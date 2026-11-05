@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jeanette Janvier · Sculpture & Installation</title>
+<meta name="description" content="Jeanette Janvier is a sculpture and installation artist who turns the most ordinary, everyday materials into immersive work through vision and skill.">
+<meta property="og:title" content="Jeanette Janvier">
+<meta property="og:description" content="Sculpture and installation. Everyday materials, transformed by vision and skill.">
+<meta property="og:image" content="https://www.jeanettejanvier.com/uploads/1/4/1/6/141687358/image-5_orig.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200..700;1,9..144,200..700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f2f1ec;
+    --paper-2:#e7e6df;
+    --ink:#131313;
+    --ink-soft:#5b5b56;
+    --clay:#2a3bd1;
+    --moss:#767d48;
+    --line:rgba(19,19,19,.14);
+    --serif:"Fraunces", Georgia, serif;
+    --sans:"Inter", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-weight:300;
+    line-height:1.6;
+    overflow-x:hidden;
+    cursor:none;
+    position:relative;
+  }
+  .newsprint{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.05;background-repeat:repeat;background-size:720px auto}
+  @media (hover:none){ body{cursor:auto} .cursor{display:none} }
+  a{color:inherit}
+  ::selection{background:var(--clay);color:var(--paper)}
+
+  /* handmade paper grain over everything */
+  .grain{
+    position:fixed;inset:-50%;pointer-events:none;z-index:50;opacity:.22;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .3 0 0 0 0 .28 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grain 1.2s steps(4) infinite;
+  }
+  @keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}100%{transform:translate(0,0)}}
+
+  /* cursor */
+  .cursor{position:fixed;left:0;top:0;width:10px;height:10px;border-radius:50%;pointer-events:none;z-index:100;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s;background:#f2f1ec;mix-blend-mode:difference}
+  .cursor.big{width:72px;height:72px}
+  .cursor-label{position:fixed;pointer-events:none;z-index:101;font:500 10px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;transform:translate(-50%,-50%);opacity:0;transition:opacity .3s;color:#f2f1ec;mix-blend-mode:difference}
+  .cursor-label.on{opacity:1}
+
+  /* nav */
+  nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:26px clamp(20px,4vw,56px);color:#f2f1ec;mix-blend-mode:difference;transition:transform .5s cubic-bezier(.7,0,.2,1)}
+  nav.away{transform:translateY(-110%)}
+  @media (max-width:420px){nav{padding:20px 16px}nav ul{gap:14px}nav a{font-size:11px;letter-spacing:.14em}}
+  .mark{font-family:var(--serif);font-size:20px;font-weight:400;letter-spacing:.02em;text-decoration:none}
+  .mark i{font-style:normal}
+  nav ul{display:flex;gap:clamp(16px,3vw,40px);list-style:none}
+  nav a{font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;position:relative;cursor:none}
+  nav ul a::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.7,0,.2,1)}
+  nav ul a:hover::after{transform:scaleX(1);transform-origin:left}
+
+  /* hero */
+  .hero{position:relative;height:100vh;min-height:620px;display:flex;flex-direction:column;justify-content:flex-end;padding:0 clamp(20px,4vw,56px) clamp(40px,8vh,90px);overflow:hidden}
+  #fragments{position:absolute;inset:0;width:100%;height:100%}
+  .hero-kicker{position:relative;align-self:flex-start;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#3d3d39;margin-bottom:22px;display:inline-flex;gap:14px;align-items:center;padding:9px 18px 9px 16px;background:rgba(242,241,236,.86);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 8px 18px -12px rgba(0,0,0,.4);transform:rotate(-1.2deg);clip-path:polygon(0 10%,3% 0,30% 6%,62% 1%,97% 5%,100% 0,99% 34%,100% 62%,98% 100%,64% 95%,33% 100%,2% 96%,0 68%,1% 38%)}
+  .hero-kicker::before{content:"";width:28px;height:1px;background:#3d3d39}
+  .hero h1{position:relative;font-family:var(--serif);font-weight:300;font-size:clamp(64px,15.5vw,260px);line-height:.84;letter-spacing:-.035em;pointer-events:none}
+  .hero h1 .row{display:block;overflow:hidden;padding-bottom:.06em}
+  .hero h1 .row:nth-child(2){padding-left:clamp(40px,14vw,260px);font-style:italic;font-weight:200}
+  .hero h1 .ch{display:inline-block;transform:translateY(110%) rotate(6deg);animation:rise 1.4s cubic-bezier(.2,.8,.2,1) forwards}
+  @keyframes rise{to{transform:none}}
+  .hero-foot{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:34px;flex-wrap:wrap}
+  .hero-foot p{max-width:360px;font-size:15px;color:#3d3d39;text-shadow:0 0 14px var(--paper),0 0 5px var(--paper),0 0 2px var(--paper)}
+  .hero .feed{right:clamp(20px,4vw,56px);bottom:clamp(110px,20vh,190px)}
+  @media (max-width:600px){.hero .feed{bottom:auto;top:calc(100% - 128px)}}
+  .hint{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#3d3d39;display:flex;align-items:center;gap:10px;padding:8px 14px;background:rgba(242,241,236,.82);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transform:rotate(.8deg);clip-path:polygon(0 8%,4% 0,50% 5%,96% 0,100% 12%,99% 50%,100% 92%,95% 100%,48% 95%,3% 100%,0 88%,1% 45%)}
+  .hint span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--clay);animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{50%{transform:scale(2.2);opacity:.3}}
+
+  /* marquee */
+  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:22px 0;background:var(--paper-2)}
+  .marquee-track{display:flex;gap:60px;white-space:nowrap;width:max-content;animation:marq 38s linear infinite}
+  .marquee-track span{font-family:var(--serif);font-size:clamp(28px,4vw,54px);font-weight:300;display:inline-flex;align-items:center;gap:.4em}
+  .marquee-track i{font-style:italic;font-weight:200;color:var(--clay)}
+  .scrap{width:.5em;height:.5em;margin:0 .5em;fill:var(--ink);animation:spin 9s linear infinite;flex:none}
+  .scrap.alt{fill:var(--clay);animation-duration:13s;animation-direction:reverse}
+  .scrap.soft{fill:none;stroke:var(--ink);stroke-width:1.4;animation-duration:11s}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes marq{to{transform:translateX(-50%)}}
+
+  section{position:relative;padding:clamp(90px,14vh,170px) clamp(20px,4vw,56px)}
+  .label{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);display:flex;gap:14px;align-items:center;margin-bottom:46px}
+  .label em{font-style:normal;color:var(--clay);font-family:var(--serif);font-size:15px;letter-spacing:0}
+
+  /* statement */
+  .statement{display:grid;grid-template-columns:1fr;gap:40px}
+  .statement h2{font-family:var(--serif);font-weight:300;font-size:clamp(32px,4.6vw,72px);line-height:1.08;letter-spacing:-.02em;max-width:1200px}
+  .statement h2 .w{display:inline-block;opacity:.12;transition:opacity .6s ease, color .6s}
+  .statement h2 .w.lit{opacity:1}
+  .statement h2 .w.accent.lit{color:var(--clay);font-style:italic}
+
+  /* the difference (interactive) */
+  .moat{background:var(--ink);color:var(--paper)}
+  .moat .label{color:rgba(242,241,236,.6)}
+  .moat .label em{color:#aab4ff}
+  .moat-head{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(30px,5vw,80px);align-items:end;margin-bottom:clamp(24px,5vh,50px)}
+  @media (max-width:860px){.moat-head{grid-template-columns:1fr}}
+  .moat h2{font-family:var(--serif);font-weight:300;font-size:clamp(36px,min(5.4vw,9vh),88px);line-height:.98;letter-spacing:-.03em}
+  .moat h2 i{color:#aab4ff;font-weight:200}
+  .moat-side p{color:rgba(242,241,236,.72);margin-bottom:26px;max-width:420px}
+  .moat-side p.meaning{font-family:var(--serif);font-weight:300;font-size:clamp(19px,1.7vw,24px);line-height:1.35;color:#f2f1ec;margin-bottom:14px}
+  .moat-side p.made{margin-bottom:14px}
+  .meter{display:grid;grid-template-columns:80px 1fr 96px;gap:14px;align-items:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,241,236,.6);padding:12px 0;border-top:1px solid rgba(242,241,236,.14)}
+  .meter b{font-weight:400;text-align:right;color:#f2f1ec}
+  .bar{height:2px;background:rgba(242,241,236,.15);overflow:hidden}
+  .bar i{display:block;height:100%;background:#aab4ff;transform-origin:left;transform:scaleX(0)}
+  .bar i.full{background:rgba(242,241,236,.55);transform:none}
+  .moat-stage{position:relative;border-radius:4px;overflow:hidden;background:#1c1c1c}
+  #moat{display:block;width:100%;height:min(calc(100vh - 170px),max(56vw,min(92vw,520px)),760px);height:min(calc(100svh - 170px),max(56vw,min(92vw,520px)),760px);min-height:300px;touch-action:none;cursor:none;user-select:none;-webkit-user-select:none}
+  .hold{display:block;margin:18px auto 0;padding:14px 26px;border-radius:999px;border:1px solid rgba(242,241,236,.6);background:transparent;color:#f2f1ec;font:500 11px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;cursor:none;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;transition:background .3s,color .3s,border-color .3s;white-space:nowrap}
+  .hold:hover{border-color:#aab4ff}
+  .hold.on{background:#aab4ff;color:#131313;border-color:#aab4ff}
+  .moat-cap{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.4vw,32px);color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.55);opacity:0;transform:translateY(10px);transition:opacity .8s,transform .8s;pointer-events:none}
+  .moat-cap.on{opacity:1;transform:none}
+
+  /* work */
+  .work{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(30px,6vw,100px);align-items:center}
+  @media (max-width:860px){.work{grid-template-columns:1fr}}
+  .frame{position:relative;aspect-ratio:4/5;cursor:none}
+  .frame .sheet{position:absolute;inset:0;background:#fbfaf6;box-shadow:0 30px 60px -30px rgba(20,20,30,.45),0 2px 6px rgba(20,20,30,.12);transform:rotate(-1.4deg) translate(14px,14px);clip-path:var(--torn)}
+  .frame .imgwrap{position:absolute;inset:0;overflow:hidden;clip-path:var(--torn);background:#d9d8d0}
+  .frame img{width:100%;height:118%;object-fit:cover;display:block;transform:translateY(var(--py,0)) scale(1.04);transition:filter 1s, transform .1s linear;filter:saturate(.9) contrast(1.02)}
+  .frame:hover img{filter:saturate(1.05) contrast(1.05)}
+  .frame canvas{position:absolute;inset:0;width:100%;height:100%;display:none}
+  .frame.fallback canvas{display:block}
+  .frame.fallback img{display:none}
+  .pin{position:absolute;top:-10px;left:50%;width:14px;height:14px;border-radius:50%;background:var(--clay);box-shadow:0 4px 8px rgba(0,0,0,.25);z-index:2}
+  .work-text h3{font-family:var(--serif);font-weight:300;font-size:clamp(34px,4vw,60px);line-height:1;letter-spacing:-.02em;margin-bottom:24px}
+  .work-text h3 i{color:var(--clay)}
+  .work-text p{color:var(--ink-soft);max-width:440px;margin-bottom:28px}
+  .meta{border-top:1px solid var(--line)}
+  .meta div{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .meta div span:first-child{letter-spacing:.2em;text-transform:uppercase;font-size:11px;color:var(--ink-soft)}
+
+  /* immersive second work */
+  .immersive{padding:0;height:240vh;background:var(--ink);color:var(--paper)}
+  .immersive .stick{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .immersive .win{position:absolute;inset:0;clip-path:inset(calc((1 - var(--p,0)) * 22%) calc((1 - var(--p,0)) * 34%) calc((1 - var(--p,0)) * 22%) calc((1 - var(--p,0)) * 34%));will-change:clip-path}
+  .immersive .win img{width:100%;height:100%;object-fit:cover;transform:scale(calc(1.35 - .35 * var(--p,0)));transform-origin:center;filter:brightness(calc(1 - .35 * var(--p,0)))}
+    .immersive .words{position:relative;z-index:2;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 clamp(20px,4vw,56px);pointer-events:none}
+  .immersive .words span{font-family:var(--serif);font-weight:300;font-size:clamp(44px,9vw,150px);letter-spacing:-.035em;line-height:1;color:#f2f1ec;mix-blend-mode:difference}
+  .immersive .words span:first-child{transform:translateX(calc(var(--p,0) * -6vw))}
+  .immersive .words span:last-child{font-style:italic;font-weight:200;transform:translateX(calc(var(--p,0) * 6vw))}
+  .immersive .cap{position:absolute;left:0;right:0;bottom:clamp(30px,6vh,60px);z-index:2;display:flex;justify-content:space-between;padding:0 clamp(20px,4vw,56px);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(242,241,236,.8);opacity:calc(var(--p,0) * 1.4 - .3)}
+  .immersive .lbl{position:absolute;top:110px;left:clamp(20px,4vw,56px);z-index:2;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(242,241,236,.7);display:flex;gap:14px;align-items:center}
+  .immersive .lbl em{font-style:normal;color:#aab4ff;font-family:var(--serif);font-size:15px;letter-spacing:0}
+
+  /* themes */
+  .themes{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+  @media (max-width:860px){.themes{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.themes{grid-template-columns:1fr}}
+  .theme{padding:40px 26px 50px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden;min-height:330px;display:flex;flex-direction:column;justify-content:space-between}
+  .theme::before{content:"";position:absolute;inset:0;background:var(--c);transform:translateY(101%);transition:transform .8s cubic-bezier(.7,0,.2,1);z-index:0}
+  .theme:hover::before{transform:none}
+  .theme > *{position:relative;z-index:1;transition:color .6s}
+  .theme:hover > *{color:var(--paper)}
+  .theme .n{font-family:var(--serif);font-size:15px;color:var(--clay)}
+  .theme h4{font-family:var(--serif);font-weight:300;font-size:clamp(28px,2.6vw,40px);line-height:1;letter-spacing:-.02em;margin:auto 0 16px}
+  .theme p{font-size:14px;color:var(--ink-soft)}
+
+  /* about */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,100px)}
+  @media (max-width:860px){.about{grid-template-columns:1fr}}
+  .about .big{font-family:var(--serif);font-weight:300;font-size:clamp(26px,2.8vw,42px);line-height:1.2;letter-spacing:-.01em}
+  .about .big i{color:var(--moss)}
+  .creds{list-style:none;border-top:1px solid var(--line)}
+  .creds li{display:grid;grid-template-columns:120px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}
+  .creds li span{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);padding-top:4px}
+  .creds li b{font-family:var(--serif);font-weight:400;font-size:21px}
+
+  /* contact */
+  .contact{text-align:center;padding-bottom:80px}
+  .contact h2{font-family:var(--serif);font-weight:200;font-size:clamp(56px,12vw,200px);line-height:.9;letter-spacing:-.04em}
+  .contact h2 i{color:var(--clay)}
+  .contact a.cta{display:inline-flex;align-items:center;gap:16px;margin-top:46px;padding:20px 36px;border:1px solid var(--ink);border-radius:999px;text-decoration:none;font-size:12px;letter-spacing:.24em;text-transform:uppercase;position:relative;overflow:hidden;cursor:none;transition:color .5s}
+  .contact a.cta::before{content:"";position:absolute;inset:0;background:var(--ink);transform:translateY(101%);transition:transform .5s cubic-bezier(.7,0,.2,1);z-index:-1}
+  .contact a.cta:hover{color:var(--paper)}
+  .contact a.cta:hover::before{transform:none}
+  footer{display:flex;justify-content:space-between;padding:28px clamp(20px,4vw,56px);border-top:1px solid var(--line);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity 1.2s cubic-bezier(.2,.8,.2,1),transform 1.2s cubic-bezier(.2,.8,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .hero h1 .ch{transform:none}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="newsprint" id="newsprint" aria-hidden="true"></div>
+<div class="grain"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-label" id="cursorLabel">View</div>
+
+<nav>
+  <a class="mark" href="#top">J<i>.</i>J</a>
+  <ul>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#difference">Vision</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="fragments" aria-hidden="true"></canvas>
+  <div class="hero-kicker">Sculpture &amp; Installation</div>
+  <h1 aria-label="Jeanette Janvier">
+    <span class="row" data-split>Jeanette</span>
+    <span class="row" data-split>Janvier</span>
+  </h1>
+  <div class="hero-foot">
+    <p>Made from what anyone can find. Shaped by what only she can see.</p>
+    <div class="hint"><span></span>Tap a stingray to explore</div>
+  </div>
+  <div id="feed"></div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Paper <i>into light</i><svg class="scrap" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 6 13 1l6 9-8 9-9-5z"/></svg>Scraps <i>into flight</i><svg class="scrap alt" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2l12 3 2 10-9 4-7-8z"/></svg>Paint <i>into sky</i><svg class="scrap soft" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 4l11-2 4 7-5 9-10-3z"/></svg>The everyday <i>into the unforgettable</i><svg class="scrap alt" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 9l7-7 9 5-2 11-10-1z"/></svg></span>
+    <span>Paper <i>into light</i><svg class="scrap" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 6 13 1l6 9-8 9-9-5z"/></svg>Scraps <i>into flight</i><svg class="scrap alt" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 2l12 3 2 10-9 4-7-8z"/></svg>Paint <i>into sky</i><svg class="scrap soft" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 4l11-2 4 7-5 9-10-3z"/></svg>The everyday <i>into the unforgettable</i><svg class="scrap alt" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 9l7-7 9 5-2 11-10-1z"/></svg></span>
+  </div>
+</div>
+
+<section class="statement" id="statement">
+  <div class="label"><em>01</em> Statement</div>
+  <h2 id="statementText">She works with the most common materials in the world. Paper. Found things. Whatever is within reach. The material is never the point. The *vision* is. With *intention* and *skill*, ordinary matter becomes a *place* you can walk into.</h2>
+</section>
+
+<section class="moat" id="difference">
+  <div class="moat-head">
+    <div>
+      <div class="label"><em>02</em> The difference</div>
+      <h2>Everyone has the scraps.<br><i>Only she sees the picture.</i></h2>
+    </div>
+    <div class="moat-side reveal">
+      <p class="meaning">Her sculptures hold still the instant a person decides to change. Not a picture of that moment, but the moment itself, suspended so you can step inside.</p>
+      <p class="made">It starts with paper. Over three years she developed her own fiber-based medium, light enough to hang large forms on invisible strings.</p>
+      <p>Here, scraps of old newspaper. Press and hold to add the one thing nobody else has.</p>
+      <div class="meter"><span>Material</span><div class="bar"><i class="full"></i></div><b>Everyone</b></div>
+      <div class="meter"><span>Vision</span><div class="bar"><i id="visionBar"></i></div><b>Hers alone</b></div>
+    </div>
+  </div>
+  <div class="moat-stage">
+    <canvas id="moat" aria-label="A pile of newspaper scraps that assembles into Jeanette Janvier's floating newspaper figure sculpture when you press and hold"></canvas>
+    <div class="moat-cap" id="moatCap">Same scraps. Her sculpture.</div>
+  </div>
+  <button class="hold" id="holdBtn" type="button">Hold to see what she sees</button>
+</section>
+
+<section class="work" id="work">
+  <div class="frame reveal" id="frame" data-cursor="Look">
+    <div class="sheet"></div>
+    <div class="imgwrap">
+      <img id="workImg" src="https://www.jeanettejanvier.com/uploads/1/4/1/6/141687358/image-5_orig.jpeg" alt="Sculptural work by Jeanette Janvier" referrerpolicy="no-referrer">
+      <canvas id="fallbackArt" aria-hidden="true"></canvas>
+    </div>
+    <div class="pin"></div>
+  </div>
+  <div class="work-text reveal">
+    <div class="label"><em>03</em> Selected work</div>
+    <h3>Held <i>together</i></h3>
+    <p>Nothing here is rare or precious. Simple materials are layered, shaped and set against each other until something delicate refuses to give way.</p>
+    <div class="meta">
+      <div><span>Medium</span><span>Paper, natural elements, mixed media</span></div>
+      <div><span>Practice</span><span>Sculpture · Installation</span></div>
+      <div><span>Theme</span><span>Resilience and change</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="immersive" id="immersive" aria-label="Ordinary, transformed">
+  <div class="stick">
+    <div class="win" id="win"><img id="img2" alt="Installation by Jeanette Janvier: iridescent forms suspended before a painted sky" referrerpolicy="no-referrer"></div>
+    <div class="lbl"><em>04</em> Step inside</div>
+    <div class="words"><span>Ordinary.</span><span>Transformed.</span></div>
+    <div class="cap"><span>Installation view</span><span>Keep scrolling</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="label"><em>05</em> What makes the work</div>
+  <div class="themes">
+    <div class="theme" style="--c:#2a3bd1"><span class="n">i.</span><h4>Everyday materials</h4><p>Things anyone in the world could pick up. Nothing rare, nothing precious.</p></div>
+    <div class="theme" style="--c:#767d48"><span class="n">ii.</span><h4>Vision</h4><p>Seeing a whole world inside what others walk past.</p></div>
+    <div class="theme" style="--c:#3e444c"><span class="n">iii.</span><h4>Skill</h4><p>The hand work that turns flat, plain matter into form, light and space.</p></div>
+    <div class="theme" style="--c:#131313"><span class="n">iv.</span><h4>Lived experience</h4><p>Each piece begins with something felt: resilience, change, holding on.</p></div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="reveal">
+    <div class="label"><em>06</em> About</div>
+    <p class="big">Jeanette Janvier builds sculpture and installation from materials anyone could pick up. What she brings is the rare part: a clear <i>vision</i> and the <i>skill</i> to make it real.</p>
+  </div>
+  <ul class="creds reveal">
+    <li><span>Education</span><b>BFA, San José State University</b></li>
+    <li><span>Education</span><b>Master's in Art Education</b></li>
+    <li><span>Practice</span><b>Sculpture, installation, immersive space</b></li>
+    <li><span>Approach</span><b>Everyday materials, transformed by vision and craft</b></li>
+  </ul>
+</section>
+
+<section class="contact" id="contact">
+  <div class="label" style="justify-content:center"><em>07</em> Contact</div>
+  <h2 class="reveal">Let's make<br><i>a space.</i></h2>
+  <a class="cta" href="contact.html">Get in touch <span>→</span></a>
+</section>
+
+<footer>
+  <span>© <span id="yr"></span> Jeanette Janvier</span>
+  <a href="#top" style="text-decoration:none;cursor:none">Back to top ↑</a>
+</footer>
+
+<script src="rays.js"></script>
+<script src="feed.js"></script>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ---------- split hero letters ---------- */
+  document.querySelectorAll('[data-split]').forEach((row, r) => {
+    const t = row.textContent; row.textContent = '';
+    [...t].forEach((c, i) => {
+      const s = document.createElement('span');
+      s.className = 'ch'; s.textContent = c;
+      s.style.animationDelay = (0.25 + r * 0.25 + i * 0.05) + 's';
+      row.appendChild(s);
+    });
+  });
+
+  /* ---------- statement word lighting ---------- */
+  const st = document.getElementById('statementText');
+  const raw = st.textContent.trim();
+  st.innerHTML = raw.split(' ').map(w => {
+    const acc = w.includes('*');
+    return `<span class="w${acc ? ' accent' : ''}">${w.replace(/\*/g, '')}</span>`;
+  }).join(' ');
+  const words = [...st.querySelectorAll('.w')];
+
+  /* ---------- cursor ---------- */
+  const cur = document.getElementById('cursor'), lab = document.getElementById('cursorLabel');
+  let mx = innerWidth / 2, my = innerHeight / 2, cx = mx, cy = my;
+  addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; });
+  document.querySelectorAll('[data-cursor], a, input').forEach(el => {
+    el.addEventListener('pointerenter', () => {
+      cur.classList.add('big');
+      if (el.dataset.cursor) { lab.textContent = el.dataset.cursor; lab.classList.add('on'); }
+    });
+    el.addEventListener('pointerleave', () => { cur.classList.remove('big'); lab.classList.remove('on'); });
+  });
+
+  /* ---------- torn edge clip path ---------- */
+  function tornPath(jag = 0.012, steps = 46) {
+    const pts = [];
+    const r = () => (Math.random() * jag * 100).toFixed(2);
+    for (let i = 0; i <= steps; i++) pts.push(`${(i / steps * 100).toFixed(2)}% ${r()}%`);
+    for (let i = 0; i <= steps; i++) pts.push(`${100 - r()}% ${(i / steps * 100).toFixed(2)}%`);
+    for (let i = steps; i >= 0; i--) pts.push(`${(i / steps * 100).toFixed(2)}% ${100 - r()}%`);
+    for (let i = steps; i >= 0; i--) pts.push(`${r()}% ${(i / steps * 100).toFixed(2)}%`);
+    return `polygon(${pts.join(',')})`;
+  }
+  const frame = document.getElementById('frame');
+  frame.style.setProperty('--torn', tornPath());
+
+  /* ---------- image fallback: generative paper piece ---------- */
+  const img = document.getElementById('workImg');
+  function drawFallback() {
+    frame.classList.add('fallback');
+    const c = document.getElementById('fallbackArt'), x = c.getContext('2d');
+    const w = c.width = c.offsetWidth * 2, h = c.height = c.offsetHeight * 2;
+    x.fillStyle = '#e2e1da'; x.fillRect(0, 0, w, h);
+    const cols = ['#fbfaf6', '#ecebe4', '#c9c8bf', '#2a3bd1', '#767d48', '#ffffff'];
+    for (let i = 0; i < 70; i++) {
+      x.save();
+      x.translate(w * (0.2 + Math.random() * 0.6), h * (0.15 + Math.random() * 0.7));
+      x.rotate(Math.random() * 6.28);
+      x.beginPath();
+      const s = 40 + Math.random() * 220, n = 5 + (Math.random() * 5 | 0);
+      for (let k = 0; k < n; k++) {
+        const a = k / n * 6.28, rr = s * (0.5 + Math.random() * 0.5);
+        x.lineTo(Math.cos(a) * rr, Math.sin(a) * rr);
+      }
+      x.closePath();
+      x.shadowColor = 'rgba(20,20,30,.22)'; x.shadowBlur = 18; x.shadowOffsetY = 6;
+      x.fillStyle = cols[i % 9 === 0 ? 3 : i % 13 === 0 ? 4 : (Math.random() * 3 | 0) + (i % 2 ? 0 : 2) % 6];
+      x.globalAlpha = 0.85; x.fill(); x.restore();
+    }
+  }
+  img.addEventListener('error', drawFallback);
+  if (img.complete && img.naturalWidth === 0) drawFallback();
+
+  /* ---------- whitewashed newsprint: the page itself is her material ---------- */
+  (function newsprint() {
+    const W = 720, H = 980, c = document.createElement('canvas'); c.width = W * 2; c.height = H * 2;
+    const x = c.getContext('2d'); x.scale(2, 2); x.fillStyle = '#000'; x.strokeStyle = '#000';
+    const vocab = 'paper found scraps light flight sky vision hands fold press layer tear mend hold float everyday ordinary transformed shelter breath memory wing string paste news morning grey white weight lift reach skin rise rest wave salt held open quiet carry again'.split(' ');
+    const word = () => vocab[Math.random() * vocab.length | 0];
+    const m = 26, colW = 152, gap = 14;
+    for (let col = 0; col < 4; col++) {
+      const x0 = m + col * (colW + gap); let y = 22;
+      if (col) { x.fillRect(x0 - gap / 2, 10, .4, H - 20); }
+      while (y < H - 18) {
+        if (Math.random() < .14) {                                  // a small headline
+          x.font = '600 11px Georgia, serif';
+          for (let l = 0; l < 2 && y < H - 30; l++) { let s = ''; while (x.measureText(s + word()).width < colW - 10) s += word() + ' '; x.fillText(s.trim().toUpperCase(), x0, y); y += 13; }
+          y += 4;
+        }
+        x.font = '8.5px Georgia, serif';
+        const lines = 5 + (Math.random() * 7 | 0);
+        for (let l = 0; l < lines && y < H - 18; l++) {
+          let s = l === 0 ? '   ' : '';
+          while (true) { const w = word(); if (x.measureText(s + w).width > colW) break; s += w + ' '; }
+          x.fillText(l === lines - 1 ? s.split(' ').slice(0, 3 + (Math.random() * 3 | 0)).join(' ') : s, x0, y); y += 10.5;
+        }
+        y += 6;
+      }
+    }
+    document.getElementById('newsprint').style.backgroundImage = `url(${c.toDataURL()})`;
+  })();
+
+  /* ---------- hero: torn newspaper scraps and gliding paper manta rays ---------- */
+  const fc = document.getElementById('fragments'), fx = fc.getContext('2d');
+  let FW, FH, DPR = Math.min(devicePixelRatio || 1, 2), frags = [], rays = [];
+  const NEWSC = ['rgba(247,246,241,.96)', 'rgba(234,232,224,.95)', 'rgba(222,220,211,.93)', 'rgba(210,208,199,.9)'];
+  const FLK = ['#2a3bd1', '#7f45cc', '#f0c030'];
+  function makeFrags() {
+    if (rays.length && fc.offsetWidth === FW) {          // height-only change (phone address bar): keep everything swimming
+      FH = fc.offsetHeight; fc.width = FW * DPR; fc.height = FH * DPR; fx.setTransform(DPR, 0, 0, DPR, 0, 0); setAvoid(); return;
+    }
+    FW = fc.offsetWidth; FH = fc.offsetHeight;
+    fc.width = FW * DPR; fc.height = FH * DPR; fx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    const count = Math.round(Math.min(34, FW / 40));
+    frags = Array.from({ length: count }, (_, i) => {
+      const fleck = i % 8 === 0;
+      const n = 5 + (Math.random() * 4 | 0), s = fleck ? 5 + Math.random() * 8 : 18 + Math.random() * (FW > 700 ? 62 : 38);
+      const shape = Array.from({ length: n }, (_, k) => {
+        const a = k / n * Math.PI * 2 + Math.random() * 0.5;
+        return [Math.cos(a) * s * (0.55 + Math.random() * 0.45), Math.sin(a) * s * (0.55 + Math.random() * 0.45)];
+      });
+      const lines = [];
+      if (!fleck) for (let y = -s; y < s; y += 4) { if (Math.random() < .08) { y += 6; continue; } lines.push([y, -s, -s + 2 * s * (.55 + Math.random() * .45)]); }
+      const hx = Math.random() * FW, hy = Math.random() * FH * 0.75;
+      return { hx, hy, x: hx, y: hy, vx: 0, vy: 0, rot: Math.random() * 6.28, vr: (Math.random() - .5) * 0.004, shape, lines, fleck,
+        col: fleck ? FLK[i / 8 % 3 | 0] : NEWSC[Math.random() * NEWSC.length | 0], ph: Math.random() * 6.28, depth: 0.4 + Math.random() * 0.6 };
+    });
+    makeRays();
+  }
+  let t = 0, burst = 0;
+  /* stingrays: each one carries a part of the site; hover to read, tap to go */
+  const RAYDEST = [['Work', '#work'], ['Vision', '#difference'], ['About', '#about'], ['Contact', 'contact.html']];
+  let hoverRay = null;
+  const angDiff = (a, b) => Math.atan2(Math.sin(a - b), Math.cos(a - b));
+  function setAvoid() {                                  // keep the rays off the name and the label above it
+    const hb = document.querySelector('.hero h1').getBoundingClientRect(), kb = document.querySelector('.hero-kicker').getBoundingClientRect(), cb = fc.getBoundingClientRect();
+    avoid = { l: Math.min(hb.left, kb.left) - cb.left, r: hb.right - cb.left, t: kb.top - cb.top, b: hb.bottom - cb.top };
+  }
+  function makeRays() {
+    const big = FW > 700; setAvoid();
+    rays = RAYDEST.map(([label, href], i) => ({
+      label, href, L: (big ? 56 : 34) + Math.random() * (big ? 14 : 8),
+      x: big ? FW * (.52 + .13 * i + .05 * Math.random()) : FW * (.2 + .2 * i), y: big ? FH * (.14 + .17 * i) : Math.max(110, avoid.t * (.3 + .16 * i)), h: Math.random() * 6.28,
+      col: PaperRay.COLORS.home[i], v: .3 + Math.random() * .14, sp: 1, ph: Math.random() * 6.28, wob: Math.random() * 100
+    }));
+  }
+  let avoid = null;
+  function stepRay(r, px, py) {
+    const hov = r === hoverRay, m = r.L * 1.3, s = feed && feed.steer(r);
+    if (s) {                                             // food in the water: go get it
+      r.h += s.turn; r.sp += (s.sp - r.sp) * .08;
+      r.x += Math.cos(r.h) * r.v * r.sp; r.y += Math.sin(r.h) * r.v * r.sp; r.ph += .05 * (.6 + r.sp * .4); return;
+    }
+    if (avoid && r.x > avoid.l - r.L && r.x < avoid.r + r.L && r.y > avoid.t - r.L * .6 && r.y < avoid.b + r.L) {
+      r.h += Math.max(-.05, Math.min(.05, angDiff(Math.atan2(r.y - (avoid.t + avoid.b) / 2, r.x - (avoid.l + avoid.r) / 2), r.h) * .05));
+    }
+    let turn = Math.sin(t * .7 + r.wob) * .012 + Math.sin(t * .23 + r.wob * 2) * .01;   // lazy wandering
+    for (const o of rays) if (o !== r) {                                              // give each other room
+      const ex = r.x - o.x, ey = r.y - o.y, ed = Math.hypot(ex, ey);
+      if (ed < (r.L + o.L) * 1.4) turn += angDiff(Math.atan2(ey, ex), r.h) * .035 * (1 - ed / ((r.L + o.L) * 1.4));
+    }
+    if (r.x < m || r.x > FW - m || r.y < 70 + r.L * .7 || r.y > FH * .8) turn += angDiff(Math.atan2(FH * .42 - r.y, FW / 2 - r.x), r.h) * .04;
+    const dx = r.x - px, dy = r.y - py, d = Math.hypot(dx, dy);
+    if (!hov && d < 190 && !(feed && feed.dragging)) { turn += angDiff(Math.atan2(dy, dx), r.h) * .06 * (1 - d / 190); r.sp = Math.min(2.6, r.sp + .06); }
+    else r.sp += ((hov ? .12 : 1) - r.sp) * .05;
+    r.h += Math.max(-.04, Math.min(.04, turn));
+    r.x += Math.cos(r.h) * r.v * r.sp; r.y += Math.sin(r.h) * r.v * r.sp;
+    r.ph += .05 * (.6 + r.sp * .4);
+  }
+  function drawRay(r) {
+    const hov = r === hoverRay, W = PaperRay.draw(fx, r, hov);
+    fx.font = '500 10px Inter, system-ui, sans-serif'; if ('letterSpacing' in fx) fx.letterSpacing = '2.5px';
+    const txt = r.label.toUpperCase() + (hov ? '  →' : ''), tw = fx.measureText(txt).width, lx = r.x - tw / 2, ly = r.y + W + 16;
+    if (hov) { fx.fillStyle = 'rgba(242,241,236,.94)'; fx.fillRect(lx - 10, ly - 13, tw + 20, 20); }
+    fx.fillStyle = hov ? 'rgba(42,59,209,1)' : 'rgba(40,40,36,.55)'; fx.fillText(txt, lx, ly);
+    if ('letterSpacing' in fx) fx.letterSpacing = '0px';
+  }
+  const rayAt = (x, y) => { let best = null, bd = 1e9; for (const r of rays) { const d = Math.hypot(r.x - x, r.y - y); if (d < r.L * .95 && d < bd) { bd = d; best = r; } } return best; };
+  makeFrags(); addEventListener('resize', makeFrags);
+  /* the food box: drag a pinch out and feed the rays */
+  const feed = reduce || !window.RayFeed ? null : RayFeed({
+    host: document.getElementById('feed'), canvas: fc, side: 'right', hideCursor: matchMedia('(hover:hover)').matches,
+    rays: () => rays, size: () => [FW, FH], drawPup: (c, p) => PaperRay.draw(c, p, false), pupsPerRay: 1, maxPups: 3
+  });
+  if (!feed) document.getElementById('feed').remove();
+  else {
+    const fb = document.querySelector('#feed .feed-box');
+    fb.addEventListener('pointerenter', () => { cur.classList.add('big'); lab.textContent = 'Drag'; lab.classList.add('on'); });
+    fb.addEventListener('pointerdown', () => { cur.classList.remove('big'); lab.classList.remove('on'); });
+    fb.addEventListener('pointerleave', () => { cur.classList.remove('big'); lab.classList.remove('on'); });
+  }
+  fc.parentElement.addEventListener('pointerdown', e => {
+    const rc = fc.getBoundingClientRect(); mx = e.clientX; my = e.clientY;
+    const hit = rayAt(e.clientX - rc.left, e.clientY - rc.top);
+    if (hit) { e.preventDefault(); if (hit.href[0] === '#') document.querySelector(hit.href).scrollIntoView({ behavior: 'smooth' }); else location.href = hit.href; return; }
+    burst = 1;
+  });
+  function drawFrags() {
+    t += 0.01;
+    fx.setTransform(DPR, 0, 0, DPR, 0, 0); fx.clearRect(0, 0, FW, FH);
+    const rect = fc.getBoundingClientRect();
+    const px = mx - rect.left, py = my - rect.top;
+    const hr = feed && (feed.hover || feed.dragging) ? null : rayAt(px, py);
+    if (hr !== hoverRay) {
+      hoverRay = hr;
+      if (hr) { cur.classList.add('big'); lab.textContent = hr.label; lab.classList.add('on'); fc.style.cursor = 'pointer'; }
+      else { cur.classList.remove('big'); lab.classList.remove('on'); fc.style.cursor = ''; }
+    }
+    for (const r of rays) stepRay(r, px, py);
+    for (const f of frags) {
+      const tx = f.hx + Math.sin(t + f.ph) * 14 * f.depth, ty = f.hy + Math.cos(t * 0.8 + f.ph) * 10 * f.depth;
+      const dx = f.x - px, dy = f.y - py, d2 = dx * dx + dy * dy, R = 160;
+      if (d2 < R * R) { const d = Math.sqrt(d2) || 1, force = (1 - d / R) * 2.2 * f.depth; f.vx += dx / d * force; f.vy += dy / d * force; f.vr += (dx > 0 ? 1 : -1) * 0.002; }
+      if (burst) { const d = Math.hypot(f.x - px, f.y - py) || 1; f.vx += (f.x - px) / d * 18 * f.depth; f.vy += (f.y - py) / d * 18 * f.depth; f.vr += (Math.random() - .5) * 0.15; }
+      f.vx += (tx - f.x) * 0.012; f.vy += (ty - f.y) * 0.012;   // the pull home: resilience
+      f.vx *= 0.92; f.vy *= 0.92; f.vr *= 0.97;
+      f.x += f.vx; f.y += f.vy; f.rot += f.vr + 0.0008;
+      fx.save(); fx.translate(f.x, f.y); fx.rotate(f.rot);
+      fx.beginPath(); f.shape.forEach(([a, b], i) => i ? fx.lineTo(a, b) : fx.moveTo(a, b)); fx.closePath();
+      fx.shadowColor = 'rgba(20,20,30,.16)'; fx.shadowBlur = 14 * f.depth; fx.shadowOffsetY = 6 * f.depth;
+      fx.fillStyle = f.col; fx.fill(); fx.shadowColor = 'transparent';
+      if (f.lines.length) {
+        fx.clip(); fx.strokeStyle = 'rgba(25,25,25,.13)'; fx.lineWidth = .6; fx.beginPath();
+        for (const [ly, a, b] of f.lines) { fx.moveTo(a, ly); fx.lineTo(b, ly); }
+        fx.stroke();
+      }
+      fx.restore();
+    }
+    if (feed) { feed.step(); feed.draw(fx); }
+    for (const r of rays) drawRay(r);
+    if (feed) feed.drawNotes(fx);
+    burst = 0;
+  }
+
+  /* ---------- the difference: newspaper scraps -> her floating figure ---------- */
+  const mc = document.getElementById('moat'), mg = mc.getContext('2d');
+  const holdBtn = document.getElementById('holdBtn'), visionBar = document.getElementById('visionBar'), moatCap = document.getElementById('moatCap');
+  let MW, MH, pieces = [], mp = 0, holding = false, moatVisible = false, mtime = 0, floorY = 0;
+  const NEWS = [[228,226,218],[214,212,203],[240,238,231],[201,199,191],[222,220,212]];
+  const FLECK = [[42,59,209],[128,64,204],[242,194,48],[46,150,170]];
+  const pick = a => a[Math.random() * a.length | 0];
+  // the sculpture, drawn in a 160 x 90 design space
+  function drawScene(o) {
+    const P = (c) => { o.fillStyle = o.strokeStyle = c; };
+    const dot = (x, y, r) => { o.beginPath(); o.arc(x, y, Math.max(r, .2), 0, 6.283); o.fill(); };
+    // tapered limb: points [[x,y,radius],...]
+    const limb = (pts) => {
+      for (let i = 0; i < pts.length - 1; i++) {
+        const [x0, y0, r0] = pts[i], [x1, y1, r1] = pts[i + 1], n = Math.ceil(Math.hypot(x1 - x0, y1 - y0) * 3);
+        for (let s = 0; s <= n; s++) { const t = s / n; dot(x0 + (x1 - x0) * t, y0 + (y1 - y0) * t, r0 + (r1 - r0) * t); }
+      }
+    };
+    o.lineCap = o.lineJoin = 'round';
+    // silver puddle on the gallery floor
+    P('#ffff00');
+    [[84, 80, 34, 4.2], [122, 77.5, 12, 2], [46, 76, 6, 1.2], [136, 85, 8, 1.6], [62, 86, 5, 1.1], [104, 87, 4, 1]].forEach(([x, y, rx, ry]) => { o.beginPath(); o.ellipse(x, y, rx, ry, 0, 0, 6.283); o.fill(); });
+    // paper manta rays
+    P('#0000ff');
+    const ray = (x, y, sc, ang) => {
+      o.save(); o.translate(x, y); o.rotate(ang); o.scale(sc, sc);
+      o.beginPath(); o.moveTo(0, -5); o.quadraticCurveTo(14, -9, 21, 2); o.quadraticCurveTo(9, 2, 2, 8); o.lineTo(0, 10); o.lineTo(-2, 8);
+      o.quadraticCurveTo(-9, 2, -21, 2); o.quadraticCurveTo(-14, -9, 0, -5); o.fill();
+      o.lineWidth = 1.1 / sc; o.beginPath(); o.moveTo(0, 9); o.quadraticCurveTo(4, 20, -2, 30); o.stroke();
+      o.restore();
+    };
+    ray(22, 46, .5, -.45); ray(146, 14, .45, .55); ray(88, 68, .38, .1); ray(146, 60, .42, -.3);
+    // the figure, floating on her back: legs lifted, arms reaching up, head tipped back
+    P('#ff0000');
+    limb([[75, 47, 5.6], [86, 52, 5.8], [97, 52, 5.6], [105, 49, 5]]);          // arched torso
+    limb([[80, 46.5, 3.2], [92, 47.5, 3.2], [101, 46, 3]]);                       // chest / belly top
+    limb([[73, 46, 4.4], [59, 31, 3.4], [58, 31, 3], [44, 17, 2], [41, 13, 1.6]]); // near leg
+    limb([[38, 12, 1.4], [43, 13.5, 1.3]]);                                       // foot
+    limb([[77, 44, 4], [65, 28, 3.1], [64, 28, 2.8], [54, 12, 1.9], [52, 8, 1.5]]); // far leg
+    limb([[50, 7, 1.3], [55, 8.5, 1.2]]);
+    limb([[103, 47, 2.4], [99, 36, 2], [98.5, 35.5, 1.8], [102, 24, 1.5], [103, 21, 1.6]]); // near arm
+    limb([[106, 47, 2.3], [107.5, 36, 1.9], [107, 35.5, 1.7], [105, 24, 1.4], [104.5, 21, 1.5]]); // far arm
+    limb([[105, 50, 2.6], [110, 54, 2.4]]);                                       // neck
+    o.beginPath(); o.ellipse(115, 56.5, 4.6, 4, -.45, 0, 6.283); o.fill();         // head, tipped back
+    // wild wire hair
+    P('#00ff00');
+    for (let i = 0; i < 26; i++) {
+      const a = -1.7 + Math.random() * 3.2, r0 = 3 + Math.random() * 1.5, r1 = 3.5 + Math.random() * 5.5, cx = 118, cy = 56;
+      o.lineWidth = .7; o.beginPath(); o.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0);
+      o.quadraticCurveTo(cx + Math.cos(a + .5) * (r0 + r1) * .7, cy + Math.sin(a + .5) * (r0 + r1) * .7, cx + Math.cos(a - .15) * (r0 + r1), cy + Math.sin(a - .15) * (r0 + r1));
+      o.stroke();
+    }
+  }
+  // her real sculpture, traced from the photo: 96x96 colours + a map of figure / hair / rays / puddle
+  let scData = null;
+  // a manta silhouette, heading up, for the mesh rays around the figure
+  function mantaPath(o, w, k = 1) {
+    const s = w / 2;
+    o.beginPath(); o.moveTo(0, -.30 * s);
+    o.quadraticCurveTo(.06 * s, -.34 * s, .10 * s, -.48 * s); o.quadraticCurveTo(.15 * s, -.37 * s, .17 * s, -.30 * s);
+    o.bezierCurveTo(.45 * s, -.28 * s, .80 * s * k, -.10 * s, s * k, .14 * s);
+    o.bezierCurveTo(.70 * s * k, .05 * s, .40 * s, .18 * s, .16 * s, .42 * s);
+    o.quadraticCurveTo(.06 * s, .52 * s, 0, .54 * s);
+    o.quadraticCurveTo(-.06 * s, .52 * s, -.16 * s, .42 * s);
+    o.bezierCurveTo(-.40 * s, .18 * s, -.70 * s * k, .05 * s, -s * k, .14 * s);
+    o.bezierCurveTo(-.80 * s * k, -.10 * s, -.45 * s, -.28 * s, -.17 * s, -.30 * s);
+    o.quadraticCurveTo(-.15 * s, -.37 * s, -.10 * s, -.48 * s); o.quadraticCurveTo(-.06 * s, -.34 * s, 0, -.30 * s);
+    o.closePath();
+  }
+  // where her two raised legs meet in the photo trace (96 x 96 grid): distance to that seam
+  const LEG_SEAM = [[19.5, 9.5], [23, 12.5], [29, 20], [35.5, 28], [38, 35]];
+  const LEG_UP = [[21.5, 0], [25, 8], [29, 13], [32.5, 20], [37.5, 28], [40, 35], [41, 39]];   // the leg reaching the top
+  const LEG_LO = [[15.5, 9.5], [19.5, 13], [26.5, 20], [33, 28], [36, 35], [37, 39]];           // the leg ending lower, with the bent foot
+  function nearest(P, x, y) {                          // distance to a centre line, and the closest point on it
+    let best = [9e9, 0, 0];
+    for (let n = 0; n < P.length - 1; n++) {
+      const [ax, ay] = P[n], [bx, by] = P[n + 1], dx = bx - ax, dy = by - ay;
+      const t = Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / (dx * dx + dy * dy)));
+      const d = Math.hypot(x - ax - dx * t, y - ay - dy * t);
+      if (d < best[0]) best = [d, ax + dx * t, ay + dy * t];
+    }
+    return best;
+  }
+  const legGap = (x, y) => nearest(LEG_SEAM, x, y)[0];
+  // her legs, drawn as two limbs as full as the curve of her hip, tapering a little to the feet
+  function legAt(x, y) {
+    if (y >= 36 || x >= 46) return null;
+    const u = nearest(LEG_UP, x, y), l = nearest(LEG_LO, x, y), t = Math.min(1, Math.max(0, y - 4) / 31);
+    const [d, cx, cy] = u[0] < l[0] ? u : l, w = u[0] < l[0] ? 2.3 + t : 2.1 + 1.1 * t;
+    return { in: d <= w, cx: Math.min(95, Math.max(0, cx | 0)), cy: Math.min(95, Math.max(0, cy | 0)) };
+  }
+  // the paper rays around her figure: [x, y, wingspan, heading] in photo pixels
+  const PHOTO_RAYS = [[170, 105, 300, 3.4], [420, 600, 340, -.25], [610, 290, 170, 1.9], [1170, 75, 330, 2.9], [1090, 700, 300, .15], [740, 820, 270, 3.5], [1320, 840, 280, 3.0]];
+  const SC_CAT = '0i470z0f2b0s470z0e2c0m2304470z0c2d0i2803470z0b2e0h2904470z092f0f2b04470z0a2d0e2d05470z0c2a0e2b07480z0e270g2709490z0z0225044403490z0z094i0z0z074j0z420z064j0y420z074i0y430z084h0x4301430j310k4g0x480h320m4e0w490g340m4d032203220m4301440g350n4c04260m4301440g350o4c03260l490e380o4b05240l4301440d3a0p4b05230l4301440b3c0q4b0r440144093e0r4b0q49083f0s4a0q48083g0u490p430144073h0v490n49073h0w480n49063i0w480n49063i0w480n49063i0x480m49053i0y480m430145053i0y480l440145053i0q2107490k44014503423i0q2503490k44014502453g0q27014a0j44014501473e0r284b0i44014501473e0r284c0b4g01473d0s284g044j01463e0r294z440244013d0r2b4z44063c0q2d4z44063b0q2e4z44053b0s2c024z4305390v2b024z4109350y2a024y0c32210z0228034u240a240z0524054o062604260z0f4k0b2f0z0h4e210f2d0z0k47270g280e210z0a2d0z240z082e0y250z092c0y270z0a2a0x280z0c270x290z0e260t2c0z0f260q2e0z0g23110r122c0z0l110q132a0z0z0d16270z0z0k160z0z0z0z0z0z0u170z0z0j140z0z0z140z0z160d1b0z0o1g081g0z0p1z130z0l1w011402190z0612031y011105140z0g1z031101140z0d1z130212011101140o180d1z1402170q1a0a1z1c0u19091z1502190u160a1z1d0x130c1z1c09120z021z1b0b120z1z1e0y17021z1j0w1z1x02120n1z1x01120f110b12021z1r0111011101110411021104120d1z1z0211051103120b1z1m0111011a011302140f1z1n011e01160g1z1z1a0g1z1z1401170f1z1z1d0f1z1x021d0g1z1z190d12051z1z140p1z1x0t1z1v08';
+  const scImg = new Image();
+  scImg.onload = () => {
+    const c = document.createElement('canvas'); c.width = c.height = 96; const o = c.getContext('2d');
+    o.drawImage(scImg, 0, 0); const px = o.getImageData(0, 0, 96, 96).data;
+    const cat = new Uint8Array(96 * 96); let k = 0;
+    for (let i = 0; i < SC_CAT.length; i += 2) { const v = +SC_CAT[i], n = parseInt(SC_CAT[i + 1], 36); cat.fill(v, k, k + n); k += n; }
+    scData = { px, cat }; buildMoat();
+  };
+  scImg.src = 'data:image/jpeg;base64,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';
+  function buildMoat() {
+    MW = mc.offsetWidth; MH = mc.offsetHeight; mc.width = MW * DPR; mc.height = MH * DPR;
+    const cols = MW > 700 ? 170 : 96, cell = MW / cols, rows = Math.round(MH / cell);
+    pieces = [];
+    const add = (tx, ty, c, col, n8) => {
+      const gx = (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+      const shape = [];
+      for (let q = 0; q < 5; q++) { const a = q / 5 * 6.283 + Math.random() * .6, r = .6 + Math.random() * .4; shape.push([Math.cos(a) * r, Math.sin(a) * r]); }
+      const p = {
+        px: MW / 2 + gx * MW * .3, py: MH - 4 - Math.random() * MH * .3 * Math.exp(-Math.pow(gx * 1.5, 2)), pr: Math.random() * 6.28,
+        tx, ty, tr: (Math.random() - .5) * .8, pc: pick(NEWS), shape, s: cell * 1.15, sx: 1, sy: 1, ta: 1, la: .3,
+        lift: 30 + Math.random() * MH * .3, cat: c, ph: Math.random() * 6.28
+      };
+      if (c === 4) {                     // the figure: real colours from the photo, newsprint on top
+        if (col) { p.tc = col.map(v => Math.max(0, Math.min(255, (v - 128) * 1.15 + 136)) | 0); p.la = .2; }
+        else { const sh = 150 + n8 * 10; p.tc = [sh, sh - 2, sh - 9]; p.la = .32; }
+        if (Math.random() < (col ? .03 : .05)) { p.tc = pick(FLECK); p.s = cell * .8; }
+        p.z = 2; p.d = .12 + Math.random() * .2;
+      } else if (c === 3) { const v = 38 + Math.random() * 45 | 0; p.tc = col ? col.map(x => x * .42 | 0) : (Math.random() < .08 ? pick(FLECK) : [v, v, v + 3]); p.sx = 1.9; p.sy = .32; p.tr = Math.random() * 6.28; p.la = 0; p.z = 3; p.d = .32 + Math.random() * .15; }
+      else if (c === 2) { const v = 226 + Math.random() * 20 | 0; p.tc = [v, v - 1, v - 6]; p.ta = .95; p.la = .14; p.z = Math.random() < .5 ? 1 : 4; p.d = .38 + Math.random() * .2; p.s = cell * 1.05; }
+      else if (c === 6) { p.tc = [226, 222, 210]; p.ta = .85; p.la = 0; p.sx = 1.5; p.sy = .35; p.tr = Math.random() * 6.28; p.z = 1; p.d = .45 + Math.random() * .15; p.s = cell * .9; }
+      else if (c === 1) { p.tc = col || [176, 178, 182]; p.ta = col ? .6 : .5; p.la = 0; p.sy = .8; p.tr = (Math.random() - .5) * .2; p.z = 0; p.d = Math.random() * .12; p.lift = 10; if (col) p.s = cell * 1.6; }
+      else { p.tc = pick(FLECK); p.s = cell * .5; p.la = 0; p.z = 5; p.d = .45 + Math.random() * .15; p.pc = pick(FLECK); }
+      pieces.push(p); return p;
+    };
+    if (scData) {
+      const q = Math.min(cols, rows) * .94, ox = (cols - q) / 2, oy = (rows - q) / 2;
+      floorY = (oy + .571 * q) * cell;
+      const RS = 192, rm = document.createElement('canvas'); rm.width = rm.height = RS; const ro = rm.getContext('2d'), kk = RS / 1440;
+      ro.lineCap = 'round';
+      for (const [x, y, w, a] of PHOTO_RAYS) {
+        const ww = w * kk;
+        ro.save(); ro.translate(x * kk, y * kk); ro.rotate(a + Math.PI / 2);
+        ro.strokeStyle = '#00ff00'; ro.lineWidth = 1.8; ro.beginPath(); ro.moveTo(0, ww * .27); ro.quadraticCurveTo(ww * .08, ww * .55, -ww * .03, ww * .85); ro.stroke();
+        ro.fillStyle = '#ff0000'; mantaPath(ro, ww); ro.fill();
+        ro.restore();
+      }
+      const rd = ro.getImageData(0, 0, RS, RS).data;
+      for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+        const u = Math.floor((i - ox) / q * 96), v = Math.floor((j - oy) / q * 96);
+        if (u < 0 || v < 0 || u > 95 || v > 95) continue;
+        let c = scData.cat[v * 96 + u]; if (c === 2) c = 0;
+        let k4 = (v * 96 + u) * 4, sh = 1;
+        const lx = (i + .5 - ox) / q * 96, ly = (j + .5 - oy) / q * 96, leg = legAt(lx, ly);
+        if (leg) {                                       // the legs follow the shape above, not the rough photo trace
+          if (!leg.in) continue;
+          if (c !== 4) { c = 4; k4 = (leg.cy * 96 + leg.cx) * 4; }
+        }
+        if (!c || (c === 1 && (i + j) % 2)) continue;
+        if (c === 4) {                                   // a thin gap between her two legs, with a soft shadow beside it
+          const g = legGap(lx, ly);
+          if (g < .75) continue; if (g < 1.7) sh = .74 + .26 * (g - .75) / .95;
+        }
+        add((i + .5) * cell, (j + .5) * cell, c, [scData.px[k4] * sh, scData.px[k4 + 1] * sh, scData.px[k4 + 2] * sh]);
+      }
+      for (let j = 0; j < rows * 2; j++) for (let i = 0; i < cols * 2; i++) {      // the rays, on a finer grid
+        const fx2 = i / 2 + .25, fy2 = j / 2 + .25, u = Math.floor((fx2 - ox) / q * RS), v = Math.floor((fy2 - oy) / q * RS);
+        if (u < 0 || v < 0 || u >= RS || v >= RS) continue;
+        const base = scData.cat[(v >> 1) * 96 + (u >> 1)]; if (base === 4 || base === 3) continue;
+        const ri = (v * RS + u) * 4, c = rd[ri] > 120 ? 2 : rd[ri + 1] > 120 ? 6 : 0; if (!c) continue;
+        const p = add(fx2 * cell, fy2 * cell, c); p.s = cell * (c === 2 ? .56 : .46); p.tr = (Math.random() - .5) * .25;
+      }
+      for (let n = 0; n < 50; n++) add((ox + Math.random() * q) * cell, (oy + Math.random() * q * .55) * cell, 5);
+    } else {
+      const oc = document.createElement('canvas'); oc.width = cols; oc.height = rows;
+      const o = oc.getContext('2d');
+      const k = Math.min(cols / 160, rows / 90), ox = (cols - 160 * k) / 2, oy = (rows - 90 * k) / 2;
+      floorY = (oy + 64 * k) * cell;
+      o.setTransform(k, 0, 0, k, ox, oy); drawScene(o);
+      const d = o.getImageData(0, 0, cols, rows).data;
+      const cat = new Int8Array(cols * rows);
+      for (let i = 0; i < cols * rows; i++) {
+        const r = d[i * 4], g = d[i * 4 + 1], b = d[i * 4 + 2];
+        cat[i] = g > 110 && r < 110 ? 3 : r > 110 && g > 110 ? 1 : b > 110 && r < 110 ? 2 : r > 110 ? 4 : 0;
+      }
+      for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+        const c = cat[j * cols + i]; if (!c) continue;
+        let n8 = 0; if (c === 4) for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) if (cat[(j + b) * cols + (i + a)] === 4) n8++;
+        add((i + .5) * cell, (j + .5) * cell, c, null, n8);
+      }
+      for (let i = 0; i < 70; i++) add((ox + Math.random() * 160 * k) * cell, (oy + Math.random() * 58 * k) * cell, 5);
+    }
+    pieces.sort((a, b) => a.z - b.z);
+    drawMoat(0);
+  }
+  const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  function drawMoat(dt) {
+    mtime += dt;
+    mp = Math.max(0, Math.min(1, mp + (holding ? dt * .5 : -dt * .7)));
+    visionBar.style.transform = `scaleX(${mp})`;
+    moatCap.classList.toggle('on', mp > .97);
+    mg.setTransform(DPR, 0, 0, DPR, 0, 0);
+    mg.fillStyle = '#2b2a28'; mg.fillRect(0, 0, MW, floorY);
+    mg.fillStyle = '#111'; mg.fillRect(0, floorY, MW, MH - floorY);
+    for (const f of pieces) {
+      const t = ease(Math.min(1, Math.max(0, (mp - f.d) / .4)));
+      const bob = f.cat === 1 ? 0 : Math.sin(mtime * (f.cat === 2 || f.cat === 5 || f.cat === 6 ? 1.3 : .9) + (f.cat === 4 || f.cat === 3 ? f.tx * .003 : f.ph)) * (f.cat === 2 || f.cat === 5 || f.cat === 6 ? 5 : 3) * t;
+      const x = f.px + (f.tx - f.px) * t, y = f.py + (f.ty - f.py) * t - Math.sin(t * Math.PI) * f.lift + bob;
+      const r = f.pr + (f.tr - f.pr) * t;
+      const sx = f.s * (1 + (f.sx - 1) * t) * DPR, sy = f.s * (1 + (f.sy - 1) * t) * DPR;
+      const a = f.pc, b = f.tc, al = 1 + (f.ta - 1) * t;
+      mg.fillStyle = `rgba(${a[0] + (b[0] - a[0]) * t | 0},${a[1] + (b[1] - a[1]) * t | 0},${a[2] + (b[2] - a[2]) * t | 0},${al})`;
+      const cs = Math.cos(r), sn = Math.sin(r);
+      mg.setTransform(cs * sx, sn * sx, -sn * sy, cs * sy, x * DPR, y * DPR);
+      const sh = f.shape; mg.beginPath(); mg.moveTo(sh[0][0], sh[0][1]);
+      for (let q = 1; q < sh.length; q++) mg.lineTo(sh[q][0], sh[q][1]);
+      mg.closePath(); mg.fill();
+      const la = .3 + (f.la - .3) * t;               // newsprint lines
+      if (la > .02 && f.cat !== 5) {
+        mg.strokeStyle = `rgba(30,30,30,${la})`; mg.lineWidth = .09; mg.beginPath();
+        mg.moveTo(-.55, -.25); mg.lineTo(.45, -.25); mg.moveTo(-.5, .05); mg.lineTo(.5, .05); mg.moveTo(-.4, .35); mg.lineTo(.2, .35); mg.stroke();
+      }
+    }
+  }
+  const holdOn = e => { holding = true; holdBtn.classList.add('on'); if (e && e.cancelable) e.preventDefault(); if (reduce) { mp = 1; drawMoat(0); } };
+  const holdOff = () => { holding = false; holdBtn.classList.remove('on'); if (reduce) { mp = 0; drawMoat(0); } };
+  holdBtn.addEventListener('pointerdown', holdOn); mc.addEventListener('pointerdown', holdOn);
+  addEventListener('pointerup', holdOff); addEventListener('pointercancel', holdOff); addEventListener('blur', holdOff);
+  holdBtn.addEventListener('contextmenu', e => e.preventDefault()); mc.addEventListener('contextmenu', e => e.preventDefault());
+  holdBtn.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); if (!e.repeat) holdOn(); } });
+  holdBtn.addEventListener('keyup', holdOff);
+  buildMoat(); addEventListener('resize', buildMoat);
+  new IntersectionObserver(([e]) => moatVisible = e.isIntersecting).observe(mc);
+
+  /* ---------- scroll: reveals, parallax, word lighting ---------- */
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  const imm = document.getElementById('immersive');
+  const img2 = document.getElementById('img2');
+  const ORIG1 = 'https://www.jeanettejanvier.com/uploads/1/4/1/6/141687358/image-5_orig.jpeg';
+  img2.addEventListener('error', () => { img2.closest('.win').style.background = '#2a3bd1'; img2.remove(); });
+  fetch('/art.json').then(r => r.json()).then(list => {
+    const banner = list.find(a => a.banner) || list.find(a => !/image-5_orig/.test(a.orig));
+    const first = list.find(a => /image-5_orig/.test(a.orig));
+    if (first) img.src = first.src;                    // local copy of the work photo
+    img2.src = banner ? banner.src : ORIG1;            // the installation banner
+  }).catch(() => { img2.src = ORIG1; });
+  function onScroll() {
+    const r = st.getBoundingClientRect();
+    const prog = Math.min(1, Math.max(0, (innerHeight * 0.85 - r.top) / (r.height + innerHeight * 0.35)));
+    const lit = Math.floor(prog * words.length * 1.05);
+    words.forEach((w, i) => w.classList.toggle('lit', i < lit));
+    const fr = frame.getBoundingClientRect();
+    img.style.setProperty('--py', (-(fr.top / innerHeight) * 40 - 30) + 'px');
+    const ir = imm.getBoundingClientRect();
+    const ip = Math.min(1, Math.max(0, -ir.top / (ir.height - innerHeight)));
+    imm.style.setProperty('--p', ip.toFixed(4));
+  }
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const navEl = document.querySelector('nav'); let lastY = scrollY;
+  addEventListener('scroll', () => { const y = scrollY; if (Math.abs(y - lastY) > 6) { navEl.classList.toggle('away', y > lastY && y > 140); lastY = y; } }, { passive: true });
+
+  /* ---------- main loop ---------- */
+  let heroVisible = true;
+  new IntersectionObserver(([e]) => heroVisible = e.isIntersecting).observe(fc);
+  let lastT = performance.now();
+  function loop() {
+    const now = performance.now(), dt = Math.min(.05, (now - lastT) / 1000); lastT = now;
+    if (moatVisible) drawMoat(dt);
+    cx += (mx - cx) * 0.18; cy += (my - cy) * 0.18;
+    cur.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`;
+    lab.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`;
+    if (heroVisible) drawFrags();
+    requestAnimationFrame(loop);
+  }
+  if (reduce) { drawFrags(); words.forEach(w => w.classList.add('lit')); }
+  else loop();
+})();
+</script>
+</body>
+</html>
