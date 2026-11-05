@@ -129,22 +129,30 @@
   .moat-cap{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.4vw,32px);color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.55);opacity:0;transform:translateY(10px);transition:opacity .8s,transform .8s;pointer-events:none}
   .moat-cap.on{opacity:1;transform:none}
 
-  /* the material: her fiber wave moves like water until you hold it still */
-  .evolve{background:var(--paper)}
-  .ev-head{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(30px,5vw,80px);align-items:end;margin-bottom:clamp(24px,5vh,50px)}
+  /* the material: raw fibers wind into her wave sculpture while you hold */
+  .evolve{background:var(--ink);color:var(--paper)}
+  .evolve .label{color:rgba(242,241,236,.6)}
+  .evolve .label em{color:#aab4ff}
+  .ev-head{display:grid;grid-template-columns:1.3fr 1fr;gap:clamp(30px,5vw,80px);align-items:end;margin-bottom:clamp(24px,5vh,50px)}
   @media (max-width:860px){.ev-head{grid-template-columns:1fr}}
   .ev-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(36px,min(5.4vw,9vh),88px);line-height:.98;letter-spacing:-.03em}
-  .ev-head h2 i{color:var(--clay);font-weight:200}
-  .ev-side p{color:var(--ink-soft);max-width:440px;margin-bottom:14px}
-  .ev-side p.meaning{font-family:var(--serif);font-weight:300;font-size:clamp(19px,1.7vw,24px);line-height:1.35;color:var(--ink)}
-  .ev-stage{position:relative;margin:0 auto;width:min(100%,calc(100vh - 190px));width:min(100%,calc(100svh - 190px));min-width:min(100%,300px);aspect-ratio:1179/1195;background:#e9e7df;overflow:hidden;box-shadow:0 40px 70px -40px rgba(20,20,30,.5),0 2px 6px rgba(20,20,30,.12)}
-  .ev-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  #evCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:none;user-select:none;-webkit-user-select:none}
-  .ev-cap{position:absolute;left:0;right:0;bottom:18px;text-align:center;font-family:var(--serif);font-style:italic;font-size:clamp(18px,2.2vw,28px);color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.6);opacity:0;transform:translateY(10px);transition:opacity .8s,transform .8s;pointer-events:none}
+  .ev-head h2 i{color:#aab4ff;font-weight:200}
+  .ev-side p{color:rgba(242,241,236,.72);margin-bottom:14px;max-width:430px}
+  .ev-side p.meaning{font-family:var(--serif);font-weight:300;font-size:clamp(19px,1.7vw,24px);line-height:1.35;color:#f2f1ec}
+  .ev-stage{position:relative;border-radius:4px;overflow:hidden;background:#161616}
+  #evCanvas{display:block;width:100%;height:min(calc(100vh - 230px),max(56vw,min(92vw,520px)),760px);height:min(calc(100svh - 230px),max(56vw,min(92vw,520px)),760px);min-height:300px;touch-action:none;cursor:none;user-select:none;-webkit-user-select:none}
+  .ev-cap{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.4vw,32px);color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.6);opacity:0;transform:translateY(10px);transition:opacity .8s,transform .8s;pointer-events:none}
   .ev-cap.on{opacity:1;transform:none}
-  .ev-hold{display:block;margin:18px auto 0;padding:14px 26px;border-radius:999px;border:1px solid var(--ink);background:transparent;color:var(--ink);font:500 11px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;cursor:none;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;transition:background .3s,color .3s;white-space:nowrap}
-  .ev-hold.on{background:var(--ink);color:var(--paper)}
-  .ev-note{text-align:center;margin-top:10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+  .ev-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+  .ev-step{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(242,241,236,.38);transition:color .5s}
+  .ev-step i{display:block;height:2px;margin-bottom:10px;background:rgba(242,241,236,.14);overflow:hidden}
+  .ev-step i b{display:block;height:100%;background:#aab4ff;transform-origin:left;transform:scaleX(0)}
+  .ev-step.on{color:#f2f1ec}
+  .ev-step span{display:block;margin-top:6px;letter-spacing:.02em;text-transform:none;font-size:13px;line-height:1.4;color:rgba(242,241,236,.5)}
+  @media (max-width:600px){.ev-step span{display:none}}
+  .ev-hold{display:block;margin:22px auto 0;padding:14px 26px;border-radius:999px;border:1px solid rgba(242,241,236,.6);background:transparent;color:#f2f1ec;font:500 11px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;cursor:none;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;transition:background .3s,color .3s,border-color .3s;white-space:nowrap}
+  .ev-hold:hover{border-color:#aab4ff}
+  .ev-hold.on{background:#aab4ff;color:#131313;border-color:#aab4ff}
 
   /* work */
   .work{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(30px,6vw,100px);align-items:center}
@@ -288,20 +296,25 @@
   <div class="ev-head">
     <div>
       <div class="label"><em>03</em> The material</div>
-      <h2>It began with <i>paper.</i><br>Now it is her own.</h2>
+      <h2>Paper had limits.<br><i>So she made her own.</i></h2>
     </div>
     <div class="ev-side reveal">
       <p class="meaning">A wave caught the instant it breaks, with stingrays rising through it. One moment of change, held open.</p>
-      <p>Paper had limits. After three years of testing she invented her own fiber medium: shaped like clay, strong like wood, light like wax, so large forms can hang on invisible strings.</p>
+      <p>Three years of testing led to a fiber medium of her own: sculpted like clay, strong like wood, light like wax, so large forms can hang on invisible strings.</p>
     </div>
   </div>
   <div class="ev-stage">
-    <img id="evImg" src="art/fiber-wave-760.webp" srcset="art/fiber-wave-760.webp 760w, art/fiber-wave-1179.webp 1179w" sizes="(max-width:860px) 92vw, 60vw" alt="Sculpture in progress by Jeanette Janvier: a white wave of her fiber medium curling into a ring, with iridescent stingrays suspended on strings in front of her painted sky">
-    <canvas id="evCanvas" aria-label="Her fiber wave sculpture rippling like moving water; press and hold to bring it to a stop"></canvas>
-    <div class="ev-cap" id="evCap">One moment, held still.</div>
+    <img id="evImg" src="art/fiber-wave-1179.webp" alt="" hidden>
+    <canvas id="evCanvas" aria-label="Loose fibers that wind together into Jeanette Janvier's fiber wave sculpture when you press and hold"></canvas>
+    <div class="ev-cap" id="evCap">A wave, held still.</div>
   </div>
-  <button class="ev-hold" id="evHold" type="button">Hold to stop the wave</button>
-  <div class="ev-note">Work in progress</div>
+  <div class="ev-steps" aria-hidden="true">
+    <div class="ev-step"><i><b></b></i>Raw fiber<span>Loose, white, weightless.</span></div>
+    <div class="ev-step"><i><b></b></i>Layered<span>Wound together, layer on layer.</span></div>
+    <div class="ev-step"><i><b></b></i>Sculpted<span>Shaped into one form.</span></div>
+    <div class="ev-step"><i><b></b></i>Finished<span>Sanded, painted, suspended.</span></div>
+  </div>
+  <button class="ev-hold" id="evHold" type="button">Hold to build it</button>
 </section>
 
 <section class="work" id="work">
@@ -861,59 +874,99 @@
   }
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  /* ---------- the material: the photo of her fiber wave moves like water; hold, and the moment stops ---------- */
+  /* ---------- the material: raw fibers wind into her fiber wave sculpture while you hold ---------- */
   (function material() {
     const img = document.getElementById('evImg'), cv = document.getElementById('evCanvas'), btn = document.getElementById('evHold'), cap = document.getElementById('evCap');
-    let amp = 1, hold = false, vis = false, t = 0, last = performance.now(), gl = null, prog, uT, uA, tex, ready = false;
-    const VS = 'attribute vec2 p;varying vec2 v;void main(){v=p*.5+.5;v.y=1.-v.y;gl_Position=vec4(p,0.,1.);}';
-    const FS = `precision mediump float;varying vec2 v;uniform sampler2D tx;uniform float t,a;
-      void main(){
-        vec2 c=vec2(.506,.487),q=v-c;float r=length(q);
-        float sw=a*.04*sin(r*16.-t*1.6)*smoothstep(.04,.42,r);            // the water swirls around the ring
-        float cs=cos(sw),sn=sin(sw);q=vec2(q.x*cs-q.y*sn,q.x*sn+q.y*cs);
-        vec2 d=a*.007*vec2(sin(v.y*23.+t*1.7)+sin((v.x+v.y)*31.-t*2.2),cos(v.x*21.-t*1.5)+sin((v.x-v.y)*27.+t*2.));
-        vec2 u=clamp(c+q+d,.001,.999);vec3 col=texture2D(tx,u).rgb;
-        float l=sin((v.x*9.+v.y*7.)+t*1.3)*sin((v.x*-6.+v.y*11.)-t*1.1);   // light moving through the water
-        col+=a*.07*smoothstep(.55,1.,l)*vec3(1.,.98,.95);
-        gl_FragColor=vec4(col,1.);}`;
-    function setup() {
-      if (ready || !img.complete || !img.naturalWidth) return;
-      gl = cv.getContext('webgl', { premultipliedAlpha: false }); if (!gl) { cv.remove(); return; }
-      const sh = (k, src) => { const x = gl.createShader(k); gl.shaderSource(x, src); gl.compileShader(x); return x; };
-      prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(prog);
-      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { cv.remove(); return; }
-      gl.useProgram(prog);
-      const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
-      const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-      tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
-      try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img); } catch (e) { cv.remove(); gl = null; return; }
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      uT = gl.getUniformLocation(prog, 't'); uA = gl.getUniformLocation(prog, 'a');
-      ready = true; size(); draw();
+    const steps = [...document.querySelectorAll('#evolve .ev-step')], bars = steps.map(s => s.querySelector('b'));
+    const c = cv.getContext('2d'); let W = 0, H = 0, F = [], ep = 0, hold = false, vis = false, t = 0, last = performance.now(), box = null;
+    const CX = .506, CY = .487;                                         // centre of the wave's ring in the photo
+    const sm = (a, b, x) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
+    const ease = u => u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
+    function build() {
+      W = cv.offsetWidth; H = cv.offsetHeight; if (!W || !img.naturalWidth) return;
+      cv.width = W * DPR; cv.height = H * DPR;
+      const side = Math.min(W, H) * .96; box = { x: (W - side) / 2, y: (H - side) / 2 + side * .01, s: side };   // the photo, fitted square in the stage
+      const N = W > 700 ? 104 : 74, o = document.createElement('canvas'); o.width = o.height = N; const ox = o.getContext('2d');
+      ox.drawImage(img, 0, 0, N, N); const d = ox.getImageData(0, 0, N, N).data; const cell = side / N;
+      F = [];
+      for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+        const k = (j * N + i) * 4, u = (i + Math.random()) / N, v = (j + Math.random()) / N;
+        const tx = box.x + u * side, ty = box.y + v * side, dx = u - CX, dy = v - CY, r = Math.hypot(dx, dy);
+        const tang = Math.atan2(dy, dx) + Math.PI / 2 + (Math.random() - .5) * .5;   // strands follow the curl of the wave
+        const lum = (d[k] + d[k + 1] + d[k + 2]) / 765;
+        F.push({ tx, ty, ta: tang, col: [d[k], d[k + 1], d[k + 2]], lum,
+          x0: Math.random() * W, y0: Math.random() * H, a0: Math.random() * 6.283, dr: .4 + Math.random() * .8,
+          len: cell * (1.8 + Math.random() * 1.6), bend: (Math.random() - .5) * .45, edge: Math.min(u, v, 1 - u, 1 - v),
+          d: ((Math.atan2(dy, dx) + Math.PI * 1.6) % 6.283) / 6.283 * .35 + r * .25 + Math.random() * .08 });   // winds in around the ring
+      }
+      draw();
     }
-    function size() { if (!gl) return; cv.width = cv.offsetWidth * DPR; cv.height = cv.offsetHeight * DPR; gl.viewport(0, 0, cv.width, cv.height); }
-    function draw() { if (!ready) return; gl.uniform1f(uT, t); gl.uniform1f(uA, amp); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4); }
+    function draw() {
+      if (!box) return;
+      c.setTransform(DPR, 0, 0, DPR, 0, 0); c.fillStyle = '#161616'; c.fillRect(0, 0, W, H);
+      const fly = Math.min(1, ep / .62), paint = sm(.22, .62, ep), thick = sm(.45, .82, ep), photo = sm(.72, .96, ep);
+      // the finished sculpture under the fibers
+      if (photo > 0) {
+        c.globalAlpha = photo; c.drawImage(img, box.x, box.y, box.s, box.s); c.globalAlpha = 1;
+        const vg = c.createRadialGradient(box.x + box.s / 2, box.y + box.s / 2, box.s * .3, box.x + box.s / 2, box.y + box.s / 2, box.s * .56);
+        vg.addColorStop(0, 'rgba(22,22,22,0)'); vg.addColorStop(1, 'rgba(22,22,22,1)');   // the photo melts into the dark stage
+        c.fillStyle = vg; c.fillRect(box.x - 2, box.y - 2, box.s + 4, box.s + 4);
+      }
+      if (photo < 1) {
+        c.lineCap = 'round';
+        const buckets = new Map();
+        for (const f of F) {
+          const u = ease(Math.min(1, Math.max(0, (fly - f.d) / .45)));
+          const dx = Math.sin(t * .25 * f.dr + f.a0) * 26, dy = Math.cos(t * .21 * f.dr + f.a0 * 1.3) * 22;  // raw fibers drift
+          const x = f.x0 + dx + (f.tx - f.x0 - dx) * u, y = f.y0 + dy + (f.ty - f.y0 - dy) * u;
+          const a = f.a0 + t * .08 * f.dr + (f.ta - f.a0 - t * .08 * f.dr) * u;
+          const p = paint * u, g = 236 - 30 * (1 - u);
+          const R = g + (f.col[0] - g) * p, G = g + (f.col[1] - g) * p, B = g - 4 + (f.col[2] - g + 4) * p;
+          const key = ((R >> 4) << 8) | ((G >> 4) << 4) | (B >> 4);
+          let b = buckets.get(key); if (!b) { b = []; buckets.set(key, b); }
+          if (u > .5 && f.edge < .06) continue;          // the form fades out softly at the edges of the frame
+          b.push(x, y, a, f.len * (1 + thick * .9), f.bend);
+        }
+        const alpha = (.36 + .56 * Math.min(1, fly * 1.6)) * (1 - photo), lw = .65 + thick * 1.9;
+        c.globalAlpha = alpha; c.lineWidth = lw;
+        for (const [key, b] of buckets) {
+          c.strokeStyle = `rgb(${((key >> 8) & 15) * 16 + 8},${((key >> 4) & 15) * 16 + 8},${(key & 15) * 16 + 8})`;
+          c.beginPath();
+          for (let n = 0; n < b.length; n += 5) {
+            const x = b[n], y = b[n + 1], a = b[n + 2], h = b[n + 3] / 2, cs = Math.cos(a) * h, sn = Math.sin(a) * h, bd = b[n + 4] * h;
+            c.moveTo(x - cs, y - sn); c.quadraticCurveTo(x - sn * bd, y + cs * bd, x + cs, y + sn);
+          }
+          c.stroke();
+        }
+        c.globalAlpha = 1;
+      }
+      // finished: one soft pass of light across the surface
+      const gl = sm(.9, 1, ep); if (gl > 0 && gl < 1 && box) {
+        const gx = box.x - box.s * .4 + gl * box.s * 1.8, gr = c.createLinearGradient(gx - box.s * .25, box.y, gx + box.s * .25, box.y + box.s * .3);
+        gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(.5, 'rgba(255,255,255,.22)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+        c.fillStyle = gr; c.fillRect(box.x, box.y, box.s, box.s);
+      }
+      const marks = [[0, .25], [.25, .5], [.5, .76], [.76, 1]];
+      marks.forEach(([a, b], i) => { const f = Math.min(1, Math.max(0, (ep - a) / (b - a))); bars[i].style.transform = `scaleX(${f.toFixed(3)})`; steps[i].classList.toggle('on', ep >= a + .001 || (i === 0)); });
+      cap.classList.toggle('on', ep > .99);
+    }
     function tick(now) {
-      const dt = Math.min(.05, (now - last) / 1000); last = now;
-      const target = hold ? 0 : 1; amp += (target - amp) * Math.min(1, dt * (hold ? 1.6 : 1.1));   // eases to a stop, and back into motion
-      t += dt * (.25 + .75 * amp);
-      cap.classList.toggle('on', amp < .04);
+      const dt = Math.min(.05, (now - last) / 1000); last = now; t += dt;
+      ep = Math.max(0, Math.min(1, ep + (hold ? dt * .32 : -dt * .5)));
       if (vis) draw();
       requestAnimationFrame(tick);
     }
-    const on = e => { hold = true; btn.classList.add('on'); if (e && e.cancelable) e.preventDefault(); };
-    const off = () => { hold = false; btn.classList.remove('on'); };
+    const on = e => { hold = true; btn.classList.add('on'); if (e && e.cancelable) e.preventDefault(); if (reduce) { ep = 1; draw(); } };
+    const off = () => { hold = false; btn.classList.remove('on'); if (reduce) { ep = 0; draw(); } };
     btn.addEventListener('pointerdown', on); cv.addEventListener('pointerdown', on);
     addEventListener('pointerup', off); addEventListener('pointercancel', off); addEventListener('blur', off);
     btn.addEventListener('contextmenu', e => e.preventDefault()); cv.addEventListener('contextmenu', e => e.preventDefault());
     btn.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); if (!e.repeat) on(); } });
     btn.addEventListener('keyup', off);
-    if (reduce) { cv.remove(); btn.remove(); cap.classList.add('on'); return; }   // still photo for people who prefer less motion
     new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(cv);
-    if (img.complete && img.naturalWidth) setup(); else img.addEventListener('load', setup);
-    addEventListener('resize', size);
-    requestAnimationFrame(tick);
+    if (img.complete && img.naturalWidth) build(); else img.addEventListener('load', build);
+    addEventListener('resize', build);
+    if (reduce) { ep = 1; img.addEventListener('load', draw); } else requestAnimationFrame(tick);
   })();
   const navEl = document.querySelector('nav'); let lastY = scrollY;
   addEventListener('scroll', () => { const y = scrollY; if (Math.abs(y - lastY) > 6) { navEl.classList.toggle('away', y > lastY && y > 140); lastY = y; } }, { passive: true });
