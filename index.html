@@ -987,12 +987,12 @@
       }
       D.sort((p, q) => p.k - q.k);                                       // later layers sit on top
       // loose fibers, scattered at random over the whole stage, each headed for one dab
-      F = []; const nf = small ? 380 : 700;
+      F = []; const nf = small ? 1100 : 2200;
       for (let n = 0; n < nf; n++) {
         const tg = D[(Math.random() * D.length) | 0] || { x: W / 2, y: H / 2, k: .5 };
         F.push({ x0: Math.random() * W, y0: Math.random() * H, tx: tg.x + (Math.random() - .5) * 8, ty: tg.y + (Math.random() - .5) * 8, k: tg.k,
           a0: Math.random() * 6.283, sp: (Math.random() - .5) * .5, ph: Math.random() * 6.283, dr: .5 + Math.random(),
-          bow: (Math.random() - .5) * .6, L: 7 + Math.random() * 12, bend: (Math.random() - .5) * 1.2 });
+          bow: (Math.random() - .5) * .6, L: 6 + Math.random() * 11, bend: (Math.random() - .5) * 1.2 });
       }
       draw();
     }
@@ -1000,7 +1000,7 @@
       if (!box) return;
       c.setTransform(DPR, 0, 0, DPR, 0, 0); c.clearRect(0, 0, W, H);   // no box of its own: it sits straight on the page
       // one continuous change, every part overlapping the next
-      const gather = 1 - Math.pow(1 - ep, 2.2), build = sm(.04, .62, ep), sand = sm(.38, .86, ep), color = sm(.58, 1, ep), loose = 1 - sm(.12, .62, ep);
+      const gather = 1 - Math.pow(1 - cl(ep / .5), 2), build = sm(.1, .5, ep), sand = sm(.42, .66, ep), color = sm(.58, .95, ep), loose = 1 - sm(.2, .5, ep);
       // 1. wet pulp builds up in layers; as it is sanded the hairs blur away into one surface
       if (sand < 1 && build > 0) {
         const sc = 1 - sm(0, .8, sand) * .75;                                        // sanding = drawing at lower detail, then smoothing it back up
@@ -1024,9 +1024,9 @@
       if (color > 0) { c.globalAlpha = color; c.drawImage(colorL, box.x, box.y, box.s, box.s); c.globalAlpha = 1; }
       // loose fibers drift on their own curved paths and sink into the pulp
       if (loose > 0) {
-        c.lineCap = 'round'; c.strokeStyle = '#ecebe6'; c.lineWidth = .9; c.globalAlpha = .62 * loose; c.beginPath();
+        c.lineCap = 'round'; c.strokeStyle = '#ecebe6'; c.lineWidth = .8; c.globalAlpha = .5 * loose; c.beginPath();
         for (const f of F) {
-          const u = cl((gather - f.k * .2) / .8), e = u * u * (3 - 2 * u);
+          const u = cl((gather - f.k * .35) / .65), e = u * u * (3 - 2 * u);
           const wx = Math.sin(t * .3 * f.dr + f.ph) * 18, wy = Math.cos(t * .23 * f.dr + f.ph * 1.7) * 15;
           const sx = f.x0 + wx, sy = f.y0 + wy, ex = f.tx - sx, ey = f.ty - sy, b = Math.sin(Math.PI * e) * f.bow;
           const x = sx + ex * e - ey * b, y = sy + ey * e + ex * b;
@@ -1035,9 +1035,9 @@
         }
         c.stroke(); c.globalAlpha = 1;
       }
-      const marks = [[0, .25], [.25, .55], [.55, .78], [.78, 1]];
+      const marks = [[0, .3], [.3, .48], [.48, .64], [.64, 1]];
       marks.forEach(([a, b], i) => { const f = cl((ep - a) / (b - a)); bars[i].style.transform = `scaleX(${f.toFixed(3)})`; steps[i].classList.toggle('on', ep >= a + .001 || (i === 0)); });
-      { const cur = ep < .25 ? 0 : ep < .55 ? 1 : ep < .78 ? 2 : 3; steps.forEach((li, i) => li.classList.toggle('cur', i === cur)); }   // only the current step's line shows
+      { const cur = ep < .3 ? 0 : ep < .48 ? 1 : ep < .64 ? 2 : 3; steps.forEach((li, i) => li.classList.toggle('cur', i === cur)); }   // only the current step's line shows
       cap.classList.toggle('on', ep > .99);
     }
     function tick(now) {
