@@ -20,7 +20,7 @@
     const p = c.createPattern(g, 'repeat'); grains.set(c, p); return p;
   }
   // half outline (right side), x along the body in units of L, y in units of the half span S
-  const SLIM = [[.48, 0], [.46, .3], [.14, .7], [-.16, 1], [-.28, .66], [-.48, .2], [-.64, .05]];
+  const SLIM = [[.48, 0], [.46, .3], [.08, .99], [-.16, 1], [-.38, 1.01], [-.48, .2], [-.64, .05]];   // control points sit level with the wing tip, so it rounds off instead of coming to a point
   const FAT = [[.6, 0], [.62, .5], [.32, 1], [-.12, 1], [-.44, .98], [-.58, .44], [-.64, .08]];
   const lerp = (a, b, t) => a + (b - a) * t;
 

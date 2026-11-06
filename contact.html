@@ -132,7 +132,7 @@
   let W, H;
   const size = () => { W = innerWidth; H = innerHeight; cv.width = W * DPR; cv.height = H * DPR; };
   size(); addEventListener('resize', size);
-  const rays = [{ x: -200, y: H * .22, h: .08, L: W > 700 ? 60 : 36, v: .3, ph: 0, col: PaperRay.COLORS.contact[0] }, { x: W * .6, y: H * .8, h: 3.1, L: W > 700 ? 46 : 28, v: .24, ph: 2, col: PaperRay.COLORS.contact[1] }];
+  const rays = [{ x: -200, y: H * .22, h: .08, L: W > 700 ? 72 : 44, v: .3, ph: 0, col: PaperRay.COLORS.contact[0] }, { x: W * .6, y: H * .8, h: 3.1, L: W > 700 ? 56 : 34, v: .24, ph: 2, col: PaperRay.COLORS.contact[1] }];
   let t = 0;
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   /* the food box: drag a pinch out and feed the rays */
