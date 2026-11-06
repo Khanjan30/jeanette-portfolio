@@ -24,7 +24,9 @@
     --sans:"Inter", system-ui, sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html.lenis,html.lenis body{height:auto}
+  .lenis.lenis-smooth{scroll-behavior:auto!important}
+  .lenis.lenis-stopped{overflow:hidden}
   body{
     background:var(--paper);
     color:var(--ink);
@@ -155,7 +157,7 @@
   .ev-hold.on{background:#aab4ff;color:#131313;border-color:#aab4ff}
 
   /* fit to one screen: text on the left, the stage on the right, both visible together */
-  html{scroll-snap-type:y proximity}
+  html.native-snap{scroll-snap-type:y proximity}   /* only when smooth scrolling is off */
   .scene{height:100vh;height:100svh;min-height:540px;scroll-snap-align:start;display:grid;grid-template-columns:minmax(300px,.42fr) 1fr;gap:clamp(24px,4vw,64px);align-items:center;padding:clamp(28px,5vh,56px) clamp(20px,4vw,56px)}
   .scene-text{display:flex;flex-direction:column;justify-content:center;min-height:0}
   .scene .label{margin-bottom:clamp(14px,3vh,28px)}
@@ -408,6 +410,8 @@
   <a href="#top" style="text-decoration:none;cursor:none">Back to top ↑</a>
 </footer>
 
+<script src="lenis.min.js"></script>
+<script src="smooth.js"></script>
 <script src="rays.js"></script>
 <script src="feed.js"></script>
 <script>
