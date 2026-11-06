@@ -154,6 +154,40 @@
   .ev-hold:hover{border-color:#aab4ff}
   .ev-hold.on{background:#aab4ff;color:#131313;border-color:#aab4ff}
 
+  /* fit to one screen: text on the left, the stage on the right, both visible together */
+  html{scroll-snap-type:y proximity}
+  .scene{height:100vh;height:100svh;min-height:540px;scroll-snap-align:start;display:grid;grid-template-columns:minmax(300px,.42fr) 1fr;gap:clamp(24px,4vw,64px);align-items:center;padding:clamp(28px,5vh,56px) clamp(20px,4vw,56px)}
+  .scene-text{display:flex;flex-direction:column;justify-content:center;min-height:0}
+  .scene .label{margin-bottom:clamp(14px,3vh,28px)}
+  .scene h2{font-family:var(--serif);font-weight:300;font-size:clamp(30px,min(3.5vw,6.6vh),64px);line-height:1;letter-spacing:-.025em}
+  .scene h2 i{color:#aab4ff;font-weight:200}
+  .scene .meaning{margin-top:clamp(12px,2.4vh,22px);font-family:var(--serif);font-weight:300;font-size:clamp(15px,min(1.35vw,2.5vh),20px);line-height:1.4;color:rgba(242,241,236,.82);max-width:400px}
+  .sc-steps{list-style:none;margin-top:clamp(16px,3.4vh,34px);display:grid;gap:clamp(8px,1.6vh,14px);max-width:400px}
+  .sc-steps li{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(242,241,236,.36);transition:color .5s}
+  .sc-steps li i{display:block;height:2px;margin-bottom:8px;background:rgba(242,241,236,.14);overflow:hidden}
+  .sc-steps li i b{display:block;height:100%;background:#aab4ff;transform-origin:left;transform:scaleX(0)}
+  .sc-steps li em{font-style:normal}
+  .sc-steps li.on{color:#f2f1ec}
+  .sc-steps li span{display:block;max-height:0;opacity:0;overflow:hidden;letter-spacing:.01em;text-transform:none;font-size:14px;line-height:1.4;color:rgba(242,241,236,.72);transition:max-height .5s,opacity .5s,margin .5s}
+  .sc-steps li.cur span{max-height:60px;opacity:1;margin-top:6px}
+  .scene .hold,.scene .ev-hold{margin:clamp(18px,3.6vh,34px) 0 0;align-self:flex-start}
+  .scene-stage{height:100%;min-height:0;border-radius:4px;overflow:hidden;position:relative;background:#1c1c1c}
+  .scene #moat,.scene #evCanvas{width:100%;height:100%;min-height:0}
+  .evolve.scene .ev-stage{background:#161616}
+  @media (max-width:860px){
+    .scene{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;gap:16px;padding:58px 18px 18px;min-height:0}
+    .scene-stage{order:-1}
+    .scene .label{margin-bottom:8px}
+    .scene h2{font-size:clamp(24px,7vw,34px)}
+    .scene .meaning{display:none}
+    .sc-steps{margin-top:12px;grid-template-columns:repeat(var(--n,3),1fr);gap:8px}
+    .sc-steps li{font-size:9px;letter-spacing:.14em}
+    .sc-steps li span{position:absolute;left:18px;right:18px}
+    .sc-steps{position:relative;padding-bottom:44px}
+    .sc-steps li:not(.cur) span{transition:none}
+    .scene .hold,.scene .ev-hold{margin-top:6px;align-self:stretch}
+  }
+
   /* work */
   .work{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(30px,6vw,100px);align-items:center}
   @media (max-width:860px){.work{grid-template-columns:1fr}}
@@ -271,50 +305,43 @@
   <h2 id="statementText">She works with the most common materials in the world. Paper. Found things. Whatever is within reach. The material is never the point. The *vision* is. With *intention* and *skill*, ordinary matter becomes a *place* you can walk into.</h2>
 </section>
 
-<section class="moat" id="difference">
-  <div class="moat-head">
-    <div>
-      <div class="label"><em>02</em> The difference</div>
-      <h2>Everyone has the scraps.<br><i>Only she sees the picture.</i></h2>
-    </div>
-    <div class="moat-side reveal">
-      <p class="meaning">Her sculptures hold still the instant a person decides to change. Not a picture of that moment, but the moment itself, suspended so you can step inside.</p>
-      <p class="made">It starts with paper. Over three years she developed her own fiber-based medium, light enough to hang large forms on invisible strings.</p>
-      <p>Here, scraps of old newspaper. Press and hold to add the one thing nobody else has.</p>
-      <div class="meter"><span>Material</span><div class="bar"><i class="full"></i></div><b>Everyone</b></div>
-      <div class="meter"><span>Vision</span><div class="bar"><i id="visionBar"></i></div><b>Hers alone</b></div>
-    </div>
+<section class="moat scene" id="difference">
+  <div class="scene-text">
+    <div class="label"><em>02</em> The difference</div>
+    <h2>Everyone has the scraps.<br><i>Only she sees the picture.</i></h2>
+    <p class="meaning">Her sculptures hold still the instant a person decides to change. Not a picture of that moment, but the moment itself.</p>
+    <ol class="sc-steps" id="moatSteps" style="--n:3">
+      <li class="on cur"><i><b></b></i><em>Scraps</em><span>Old newspaper. Anyone could pick it up.</span></li>
+      <li><i><b></b></i><em>Vision</em><span>Her eye gathers the pieces.</span></li>
+      <li><i><b></b></i><em>Her figure</em><span>Same scraps. Her sculpture.</span></li>
+    </ol>
+    <button class="hold" id="holdBtn" type="button">Hold to see what she sees</button>
+    <span id="visionBar" hidden></span>
   </div>
-  <div class="moat-stage">
+  <div class="moat-stage scene-stage">
     <canvas id="moat" aria-label="A pile of newspaper scraps that assembles into Jeanette Janvier's floating newspaper figure sculpture when you press and hold"></canvas>
     <div class="moat-cap" id="moatCap">Same scraps. Her sculpture.</div>
   </div>
-  <button class="hold" id="holdBtn" type="button">Hold to see what she sees</button>
 </section>
 
-<section class="evolve" id="evolve">
-  <div class="ev-head">
-    <div>
-      <div class="label"><em>03</em> The material</div>
-      <h2>Paper had limits.<br><i>So she made her own.</i></h2>
-    </div>
-    <div class="ev-side reveal">
-      <p class="meaning">A wave caught the instant it breaks, with stingrays rising through it. One moment of change, held open.</p>
-      <p>Three years of testing led to a fiber medium of her own: sculpted like clay, strong like wood, light like wax, so large forms can hang on invisible strings.</p>
-    </div>
+<section class="evolve scene" id="evolve">
+  <div class="scene-text">
+    <div class="label"><em>03</em> The material</div>
+    <h2>Paper had limits.<br><i>So she made her own.</i></h2>
+    <p class="meaning">Three years of testing led to her own fiber medium, light enough to hang large forms on invisible strings.</p>
+    <ol class="sc-steps" style="--n:4">
+      <li class="ev-step on cur"><i><b></b></i><em>Raw fiber</em><span>Loose, white, weightless.</span></li>
+      <li class="ev-step"><i><b></b></i><em>Layered</em><span>Wound together, layer on layer.</span></li>
+      <li class="ev-step"><i><b></b></i><em>Sculpted</em><span>Shaped into one form.</span></li>
+      <li class="ev-step"><i><b></b></i><em>Finished</em><span>A wave caught the instant it breaks, stingrays rising through it.</span></li>
+    </ol>
+    <button class="ev-hold" id="evHold" type="button">Hold to build it</button>
   </div>
-  <div class="ev-stage">
+  <div class="ev-stage scene-stage">
     <img id="evImg" src="art/fiber-wave-1179.webp" alt="" hidden>
     <canvas id="evCanvas" aria-label="Loose fibers that wind together into Jeanette Janvier's fiber wave sculpture when you press and hold"></canvas>
     <div class="ev-cap" id="evCap">A wave, held still.</div>
   </div>
-  <div class="ev-steps" aria-hidden="true">
-    <div class="ev-step"><i><b></b></i>Raw fiber<span>Loose, white, weightless.</span></div>
-    <div class="ev-step"><i><b></b></i>Layered<span>Wound together, layer on layer.</span></div>
-    <div class="ev-step"><i><b></b></i>Sculpted<span>Shaped into one form.</span></div>
-    <div class="ev-step"><i><b></b></i>Finished<span>Sanded, painted, suspended.</span></div>
-  </div>
-  <button class="ev-hold" id="evHold" type="button">Hold to build it</button>
 </section>
 
 <section class="work" id="work">
@@ -623,7 +650,7 @@
 
   /* ---------- the difference: newspaper scraps -> her floating figure ---------- */
   const mc = document.getElementById('moat'), mg = mc.getContext('2d');
-  const holdBtn = document.getElementById('holdBtn'), visionBar = document.getElementById('visionBar'), moatCap = document.getElementById('moatCap');
+  const holdBtn = document.getElementById('holdBtn'), visionBar = document.getElementById('visionBar'), moatCap = document.getElementById('moatCap'), moatSteps = [...document.querySelectorAll('#moatSteps li')];
   let MW, MH, pieces = [], mp = 0, holding = false, moatVisible = false, mtime = 0, floorY = 0;
   const NEWS = [[228,226,218],[214,212,203],[240,238,231],[201,199,191],[222,220,212]];
   const FLECK = [[42,59,209],[128,64,204],[242,194,48],[46,150,170]];
@@ -814,6 +841,8 @@
     mtime += dt;
     mp = Math.max(0, Math.min(1, mp + (holding ? dt * .5 : -dt * .7)));
     visionBar.style.transform = `scaleX(${mp})`;
+    { const R = [[0, .2], [.2, .78], [.78, 1]], cur = mp < .2 ? 0 : mp < .78 ? 1 : 2;   // the step text follows the scraps
+      moatSteps.forEach((li, i) => { li.querySelector('b').style.transform = `scaleX(${Math.min(1, Math.max(0, (mp - R[i][0]) / (R[i][1] - R[i][0]))).toFixed(3)})`; li.classList.toggle('on', i <= cur); li.classList.toggle('cur', i === cur); }); }
     moatCap.classList.toggle('on', mp > .97);
     mg.setTransform(DPR, 0, 0, DPR, 0, 0);
     mg.fillStyle = '#2b2a28'; mg.fillRect(0, 0, MW, floorY);
@@ -948,6 +977,7 @@
       }
       const marks = [[0, .25], [.25, .5], [.5, .76], [.76, 1]];
       marks.forEach(([a, b], i) => { const f = Math.min(1, Math.max(0, (ep - a) / (b - a))); bars[i].style.transform = `scaleX(${f.toFixed(3)})`; steps[i].classList.toggle('on', ep >= a + .001 || (i === 0)); });
+      { const cur = ep < .25 ? 0 : ep < .5 ? 1 : ep < .76 ? 2 : 3; steps.forEach((li, i) => li.classList.toggle('cur', i === cur)); }   // only the current step's line shows
       cap.classList.toggle('on', ep > .99);
     }
     function tick(now) {
