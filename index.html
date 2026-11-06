@@ -333,7 +333,7 @@
       <li class="ev-step on cur"><i><b></b></i><em>Raw fiber</em><span>Short fibers, loose and white.</span></li>
       <li class="ev-step"><i><b></b></i><em>Layered</em><span>Pressed on in soft, wet layers.</span></li>
       <li class="ev-step"><i><b></b></i><em>Sanded</em><span>Smoothed into one surface.</span></li>
-      <li class="ev-step"><i><b></b></i><em>Finished</em><span>Color comes last. A wave caught as it breaks.</span></li>
+      <li class="ev-step"><i><b></b></i><em>Finished</em><span>Color soaks in last. A wave caught as it breaks.</span></li>
     </ol>
     <button class="ev-hold" id="evHold" type="button">Hold to build it</button>
   </div>
@@ -903,46 +903,46 @@
   }
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  /* ---------- the material: loose fiber becomes wet pulp, is sanded smooth, then color washes in ---------- */
+  /* ---------- the material: loose fiber lands, builds up as pulp, is sanded, then color soaks in ---------- */
   (function material() {
     const img = document.getElementById('evImg'), cv = document.getElementById('evCanvas'), btn = document.getElementById('evHold'), cap = document.getElementById('evCap');
     const steps = [...document.querySelectorAll('#evolve .ev-step')], bars = steps.map(s => s.querySelector('b'));
     const c = cv.getContext('2d'); let W = 0, H = 0, F = [], D = [], ep = 0, hold = false, vis = false, t = 0, last = performance.now(), box = null;
-    let grayL = null, colorL = null, pulpL = null, px = null, SPR = null;
-    const CX = .506, CY = .487, M = 180;                                // centre of the wave's ring in the photo; mask grid size
+    let grayL = null, colorL = null, maskL = null, mx = null, roughL = null, rx = null, layL = null, lx = null, washL = null, wx = null, HAIR = null, SOFT = null, MS = .5;
+    const CX = .506, CY = .487, M = 180;
     const sm = (a, b, x) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
     const cl = x => Math.min(1, Math.max(0, x));
-    const mk = (w, h) => { const o = document.createElement('canvas'); o.width = w; o.height = h; return o; };
-    // one dab of wet pulp: a soft lump made of many short hairs, with a wet sheen on top
-    function dabSprite(level) {
-      const w = 128, h = 68, o = mk(w, h), x = o.getContext('2d'), g = Math.round(255 * level);
-      const base = x.createRadialGradient(w / 2, h / 2, 2, w / 2, h / 2, w / 2);
-      base.addColorStop(0, `rgba(${g},${g},${g - 4},.8)`); base.addColorStop(.5, `rgba(${g},${g},${g - 4},.4)`); base.addColorStop(1, `rgba(${g},${g},${g - 4},0)`);
-      x.save(); x.translate(w / 2, h / 2); x.scale(1, h / w); x.translate(-w / 2, -w / 2); x.fillStyle = base; x.fillRect(0, 0, w, w); x.restore();
-      x.lineCap = 'round';
-      for (let n = 0; n < 150; n++) {                                  // the hairs stick out past the edge, so it reads as fiber, not paint
-        const a = Math.random() * 6.283, rr = Math.sqrt(Math.random()), cx = w / 2 + Math.cos(a) * rr * w * .44, cy = h / 2 + Math.sin(a) * rr * h * .44;
-        const ang = Math.random() * 6.283, L = 6 + Math.random() * 12, k = Math.round(g * (.82 + Math.random() * .2));
-        x.strokeStyle = `rgba(${k},${k},${k - 3},${(.35 + Math.random() * .5) * (1 - rr * .4)})`; x.lineWidth = .6 + Math.random() * .8;
-        x.beginPath(); x.moveTo(cx - Math.cos(ang) * L / 2, cy - Math.sin(ang) * L / 2);
-        x.quadraticCurveTo(cx + (Math.random() - .5) * 6, cy + (Math.random() - .5) * 6, cx + Math.cos(ang) * L / 2, cy + Math.sin(ang) * L / 2); x.stroke();
+    const mk = (w, h) => { const o = document.createElement('canvas'); o.width = Math.max(1, w); o.height = Math.max(1, h); return o; };
+    // a clump of wet fiber: dense in the middle, hairs sticking out at the edge
+    function hairSprite() {
+      const w = 128, h = 68, o = mk(w, h), x = o.getContext('2d');
+      const base = x.createRadialGradient(w / 2, w / 2, 2, w / 2, w / 2, w / 2);
+      base.addColorStop(0, 'rgba(255,255,255,.95)'); base.addColorStop(.45, 'rgba(255,255,255,.6)'); base.addColorStop(1, 'rgba(255,255,255,0)');
+      x.save(); x.translate(0, h / 2); x.scale(1, h / w); x.translate(0, -w / 2); x.fillStyle = base; x.fillRect(0, 0, w, w); x.restore();
+      x.lineCap = 'round'; x.strokeStyle = '#fff';
+      for (let n = 0; n < 170; n++) {
+        const a = Math.random() * 6.283, rr = Math.sqrt(Math.random()), px = w / 2 + Math.cos(a) * rr * w * .46, py = h / 2 + Math.sin(a) * rr * h * .46;
+        const ang = Math.random() * 6.283, L = 6 + Math.random() * 13;
+        x.globalAlpha = (.35 + Math.random() * .5) * (1 - rr * .35); x.lineWidth = .6 + Math.random() * .9;
+        x.beginPath(); x.moveTo(px - Math.cos(ang) * L / 2, py - Math.sin(ang) * L / 2);
+        x.quadraticCurveTo(px + (Math.random() - .5) * 7, py + (Math.random() - .5) * 7, px + Math.cos(ang) * L / 2, py + Math.sin(ang) * L / 2); x.stroke();
       }
-      x.globalCompositeOperation = 'source-atop';                        // round it: lit on top, a little shadow underneath
-      const sd = x.createLinearGradient(0, 0, 0, h); sd.addColorStop(0, 'rgba(255,255,255,.18)'); sd.addColorStop(.55, 'rgba(0,0,0,0)'); sd.addColorStop(1, 'rgba(0,0,0,.38)');
-      x.fillStyle = sd; x.fillRect(0, 0, w, h);
-      const sx = w * (.3 + Math.random() * .3), sy = h * .3, sh = x.createRadialGradient(sx, sy, 1, sx, sy, w * .22);   // a thin wet streak
-      sh.addColorStop(0, 'rgba(255,255,255,.32)'); sh.addColorStop(1, 'rgba(255,255,255,0)');
-      x.save(); x.translate(sx, sy); x.scale(1, .16); x.translate(-sx, -sy); x.fillStyle = sh; x.fillRect(0, 0, w, h); x.restore();
-      x.globalCompositeOperation = 'source-over';
       return o;
+    }
+    // the same clump once sanded: no hairs, just a soft smooth edge
+    function softSprite() {
+      const w = 128, h = 68, o = mk(w, h), x = o.getContext('2d');
+      const g = x.createRadialGradient(w / 2, w / 2, 0, w / 2, w / 2, w / 2);
+      g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.6, 'rgba(255,255,255,.85)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+      x.translate(0, h / 2); x.scale(1, h / w); x.translate(0, -w / 2); x.fillStyle = g; x.fillRect(0, 0, w, w); return o;
     }
     function build() {
       W = cv.offsetWidth; H = cv.offsetHeight; if (!W || !img.naturalWidth) return;
       cv.width = W * DPR; cv.height = H * DPR;
       const side = Math.min(W, H) * 1.02; box = { x: (W - side) / 2, y: (H - side) / 2, s: side };
       const small = W < 700;
-      if (!SPR) SPR = [.5, .6, .7, .8, .9, 1].map(lv => [dabSprite(lv), dabSprite(lv)]);
-      // where the white wave is: bright, colourless pixels around the ring
+      if (!HAIR) { HAIR = [hairSprite(), hairSprite(), hairSprite()]; SOFT = softSprite(); }
+      // where the white wave is in the photo
       const o = mk(M, M), ox = o.getContext('2d'); ox.drawImage(img, 0, 0, M, M);
       const d = ox.getImageData(0, 0, M, M).data; let m = new Float32Array(M * M); const lumA = new Float32Array(M * M);
       for (let j = 0; j < M; j++) for (let i = 0; i < M; i++) {
@@ -950,7 +950,7 @@
         const rad = Math.hypot(i / M - CX, j / M - CY); lumA[j * M + i] = (r + g + b) / 765;
         m[j * M + i] = hi > 135 && (hi - lo) / (hi + 1) < .22 && rad > .15 && rad < .465 ? 1 : 0;
       }
-      for (let pass = 0; pass < 5; pass++) {                             // soften the mask so nothing has a hard edge
+      for (let pass = 0; pass < 5; pass++) {
         const n = new Float32Array(M * M);
         for (let j = 0; j < M; j++) for (let i = 0; i < M; i++) {
           let s = 0, c2 = 0; for (let b = -1; b <= 1; b++) for (let a = -1; a <= 1; a++) { const ii = i + a, jj = j + b; if (ii >= 0 && jj >= 0 && ii < M && jj < M) { s += m[jj * M + ii]; c2++; } }
@@ -959,90 +959,110 @@
         m = n;
       }
       const at = (u, v) => { const i = Math.min(M - 1, Math.max(0, u * M | 0)), j = Math.min(M - 1, Math.max(0, v * M | 0)); return j * M + i; };
-      // the sanded surface: the wave itself, in grey, with feathered edges
+      // the wave from the photo, in white and grey: this is what the pulp is made of
       const R = Math.min(1100, Math.round(side * DPR)); grayL = mk(R, R);
       { const gx = grayL.getContext('2d'); gx.drawImage(img, 0, 0, R, R); const id = gx.getImageData(0, 0, R, R), p = id.data;
         for (let j = 0; j < R; j++) for (let i = 0; i < R; i++) {
           const k = (j * R + i) * 4, fu = i / R * M - .5, fv = j / R * M - .5, i0 = Math.max(0, Math.min(M - 2, fu | 0)), j0 = Math.max(0, Math.min(M - 2, fv | 0)), ax = cl(fu - i0), ay = cl(fv - j0);
           const mv = (m[j0 * M + i0] * (1 - ax) + m[j0 * M + i0 + 1] * ax) * (1 - ay) + (m[(j0 + 1) * M + i0] * (1 - ax) + m[(j0 + 1) * M + i0 + 1] * ax) * ay;
-          const l = (p[k] * .3 + p[k + 1] * .55 + p[k + 2] * .15) * 1.02;
-          p[k] = Math.min(255, l + 2); p[k + 1] = Math.min(255, l + 1); p[k + 2] = Math.min(255, l - 3); p[k + 3] = 255 * sm(.15, .7, mv);
+          const l = Math.min(255, (p[k] * .3 + p[k + 1] * .55 + p[k + 2] * .15) * 1.05 + 6);
+          p[k] = l; p[k + 1] = l; p[k + 2] = Math.max(0, l - 4); p[k + 3] = 255 * sm(.12, .6, mv);
         }
         gx.putImageData(id, 0, 0); }
-      // the finished piece in full colour, fading out in a circle so the frame has no corners
+      // the finished piece in colour, fading out in a circle (no corners)
       colorL = mk(R, R);
       { const x = colorL.getContext('2d'); x.drawImage(img, 0, 0, R, R); x.globalCompositeOperation = 'destination-in';
         const rg = x.createRadialGradient(CX * R, CY * R, R * .36, CX * R, CY * R, R * .52);
         rg.addColorStop(0, 'rgba(0,0,0,1)'); rg.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = rg; x.fillRect(0, 0, R, R); }
-      pulpL = mk(Math.ceil(W * DPR), Math.ceil(H * DPR)); px = pulpL.getContext('2d');
-      // pulp dabs, only where the wave is, each laid along the curl
-      D = []; const want = small ? 620 : 1100; let tries = 0;
+      MS = small ? .6 : .5;                                              // the pulp mask is drawn at lower detail: softer and cheaper
+      maskL = mk(Math.ceil(W * DPR * MS), Math.ceil(H * DPR * MS)); mx = maskL.getContext('2d');
+      roughL = mk(maskL.width, maskL.height); rx = roughL.getContext('2d');
+      layL = mk(Math.ceil(W * DPR), Math.ceil(H * DPR)); lx = layL.getContext('2d');
+      washL = mk(Math.ceil(W * DPR), Math.ceil(H * DPR)); wx = washL.getContext('2d');
+      // clumps of pulp, only on the wave, each laid along the curl. Each has its own landing time.
+      D = []; const want = small ? 650 : 1150; let tries = 0;
       while (D.length < want && tries++ < want * 40) {
-        const u = Math.random(), v = Math.random(), mv = m[at(u, v)]; if (mv < .55 || Math.random() > mv) continue;
-        const dx = u - CX, dy = v - CY, ang = Math.atan2(dy, dx);
-        const sweep = ((ang + Math.PI * 1.5) % 6.283) / 6.283;            // layers travel round the curl, overlapping heavily
+        const u = Math.random(), v = Math.random(), mv = m[at(u, v)]; if (mv < .5 || Math.random() > mv) continue;
+        const ang = Math.atan2(v - CY, u - CX);
         D.push({ x: box.x + u * side, y: box.y + v * side, a: ang + Math.PI / 2 + (Math.random() - .5) * .6,
-          s: side * (.04 + Math.random() * .04), lv: Math.max(0, Math.min(5, Math.round((lumA[at(u, v)] - .45) / .55 * 5))),
-          v: Math.random() < .5 ? 0 : 1, k: sweep * .25 + Math.random() * .75 });
+          s: side * (.035 + Math.random() * .035), h: (Math.random() * 3) | 0, arr: .1 + Math.random() * .3,
+          sw: ((ang + Math.PI * 1.25) % 6.283 + 6.283) % 6.283 / 6.283 });   // where it sits on the curl: the sanding pass travels round in this order
       }
-      D.sort((p, q) => p.k - q.k);                                       // later layers sit on top
-      // loose fibers, scattered at random over the whole stage, each headed for one dab
+      D.sort((p, q) => p.arr - q.arr);
+      // loose fibers all over the stage. Every fiber belongs to a clump and lands just before it starts to grow.
       F = []; const nf = small ? 1100 : 2200;
       for (let n = 0; n < nf; n++) {
-        const tg = D[(Math.random() * D.length) | 0] || { x: W / 2, y: H / 2, k: .5 };
-        F.push({ x0: Math.random() * W, y0: Math.random() * H, tx: tg.x + (Math.random() - .5) * 8, ty: tg.y + (Math.random() - .5) * 8, k: tg.k,
-          a0: Math.random() * 6.283, sp: (Math.random() - .5) * .5, ph: Math.random() * 6.283, dr: .5 + Math.random(),
-          bow: (Math.random() - .5) * .6, L: 6 + Math.random() * 11, bend: (Math.random() - .5) * 1.2 });
+        const tg = D[(Math.random() * D.length) | 0] || { x: W / 2, y: H / 2, arr: .3 };
+        const l = Math.round(160 + 90 * (lumA[at((tg.x - box.x) / side, (tg.y - box.y) / side)] || 1));
+        F.push({ x0: Math.random() * W, y0: Math.random() * H, tx: tg.x + (Math.random() - .5) * 10, ty: tg.y + (Math.random() - .5) * 10,
+          arr: tg.arr + (Math.random() - .5) * .04, a0: Math.random() * 6.283, sp: (Math.random() - .5) * .5, ph: Math.random() * 6.283,
+          dr: .5 + Math.random(), bow: (Math.random() - .5) * .6, L: 6 + Math.random() * 11, bend: (Math.random() - .5) * 1.2 });
       }
       draw();
     }
     function draw() {
       if (!box) return;
-      c.setTransform(DPR, 0, 0, DPR, 0, 0); c.clearRect(0, 0, W, H);   // no box of its own: it sits straight on the page
-      // one continuous change, every part overlapping the next
-      const gather = 1 - Math.pow(1 - cl(ep / .5), 2), build = sm(.1, .5, ep), sand = sm(.42, .66, ep), color = sm(.58, .95, ep), loose = 1 - sm(.2, .5, ep);
-      // 1. wet pulp builds up in layers; as it is sanded the hairs blur away into one surface
-      if (sand < 1 && build > 0) {
-        const sc = 1 - sm(0, .8, sand) * .75;                                        // sanding = drawing at lower detail, then smoothing it back up
-        px.setTransform(1, 0, 0, 1, 0, 0); px.clearRect(0, 0, pulpL.width, pulpL.height);
+      c.setTransform(DPR, 0, 0, DPR, 0, 0); c.clearRect(0, 0, W, H);
+      // four equal quarters, each one already starting inside the one before:
+      // fibers travel and land (0 to .5), pulp builds where they land (.1 to .7), sanding (.5 to .75), colour soaks in (.7 to 1)
+      const sandG = sm(.5, .75, ep), colorG = sm(.7, 1, ep);
+      // 1. the pulp: each clump grows from the spot its fibers landed on, revealing the wave from the photo
+      if (ep > .08 && colorG < 1) {
+        const k = MS * DPR; mx.setTransform(1, 0, 0, 1, 0, 0); mx.clearRect(0, 0, maskL.width, maskL.height); rx.setTransform(1, 0, 0, 1, 0, 0); rx.clearRect(0, 0, roughL.width, roughL.height);
         for (const p of D) {
-          const g = cl((build - p.k * .62) / .38); if (g <= 0) continue;
-          const sz = p.s * (.35 + .65 * Math.sqrt(g)), cs = Math.cos(p.a) * sc * DPR, sn = Math.sin(p.a) * sc * DPR;
-          px.globalAlpha = .55 + .45 * g;
-          px.setTransform(cs, sn, -sn, cs, p.x * sc * DPR, p.y * sc * DPR);
-          px.drawImage(SPR[p.lv][p.v], -sz * 1.1, -sz * .6, sz * 2.2, sz * 1.17);
+          const g = cl((ep - p.arr) / .3); if (g <= 0) continue;
+          const sd = cl((ep - .5 - p.sw * .17) / .08);                   // a sanding pass travels round the curl between .5 and .75
+          const sz = p.s * (.25 + .75 * Math.sqrt(g) + .55 * sd), cs = Math.cos(p.a) * k, sn = Math.sin(p.a) * k;
+          mx.setTransform(cs, sn, -sn, cs, p.x * k, p.y * k);
+          if (sd < 1) { mx.globalAlpha = (.5 + .5 * g) * (1 - sd); mx.drawImage(HAIR[p.h], -sz * 1.1, -sz * .58, sz * 2.2, sz * 1.17);
+            rx.setTransform(cs, sn, -sn, cs, p.x * k, p.y * k); rx.globalAlpha = .16 * g * (1 - sd); rx.drawImage(HAIR[p.h], -sz * .95, -sz * .5, sz * 1.9, sz * 1.0); }   // wet, lumpy and hairy until sanded
+          if (sd > 0) { mx.globalAlpha = sd; mx.drawImage(SOFT, -sz * 1.2, -sz * .64, sz * 2.4, sz * 1.28); }
         }
-        px.setTransform(1, 0, 0, 1, 0, 0); px.globalAlpha = 1;
-        c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.imageSmoothingQuality = 'high';
-        c.globalAlpha = 1 - sm(.55, 1, sand);
-        c.drawImage(pulpL, 0, 0, pulpL.width * sc, pulpL.height * sc, 0, 0, pulpL.width, pulpL.height);
-        c.restore();
+        mx.setTransform(1, 0, 0, 1, 0, 0); mx.globalAlpha = 1; rx.setTransform(1, 0, 0, 1, 0, 0); rx.globalAlpha = 1;
+        // the photo's wave, seen only through the pulp
+        lx.setTransform(1, 0, 0, 1, 0, 0); lx.globalCompositeOperation = 'source-over'; lx.clearRect(0, 0, layL.width, layL.height);
+        lx.drawImage(grayL, box.x * DPR, box.y * DPR, box.s * DPR, box.s * DPR);
+        lx.globalCompositeOperation = 'destination-in'; lx.imageSmoothingQuality = 'high';
+        lx.drawImage(maskL, 0, 0, layL.width, layL.height);
+        // still wet: a pale, glossy film over the fresh pulp that dries off as it is sanded
+        lx.globalCompositeOperation = 'source-atop'; lx.drawImage(roughL, 0, 0, layL.width, layL.height); lx.globalCompositeOperation = 'source-over';
+        c.setTransform(1, 0, 0, 1, 0, 0); c.drawImage(layL, 0, 0); c.setTransform(DPR, 0, 0, DPR, 0, 0);
       }
-      // 2. the sanded surface: smooth, matte, still white
-      if (sand > 0) { c.globalAlpha = sand * (1 - color * .9); c.drawImage(grayL, box.x, box.y, box.s, box.s); c.globalAlpha = 1; }
-      // 3. colour washes in last
-      if (color > 0) { c.globalAlpha = color; c.drawImage(colorL, box.x, box.y, box.s, box.s); c.globalAlpha = 1; }
-      // loose fibers drift on their own curved paths and sink into the pulp
-      if (loose > 0) {
-        c.lineCap = 'round'; c.strokeStyle = '#ecebe6'; c.lineWidth = .8; c.globalAlpha = .5 * loose; c.beginPath();
+      // 2. colour soaks up from the base of the sculpture, like a wash moving through wet paper
+      if (colorG > 0) {
+        const s = box.s * DPR, y0 = (box.y + box.s) * DPR, front = y0 - colorG * s * 1.5;
+        wx.setTransform(1, 0, 0, 1, 0, 0); wx.globalCompositeOperation = 'source-over'; wx.clearRect(0, 0, washL.width, washL.height);
+        wx.drawImage(colorL, box.x * DPR, box.y * DPR, s, s);
+        if (colorG < 1) {
+          const gr = wx.createLinearGradient(0, front - s * .35, 0, front + s * .05);
+          gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,1)');
+          wx.globalCompositeOperation = 'destination-in'; wx.fillStyle = gr; wx.fillRect(0, 0, washL.width, washL.height); wx.globalCompositeOperation = 'source-over';
+        }
+        c.setTransform(1, 0, 0, 1, 0, 0); c.drawImage(washL, 0, 0); c.setTransform(DPR, 0, 0, DPR, 0, 0);
+      }
+      // 3. loose fibers drift on their own curved paths and sink into the spot where their clump grows
+      if (ep < .55) {
+        c.lineCap = 'round'; c.strokeStyle = '#ecebe6'; c.lineWidth = .8; c.beginPath();
+        let any = false;
         for (const f of F) {
-          const u = cl((gather - f.k * .35) / .65), e = u * u * (3 - 2 * u);
-          const wx = Math.sin(t * .3 * f.dr + f.ph) * 18, wy = Math.cos(t * .23 * f.dr + f.ph * 1.7) * 15;
-          const sx = f.x0 + wx, sy = f.y0 + wy, ex = f.tx - sx, ey = f.ty - sy, b = Math.sin(Math.PI * e) * f.bow;
+          const u = cl(ep / f.arr); if (u >= 1) continue; any = true;
+          const e = 1 - Math.pow(1 - u, 1.8);
+          const wxx = Math.sin(t * .3 * f.dr + f.ph) * 18 * (1 - e), wyy = Math.cos(t * .23 * f.dr + f.ph * 1.7) * 15 * (1 - e);
+          const sx = f.x0 + wxx, sy = f.y0 + wyy, ex = f.tx - sx, ey = f.ty - sy, b = Math.sin(Math.PI * e) * f.bow;
           const x = sx + ex * e - ey * b, y = sy + ey * e + ex * b;
-          const a = f.a0 + t * f.sp, h = f.L * (1 - .7 * e) / 2, cs = Math.cos(a) * h, sn = Math.sin(a) * h, bd = f.bend * h;
+          const a = f.a0 + t * f.sp, h = f.L * (1 - .75 * e * e) / 2, cs = Math.cos(a) * h, sn = Math.sin(a) * h, bd = f.bend * h;
           c.moveTo(x - cs, y - sn); c.quadraticCurveTo(x - sn * bd, y + cs * bd, x + cs, y + sn);
         }
-        c.stroke(); c.globalAlpha = 1;
+        c.globalAlpha = .5; if (any) c.stroke(); c.globalAlpha = 1;
       }
-      const marks = [[0, .3], [.3, .48], [.48, .64], [.64, 1]];
+      const marks = [[0, .25], [.25, .5], [.5, .75], [.75, 1]];
       marks.forEach(([a, b], i) => { const f = cl((ep - a) / (b - a)); bars[i].style.transform = `scaleX(${f.toFixed(3)})`; steps[i].classList.toggle('on', ep >= a + .001 || (i === 0)); });
-      { const cur = ep < .3 ? 0 : ep < .48 ? 1 : ep < .64 ? 2 : 3; steps.forEach((li, i) => li.classList.toggle('cur', i === cur)); }   // only the current step's line shows
+      { const cur = Math.min(3, ep * 4 | 0); steps.forEach((li, i) => li.classList.toggle('cur', i === cur)); }   // only the current step's line shows
       cap.classList.toggle('on', ep > .99);
     }
     function tick(now) {
       const dt = Math.min(.05, (now - last) / 1000); last = now; t += dt;
-      ep = Math.max(0, Math.min(1, ep + (hold ? dt * .24 : -dt * .4)));
+      ep = Math.max(0, Math.min(1, ep + (hold ? dt * .2 : -dt * .35)));
       if (vis) draw();
       requestAnimationFrame(tick);
     }
