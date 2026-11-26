@@ -4,8 +4,8 @@ const fs = require('fs'), path = require('path');
 const SITE = 'https://www.jeanettejanvier.com';
 const OUT = 'public';
 fs.mkdirSync(path.join(OUT, 'art'), { recursive: true });
-for (const f of ['index.html', 'contact.html', 'feed.js', 'rays.js', 'lenis.min.js', 'smooth.js']) fs.copyFileSync(f, path.join(OUT, f));
-for (const f of fs.readdirSync('art')) fs.copyFileSync(path.join('art', f), path.join(OUT, 'art', f));   // her own photos, kept in the repository
+for (const f of ['index.html', 'contact.html', 'feed.js', 'rays.js', 'lenis.min.js', 'smooth.js', 'cycle.js']) fs.copyFileSync(f, path.join(OUT, f));
+fs.cpSync('art', path.join(OUT, 'art'), { recursive: true });   // her own photos, kept in the repository (including art/work)
 (async () => {
   const found = new Set();
   const grab = (txt, base) => {

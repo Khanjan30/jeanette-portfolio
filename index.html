@@ -191,38 +191,80 @@
   }
 
   /* work */
-  .work{display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(30px,6vw,100px);align-items:center}
-  @media (max-width:860px){.work{grid-template-columns:1fr}}
-  .frame{position:relative;aspect-ratio:4/5;cursor:none}
-  .frame .sheet{position:absolute;inset:0;background:#fbfaf6;box-shadow:0 30px 60px -30px rgba(20,20,30,.45),0 2px 6px rgba(20,20,30,.12);transform:rotate(-1.4deg) translate(14px,14px);clip-path:var(--torn)}
-  .frame .imgwrap{position:absolute;inset:0;overflow:hidden;clip-path:var(--torn);background:#d9d8d0}
-  .frame img{width:100%;height:118%;object-fit:cover;display:block;transform:translateY(var(--py,0)) scale(1.04);transition:filter 1s, transform .1s linear;filter:saturate(.9) contrast(1.02)}
-  .frame:hover img{filter:saturate(1.05) contrast(1.05)}
-  .frame canvas{position:absolute;inset:0;width:100%;height:100%;display:none}
-  .frame.fallback canvas{display:block}
-  .frame.fallback img{display:none}
-  .pin{position:absolute;top:-10px;left:50%;width:14px;height:14px;border-radius:50%;background:var(--clay);box-shadow:0 4px 8px rgba(0,0,0,.25);z-index:2}
-  .work-text h3{font-family:var(--serif);font-weight:300;font-size:clamp(34px,4vw,60px);line-height:1;letter-spacing:-.02em;margin-bottom:24px}
-  .work-text h3 i{color:var(--clay)}
-  .work-text p{color:var(--ink-soft);max-width:440px;margin-bottom:28px}
-  .meta{border-top:1px solid var(--line)}
-  .meta div{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:13px}
-  .meta div span:first-child{letter-spacing:.2em;text-transform:uppercase;font-size:11px;color:var(--ink-soft)}
 
-  /* immersive second work */
-  .immersive{padding:0;height:240vh;background:var(--ink);color:var(--paper)}
-  .immersive .stick{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
-  .immersive .win{position:absolute;inset:0;clip-path:inset(calc((1 - var(--p,0)) * 22%) calc((1 - var(--p,0)) * 34%) calc((1 - var(--p,0)) * 22%) calc((1 - var(--p,0)) * 34%));will-change:clip-path}
-  .immersive .win img{width:100%;height:100%;object-fit:cover;transform:scale(calc(1.35 - .35 * var(--p,0)));transform-origin:center;filter:brightness(calc(1 - .35 * var(--p,0)))}
-    .immersive .words{position:relative;z-index:2;width:100%;display:flex;justify-content:space-between;align-items:center;padding:0 clamp(20px,4vw,56px);pointer-events:none}
-  .immersive .words span{font-family:var(--serif);font-weight:300;font-size:clamp(44px,9vw,150px);letter-spacing:-.035em;line-height:1;color:#f2f1ec;mix-blend-mode:difference}
-  .immersive .words span:first-child{transform:translateX(calc(var(--p,0) * -6vw))}
-  .immersive .words span:last-child{font-style:italic;font-weight:200;transform:translateX(calc(var(--p,0) * 6vw))}
-  .immersive .cap{position:absolute;left:0;right:0;bottom:clamp(30px,6vh,60px);z-index:2;display:flex;justify-content:space-between;padding:0 clamp(20px,4vw,56px);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(242,241,236,.8);opacity:calc(var(--p,0) * 1.4 - .3)}
-  .immersive .lbl{position:absolute;top:110px;left:clamp(20px,4vw,56px);z-index:2;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(242,241,236,.7);display:flex;gap:14px;align-items:center}
-  .immersive .lbl em{font-style:normal;color:#aab4ff;font-family:var(--serif);font-size:15px;letter-spacing:0}
+  /* ---------- 05 the work: the cycle ---------- */
+  .cycle{padding:0;height:1150vh;background:#131313;color:#f2f1ec}
+  .cy-stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+  .cy-top{position:absolute;z-index:420;top:clamp(78px,11vh,104px);left:clamp(20px,4vw,56px);right:clamp(20px,4vw,56px);display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+  .cy-top .label{margin:0;color:rgba(242,241,236,.6)}
+  .cy-chips{display:flex;gap:6px;flex-wrap:wrap}
+  .cy-chips button{font:500 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:rgba(242,241,236,.55);background:none;border:1px solid rgba(242,241,236,.16);border-radius:40px;padding:9px 14px;cursor:none;transition:color .4s,border-color .4s,background .4s}
+  .cy-chips button:hover,.cy-chips button.on{color:#f2f1ec;border-color:rgba(242,241,236,.6)}
+  .cy-chips .cy-ixbtn{margin-left:10px;background:#f2f1ec;color:#131313;border-color:#f2f1ec}
+  .cy-line{position:absolute;z-index:220;left:clamp(20px,4vw,56px);top:clamp(124px,17vh,160px);max-width:360px;font-family:var(--serif);font-size:clamp(17px,1.6vw,21px);line-height:1.35;color:rgba(242,241,236,.72)}
+  .cy-line b{display:block;font-family:var(--sans);font-weight:500;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#aab4ff;margin-bottom:8px}
+  .cy-word{position:absolute;left:0;right:0;top:48%;text-align:center;font-family:var(--serif);font-weight:200;font-style:italic;font-size:clamp(84px,19vw,330px);letter-spacing:-.045em;line-height:1;color:rgba(242,241,236,.13);white-space:nowrap;pointer-events:none;opacity:0;will-change:transform,opacity}
+  .cy-ring{position:absolute;inset:0;left:50%;top:0;width:0}
+  .cy-card{position:absolute;left:0;top:0;padding:0;border:0;background:#1d1d1c;cursor:none;transform-origin:50% 0%;will-change:transform,opacity;box-shadow:0 30px 60px -28px rgba(0,0,0,.8)}
+  .cy-card img{display:block;width:100%;height:100%;object-fit:cover;filter:brightness(calc(1 - .45 * var(--dim,0)))}
+  .cy-card .cy-str{position:absolute;left:50%;bottom:100%;width:1px;height:120vh;background:linear-gradient(rgba(242,241,236,0),rgba(242,241,236,.28));transform:translateX(-50%);pointer-events:none}
+  .cy-card:focus-visible{outline:2px solid #aab4ff;outline-offset:6px}
+  .cy-cap{position:absolute;z-index:220;left:50%;bottom:clamp(22px,5vh,48px);transform:translateX(-50%);display:flex;align-items:baseline;gap:16px;white-space:nowrap;transition:opacity .2s}
+  .cy-cap .n{font-size:11px;letter-spacing:.22em;color:rgba(242,241,236,.5)}
+  .cy-cap .t{font-family:var(--serif);font-size:clamp(22px,2.4vw,32px);font-weight:300;letter-spacing:-.01em}
+  .cy-cap .m{font-size:12px;color:rgba(242,241,236,.6)}
+  .cy-cap button{font:500 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#f2f1ec;background:none;border:0;border-bottom:1px solid rgba(242,241,236,.4);padding:4px 0;cursor:none}
+  .cy-end{position:absolute;z-index:400;left:0;right:0;bottom:0;padding:0 clamp(20px,4vw,56px) clamp(30px,7vh,70px);background:linear-gradient(rgba(19,19,19,0),rgba(19,19,19,.78) 60%);opacity:0;pointer-events:none;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+  .cy-end p{font-family:var(--serif);font-weight:300;font-size:clamp(44px,7vw,110px);line-height:.95;letter-spacing:-.035em}
+  .cy-end p i{font-weight:200;color:#c9cfff}
+  .cy-end span{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(242,241,236,.7)}
+  @media (max-width:760px){
+    .cy-top{top:64px;flex-direction:column;align-items:flex-start;gap:10px}
+    .cy-chips button{padding:7px 10px;letter-spacing:.14em}
+    .cy-chips .cy-ixbtn{margin-left:0}
+    .cy-line{top:178px;max-width:none;right:20px;font-size:15px}
+    .cy-cap{flex-direction:column;align-items:center;gap:4px;text-align:center;white-space:normal;width:86%}
+    .cy-end{flex-direction:column;align-items:flex-start}
+  }
+  html.cy-locked,html.cy-locked body{overflow:hidden}
 
-  /* themes */
+  /* a quiet page for each work: one piece, lots of space */
+  .wp,.ix{position:fixed;inset:0;z-index:90;overflow-y:auto;overscroll-behavior:contain;background:#efeee9;color:#131313;opacity:0;transform:translateY(18px);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
+  .wp.open,.ix.open{opacity:1;transform:none}
+  .wp-bar{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(20px,4vw,56px);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#5b5b56;background:linear-gradient(#efeee9 60%,rgba(239,238,233,0))}
+  .wp-bar div{display:flex;gap:10px}
+  .wp-bar button{font:500 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#131313;background:none;border:1px solid rgba(19,19,19,.2);border-radius:40px;padding:10px 16px;cursor:none}
+  .wp-bar button:hover{background:#131313;color:#efeee9}
+  .wp-body{padding:0 clamp(20px,4vw,56px) 60px}
+  .wp-hero{margin:clamp(10px,4vh,40px) auto 0;height:min(76vh,calc(86vw / var(--ar)));aspect-ratio:var(--ar);max-width:100%;box-shadow:0 40px 80px -40px rgba(20,20,30,.5)}
+  .wp-hero img,.wp-fig img{width:100%;height:100%;object-fit:cover;display:block;background:#dedcd5}
+  .wp-cap{max-width:560px;margin:clamp(30px,6vh,56px) auto clamp(60px,12vh,120px);text-align:center}
+  .wp-cap h2{font-family:var(--serif);font-weight:300;font-size:clamp(36px,4.6vw,64px);line-height:1;letter-spacing:-.025em}
+  .wp-meta{margin-top:14px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#5b5b56}
+  .wp-line{margin-top:18px;font-family:var(--serif);font-size:clamp(18px,1.7vw,22px);color:#3d3d39}
+  .wp-more{display:flex;flex-direction:column;align-items:center;gap:clamp(60px,14vh,140px)}
+  .wp-fig{height:min(82vh,calc(86vw / var(--ar)));aspect-ratio:var(--ar);max-width:100%;opacity:0;transform:scale(.93);transition:opacity 1s ease,transform 1.2s cubic-bezier(.2,.8,.2,1)}
+  .wp-fig.in{opacity:1;transform:none}
+  .wp-more.table{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:clamp(20px,4vw,50px);padding:clamp(30px,6vh,60px) 0;background:#e3e1da;border-radius:6px}
+  .wp-more.table .wp-fig{height:min(60vh,calc(70vw / var(--ar)));transform:rotate(var(--r)) scale(.93);box-shadow:0 24px 40px -24px rgba(20,20,30,.55)}
+  .wp-more.table .wp-fig.in{transform:rotate(var(--r))}
+  .wp-nav{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:clamp(80px,16vh,160px) auto 0;border-top:1px solid rgba(19,19,19,.14);padding-top:26px}
+  .wp-nav button{text-align:left;background:none;border:0;cursor:none;color:#131313;display:flex;flex-direction:column;gap:8px}
+  .wp-nav button:last-child{text-align:right;align-items:flex-end}
+  .wp-nav span{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#5b5b56}
+  .wp-nav b{font-family:var(--serif);font-weight:300;font-size:clamp(22px,2.6vw,34px);letter-spacing:-.01em}
+  .wp-nav button:hover b{color:var(--clay)}
+  .ix-list{list-style:none;max-width:980px;margin:0 auto;padding:clamp(10px,4vh,40px) clamp(20px,4vw,56px) 100px}
+  .ix-ch{display:flex;gap:16px;align-items:baseline;margin:clamp(30px,6vh,56px) 0 8px;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:#5b5b56}
+  .ix-ch span{font-family:var(--serif);font-size:15px;letter-spacing:0;color:var(--clay)}
+  .ix-list button{width:100%;display:flex;justify-content:space-between;align-items:baseline;gap:20px;background:none;border:0;border-top:1px solid rgba(19,19,19,.12);padding:16px 0;cursor:none;color:#131313;text-align:left}
+  .ix-t{font-family:var(--serif);font-weight:300;font-size:clamp(26px,4vw,52px);letter-spacing:-.02em;line-height:1.05;transition:transform .4s cubic-bezier(.2,.8,.2,1),color .3s}
+  .ix-list button:hover .ix-t{transform:translateX(14px);color:var(--clay)}
+  .ix-y{font-size:12px;letter-spacing:.18em;color:#5b5b56}
+  .ix-peek{position:fixed;left:0;top:0;width:180px;height:220px;object-fit:cover;pointer-events:none;opacity:0;transition:opacity .25s;box-shadow:0 30px 50px -24px rgba(0,0,0,.5);z-index:3}
+  .ix-peek.on{opacity:1}
+  @media (hover:none){.ix-peek{display:none}}
+  @media (prefers-reduced-motion:reduce){.cycle{height:auto}.wp,.ix,.wp-fig{transition:none}}
   .themes{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
   @media (max-width:860px){.themes{grid-template-columns:1fr 1fr}}
   @media (max-width:520px){.themes{grid-template-columns:1fr}}
@@ -346,38 +388,8 @@
   </div>
 </section>
 
-<section class="work" id="work">
-  <div class="frame reveal" id="frame" data-cursor="Look">
-    <div class="sheet"></div>
-    <div class="imgwrap">
-      <img id="workImg" src="https://www.jeanettejanvier.com/uploads/1/4/1/6/141687358/image-5_orig.jpeg" alt="Sculptural work by Jeanette Janvier" referrerpolicy="no-referrer">
-      <canvas id="fallbackArt" aria-hidden="true"></canvas>
-    </div>
-    <div class="pin"></div>
-  </div>
-  <div class="work-text reveal">
-    <div class="label"><em>04</em> Selected work</div>
-    <h3>Held <i>together</i></h3>
-    <p>Nothing here is rare or precious. Simple materials are layered, shaped and set against each other until something delicate refuses to give way.</p>
-    <div class="meta">
-      <div><span>Medium</span><span>Paper, natural elements, mixed media</span></div>
-      <div><span>Practice</span><span>Sculpture · Installation</span></div>
-      <div><span>Theme</span><span>Resilience and change</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="immersive" id="immersive" aria-label="Ordinary, transformed">
-  <div class="stick">
-    <div class="win" id="win"><img id="img2" alt="Installation by Jeanette Janvier: iridescent forms suspended before a painted sky" referrerpolicy="no-referrer"></div>
-    <div class="lbl"><em>05</em> Step inside</div>
-    <div class="words"><span>Ordinary.</span><span>Transformed.</span></div>
-    <div class="cap"><span>Installation view</span><span>Keep scrolling</span></div>
-  </div>
-</section>
-
 <section>
-  <div class="label"><em>06</em> What makes the work</div>
+  <div class="label"><em>04</em> What makes the work</div>
   <div class="themes">
     <div class="theme" style="--c:#2a3bd1"><span class="n">i.</span><h4>Everyday materials</h4><p>Things anyone in the world could pick up. Nothing rare, nothing precious.</p></div>
     <div class="theme" style="--c:#767d48"><span class="n">ii.</span><h4>Vision</h4><p>Seeing a whole world inside what others walk past.</p></div>
@@ -386,9 +398,26 @@
   </div>
 </section>
 
+<section class="cycle" id="work" aria-label="The work: ten pieces in four chapters">
+  <div class="cy-stick">
+    <div class="cy-top">
+      <div class="label"><em>05</em> The work</div>
+      <div class="cy-chips" role="group" aria-label="Chapters">
+        <button type="button" class="cy-chip on">I. Falling</button><button type="button" class="cy-chip">II. Suspended</button><button type="button" class="cy-chip">III. Choosing</button><button type="button" class="cy-chip">IV. Rising</button>
+        <button type="button" class="cy-ixbtn" data-open-index>Index</button>
+      </div>
+    </div>
+    <p class="cy-line" id="cyLine"></p>
+    <div class="cy-word" aria-hidden="true">Falling</div><div class="cy-word" aria-hidden="true">Suspended</div><div class="cy-word" aria-hidden="true">Choosing</div><div class="cy-word" aria-hidden="true">Rising</div>
+    <div class="cy-ring" id="cyRing"></div>
+    <div class="cy-cap" id="cyCap"><span class="n"></span><span class="t"></span><span class="m"></span><button type="button" data-cursor="Open">View work <span>→</span></button></div>
+    <div class="cy-end" id="cyEnd"><p>This is where<br><i>I begin.</i></p><span>Break the Cycle, 2026</span></div>
+  </div>
+</section>
+
 <section class="about" id="about">
   <div class="reveal">
-    <div class="label"><em>07</em> About</div>
+    <div class="label"><em>06</em> About</div>
     <p class="big">Jeanette Janvier builds sculpture and installation from materials anyone could pick up. What she brings is the rare part: a clear <i>vision</i> and the <i>skill</i> to make it real.</p>
   </div>
   <ul class="creds reveal">
@@ -400,7 +429,7 @@
 </section>
 
 <section class="contact" id="contact">
-  <div class="label" style="justify-content:center"><em>08</em> Contact</div>
+  <div class="label" style="justify-content:center"><em>07</em> Contact</div>
   <h2 class="reveal">Let's make<br><i>a space.</i></h2>
   <a class="cta" href="contact.html">Get in touch <span>→</span></a>
 </section>
@@ -410,10 +439,21 @@
   <a href="#top" style="text-decoration:none;cursor:none">Back to top ↑</a>
 </footer>
 
+<div class="wp" id="wp" hidden data-lenis-prevent role="dialog" aria-modal="true" aria-label="Artwork">
+  <header class="wp-bar"><span id="wpCh"></span><div><button type="button" data-open-index>Index</button><button type="button" class="wp-x">Close <span aria-hidden="true">×</span></button></div></header>
+  <div class="wp-body" id="wpBody"></div>
+</div>
+<div class="ix" id="ix" hidden data-lenis-prevent role="dialog" aria-modal="true" aria-label="Index of works">
+  <header class="wp-bar"><span>Index</span><button type="button" class="ix-x">Close <span aria-hidden="true">×</span></button></header>
+  <ol class="ix-list" id="ixList"></ol>
+  <img class="ix-peek" id="ixPeek" alt="">
+</div>
+
 <script src="lenis.min.js"></script>
 <script src="smooth.js"></script>
 <script src="rays.js"></script>
 <script src="feed.js"></script>
+<script src="cycle.js" defer></script>
 <script>
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -443,54 +483,16 @@
   const cur = document.getElementById('cursor'), lab = document.getElementById('cursorLabel');
   let mx = innerWidth / 2, my = innerHeight / 2, cx = mx, cy = my;
   addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; });
-  document.querySelectorAll('[data-cursor], a, input').forEach(el => {
-    el.addEventListener('pointerenter', () => {
-      cur.classList.add('big');
-      if (el.dataset.cursor) { lab.textContent = el.dataset.cursor; lab.classList.add('on'); }
-    });
-    el.addEventListener('pointerleave', () => { cur.classList.remove('big'); lab.classList.remove('on'); });
+  let hoverEl = null;
+  addEventListener('pointerover', e => {
+    const el = e.target.closest && e.target.closest('[data-cursor], a, input, button');
+    if (el === hoverEl) return; hoverEl = el;
+    if (!el) { cur.classList.remove('big'); lab.classList.remove('on'); return; }
+    cur.classList.add('big');
+    if (el.dataset.cursor) { lab.textContent = el.dataset.cursor; lab.classList.add('on'); } else lab.classList.remove('on');
   });
 
   /* ---------- torn edge clip path ---------- */
-  function tornPath(jag = 0.012, steps = 46) {
-    const pts = [];
-    const r = () => (Math.random() * jag * 100).toFixed(2);
-    for (let i = 0; i <= steps; i++) pts.push(`${(i / steps * 100).toFixed(2)}% ${r()}%`);
-    for (let i = 0; i <= steps; i++) pts.push(`${100 - r()}% ${(i / steps * 100).toFixed(2)}%`);
-    for (let i = steps; i >= 0; i--) pts.push(`${(i / steps * 100).toFixed(2)}% ${100 - r()}%`);
-    for (let i = steps; i >= 0; i--) pts.push(`${r()}% ${(i / steps * 100).toFixed(2)}%`);
-    return `polygon(${pts.join(',')})`;
-  }
-  const frame = document.getElementById('frame');
-  frame.style.setProperty('--torn', tornPath());
-
-  /* ---------- image fallback: generative paper piece ---------- */
-  const img = document.getElementById('workImg');
-  function drawFallback() {
-    frame.classList.add('fallback');
-    const c = document.getElementById('fallbackArt'), x = c.getContext('2d');
-    const w = c.width = c.offsetWidth * 2, h = c.height = c.offsetHeight * 2;
-    x.fillStyle = '#e2e1da'; x.fillRect(0, 0, w, h);
-    const cols = ['#fbfaf6', '#ecebe4', '#c9c8bf', '#2a3bd1', '#767d48', '#ffffff'];
-    for (let i = 0; i < 70; i++) {
-      x.save();
-      x.translate(w * (0.2 + Math.random() * 0.6), h * (0.15 + Math.random() * 0.7));
-      x.rotate(Math.random() * 6.28);
-      x.beginPath();
-      const s = 40 + Math.random() * 220, n = 5 + (Math.random() * 5 | 0);
-      for (let k = 0; k < n; k++) {
-        const a = k / n * 6.28, rr = s * (0.5 + Math.random() * 0.5);
-        x.lineTo(Math.cos(a) * rr, Math.sin(a) * rr);
-      }
-      x.closePath();
-      x.shadowColor = 'rgba(20,20,30,.22)'; x.shadowBlur = 18; x.shadowOffsetY = 6;
-      x.fillStyle = cols[i % 9 === 0 ? 3 : i % 13 === 0 ? 4 : (Math.random() * 3 | 0) + (i % 2 ? 0 : 2) % 6];
-      x.globalAlpha = 0.85; x.fill(); x.restore();
-    }
-  }
-  img.addEventListener('error', drawFallback);
-  if (img.complete && img.naturalWidth === 0) drawFallback();
-
   /* ---------- whitewashed newsprint: the page itself is her material ---------- */
   (function newsprint() {
     const W = 720, H = 980, c = document.createElement('canvas'); c.width = W * 2; c.height = H * 2;
@@ -884,26 +886,11 @@
   /* ---------- scroll: reveals, parallax, word lighting ---------- */
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-  const imm = document.getElementById('immersive');
-  const img2 = document.getElementById('img2');
-  const ORIG1 = 'https://www.jeanettejanvier.com/uploads/1/4/1/6/141687358/image-5_orig.jpeg';
-  img2.addEventListener('error', () => { img2.closest('.win').style.background = '#2a3bd1'; img2.remove(); });
-  fetch('/art.json').then(r => r.json()).then(list => {
-    const banner = list.find(a => a.banner) || list.find(a => !/image-5_orig/.test(a.orig));
-    const first = list.find(a => /image-5_orig/.test(a.orig));
-    if (first) img.src = first.src;                    // local copy of the work photo
-    img2.src = banner ? banner.src : ORIG1;            // the installation banner
-  }).catch(() => { img2.src = ORIG1; });
   function onScroll() {
     const r = st.getBoundingClientRect();
     const prog = Math.min(1, Math.max(0, (innerHeight * 0.85 - r.top) / (r.height + innerHeight * 0.35)));
     const lit = Math.floor(prog * words.length * 1.05);
     words.forEach((w, i) => w.classList.toggle('lit', i < lit));
-    const fr = frame.getBoundingClientRect();
-    img.style.setProperty('--py', (-(fr.top / innerHeight) * 40 - 30) + 'px');
-    const ir = imm.getBoundingClientRect();
-    const ip = Math.min(1, Math.max(0, -ir.top / (ir.height - innerHeight)));
-    imm.style.setProperty('--p', ip.toFixed(4));
   }
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
