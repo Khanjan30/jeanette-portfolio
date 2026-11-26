@@ -143,7 +143,14 @@
   .ev-side p.meaning{font-family:var(--serif);font-weight:300;font-size:clamp(19px,1.7vw,24px);line-height:1.35;color:#f2f1ec}
   .ev-stage{position:relative;border-radius:4px;overflow:hidden;background:transparent}
   #evCanvas{display:block;width:100%;height:min(calc(100vh - 230px),max(56vw,min(92vw,520px)),760px);height:min(calc(100svh - 230px),max(56vw,min(92vw,520px)),760px);min-height:300px;touch-action:none;cursor:none;user-select:none;-webkit-user-select:none}
-  .ev-cap{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.4vw,32px);color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.6);opacity:0;transform:translateY(10px);transition:opacity .8s,transform .8s;pointer-events:none}
+  .ev-stage canvas{touch-action:none}
+  .ev-hold[hidden],.ev-again[hidden]{display:none}
+  .ev-hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:11px 18px;border-radius:999px;background:rgba(19,19,19,.72);color:#f2f1ec;font:500 10.5px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;pointer-events:none;transition:opacity .6s;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:evhint 2.6s ease-in-out infinite}
+  .ev-hint.gone{opacity:0;animation:none}
+  @keyframes evhint{0%,100%{transform:translate(-50%,-50%)}50%{transform:translate(-50%,calc(-50% - 6px))}}
+  .ev-again{margin:clamp(18px,3.6vh,34px) 0 0;align-self:flex-start;padding:14px 26px;border-radius:999px;border:1px solid rgba(242,241,236,.3);background:transparent;color:rgba(242,241,236,.8);font:500 11px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;cursor:none}
+  .ev-again:hover{border-color:#aab4ff;color:#f2f1ec}
+  .ev-cap{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-family:var(--serif);font-style:italic;font-size:clamp(17px,1.8vw,24px);color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.6);opacity:0;transform:translateY(10px);transition:opacity .8s,transform .8s;pointer-events:none}
   .ev-cap.on{opacity:1;transform:none}
   .ev-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
   .ev-step{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(242,241,236,.38);transition:color .5s}
@@ -187,7 +194,7 @@
     .sc-steps li span{position:absolute;left:18px;right:18px}
     .sc-steps{position:relative;padding-bottom:44px}
     .sc-steps li:not(.cur) span{transition:none}
-    .scene .hold,.scene .ev-hold{margin-top:6px;align-self:stretch}
+    .scene .hold,.scene .ev-hold,.scene .ev-again{margin-top:6px;align-self:stretch}
   }
 
   /* work */
@@ -373,18 +380,19 @@
     <div class="label"><em>03</em> The material</div>
     <h2>Paper had limits.<br><i>So she made her own.</i></h2>
     <p class="meaning">Three years of testing led to her own fiber medium, light enough to hang large forms on invisible strings.</p>
-    <ol class="sc-steps" style="--n:4">
-      <li class="ev-step on cur"><i><b></b></i><em>Fiber clay</em><span>Soft and sticky, pressed on by hand.</span></li>
-      <li class="ev-step"><i><b></b></i><em>Layered</em><span>Built up, dab on dab.</span></li>
-      <li class="ev-step"><i><b></b></i><em>Smoothed</em><span>Spread flat, like frosting on a cake.</span></li>
-      <li class="ev-step"><i><b></b></i><em>Finished</em><span>The picture comes clear. A wave caught as it breaks.</span></li>
+    <ol class="sc-steps" style="--n:3">
+      <li class="ev-step on cur"><i><b></b></i><em>Raw clay</em><span>Soft, sticky, pressed on by hand.</span></li>
+      <li class="ev-step"><i><b></b></i><em>Smoothed</em><span>Spread flat with a knife, like frosting.</span></li>
+      <li class="ev-step"><i><b></b></i><em>Revealed</em><span>Light enough to hold in one hand.</span></li>
     </ol>
-    <button class="ev-hold" id="evHold" type="button">Hold to build it</button>
+    <button class="ev-hold" id="evHold" type="button">Hold to smooth</button>
+    <button class="ev-again" id="evAgain" type="button" hidden>Smooth it again</button>
   </div>
   <div class="ev-stage scene-stage">
-    <img id="evImg" src="art/fiber-wave-1179.webp" alt="" hidden>
-    <canvas id="evCanvas" aria-label="Loose fibers that wind together into Jeanette Janvier's fiber wave sculpture when you press and hold"></canvas>
-    <div class="ev-cap" id="evCap">A wave, held still.</div>
+    <img id="evImg" src="art/work/what-remains-of-gravity-0.webp" alt="" hidden>
+    <canvas id="evCanvas" data-cursor="Drag" aria-label="Raw fiber clay covers one of Jeanette Janvier's sculptures. Drag across it, or hold the Hold to smooth button, to spread the clay smooth and reveal the piece: What Remains of Gravity, 2026, held in one hand."></canvas>
+    <div class="ev-hint" id="evHint" aria-hidden="true">Drag to smooth the clay</div>
+    <div class="ev-cap" id="evCap">What Remains of Gravity, 2026</div>
   </div>
 </section>
 
@@ -894,200 +902,201 @@
   }
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  /* ---------- the material: sticky fiber clay is pressed on, then spread smooth like frosting until the picture comes through ---------- */
+  /* ---------- the material: you hold the palette knife. Drag to spread the raw fiber clay smooth until her piece comes through ---------- */
   (function material() {
     const img = document.getElementById('evImg'), cv = document.getElementById('evCanvas'), btn = document.getElementById('evHold'), cap = document.getElementById('evCap');
+    const hint = document.getElementById('evHint'), again = document.getElementById('evAgain');
     const steps = [...document.querySelectorAll('#evolve .ev-step')], bars = steps.map(s => s.querySelector('b'));
-    const c = cv.getContext('2d'); let W = 0, H = 0, F = [], FB = [], D = [], ep = 0, hold = false, vis = false, t = 0, last = performance.now(), box = null;
-    let K = [], cM = null, cmx = null, cS = null, csx = null, baked = 0, sharpL = null, shL = null, shx = null, blurL = null, mA = null, ax = null, mB = null, bx = null, lA = null, lax = null, lB = null, lbx = null, HAIR = null, SOFT = null, MS = .5;
-    const CX = .506, CY = .487, M = 180;
-    const sm = (a, b, x) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
-    const cl = x => Math.min(1, Math.max(0, x));
-    const mk = (w, h) => { const o = document.createElement('canvas'); o.width = Math.max(1, w); o.height = Math.max(1, h); return o; };
-    // a dab of sticky fiber clay: a soft, lumpy blob with a few fibers caught in it
-    function claySprite() {
-      const w = 96, o = mk(w, w), x = o.getContext('2d');
-      for (let n = 0; n < 7; n++) {
-        const a = Math.random() * 6.283, rr = Math.random() * w * .16, cx = w / 2 + Math.cos(a) * rr, cy = w / 2 + Math.sin(a) * rr, R0 = w * (.18 + Math.random() * .14);
-        const g = x.createRadialGradient(cx, cy, 0, cx, cy, R0); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.7, 'rgba(255,255,255,.9)'); g.addColorStop(1, 'rgba(255,255,255,0)');
-        x.fillStyle = g; x.fillRect(0, 0, w, w);
-      }
-      x.globalCompositeOperation = 'destination-out'; x.lineCap = 'round';
-      for (let n = 0; n < 26; n++) {                                   // tiny pits and fibers in the surface
-        const px = w * (.2 + Math.random() * .6), py = w * (.2 + Math.random() * .6), ang = Math.random() * 6.283, L = 2 + Math.random() * 5;
-        x.strokeStyle = `rgba(0,0,0,${.15 + Math.random() * .25})`; x.lineWidth = .7; x.beginPath(); x.moveTo(px, py); x.lineTo(px + Math.cos(ang) * L, py + Math.sin(ang) * L); x.stroke();
-      }
-      return o;
+    const c = cv.getContext('2d');
+    let W = 0, H = 0, fr = null, clayL = null, ridgeL = null, rx = null, maskL = null, mx = null, tmp = null, tx = null, probe = null, px = null;
+    let dirty = true, covered = 0, done = false, finishing = false, demoDone = false, vis = false, holding = false, knife = null;
+    const MS = .5, cl = x => Math.min(1, Math.max(0, x));
+    const mk = (w, h) => { const o = document.createElement('canvas'); o.width = Math.max(1, Math.round(w)); o.height = Math.max(1, Math.round(h)); return o; };
+
+    // smooth random noise, used to model the lumpy surface of hand-pressed clay
+    function noiseField(w, h, cell, seed) {
+      const gw = Math.ceil(w / cell) + 2, gh = Math.ceil(h / cell) + 2, g = new Float32Array(gw * gh);
+      let s = seed; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+      for (let i = 0; i < g.length; i++) g[i] = rnd();
+      const out = new Float32Array(w * h);
+      for (let y = 0; y < h; y++) { const fy = y / cell, iy = fy | 0, ty = fy - iy, sy = ty * ty * (3 - 2 * ty);
+        for (let x = 0; x < w; x++) { const fx = x / cell, ix = fx | 0, t = fx - ix, sx = t * t * (3 - 2 * t), k = iy * gw + ix;
+          out[y * w + x] = (g[k] * (1 - sx) + g[k + 1] * sx) * (1 - sy) + (g[k + gw] * (1 - sx) + g[k + gw + 1] * sx) * sy; } }
+      return out;
     }
-    // light and shadow for the same dab, so the pile reads as soft, thick lumps
-    function shadeOf(spr) {
-      const w = spr.width, o = mk(w, w), x = o.getContext('2d'); x.drawImage(spr, 0, 0);
-      x.globalCompositeOperation = 'source-in';
-      const g = x.createLinearGradient(w * .2, w * .15, w * .8, w * .9);
-      g.addColorStop(0, 'rgba(255,255,255,.55)'); g.addColorStop(.45, 'rgba(255,255,255,0)'); g.addColorStop(.6, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(30,26,20,.55)');
-      x.fillStyle = g; x.fillRect(0, 0, w, w); return o;
+    // the raw clay: pale, matte, lumpy where it was pressed on by hand, with short fibers caught in it, lit from the top left
+    function makeClay(w, h) {
+      const s = Math.min(1, 700 / Math.max(w, h)), cw = Math.round(w * s), ch = Math.round(h * s);
+      const hgt = new Float32Array(cw * ch);
+      [[cw / 9, .55, 11], [cw / 22, .3, 23], [cw / 60, .12, 37], [3, .05, 41]].forEach(([cell, amp, seed]) => { const n = noiseField(cw, ch, Math.max(2, cell), seed); for (let i = 0; i < hgt.length; i++) hgt[i] += n[i] * amp; });
+      for (let n = 0; n < 70; n++) {                                       // dabs pressed on with the fingers
+        const bx = Math.random() * cw, by = Math.random() * ch, r = cw * (.05 + Math.random() * .09), r2 = r * r;
+        for (let y = Math.max(0, by - r | 0); y < Math.min(ch, by + r); y++) for (let x = Math.max(0, bx - r | 0); x < Math.min(cw, bx + r); x++) {
+          const d = ((x - bx) ** 2 + (y - by) ** 2) / r2; if (d < 1) hgt[y * cw + x] += .32 * (1 - d) * (1 - d); }
+      }
+      // a faint hint of the piece underneath shows through the clay
+      const hintC = mk(cw / 10, ch / 10), hx = hintC.getContext('2d'); hx.drawImage(img, 0, 0, hintC.width, hintC.height);
+      const big = mk(cw, ch), bgx = big.getContext('2d'); bgx.imageSmoothingQuality = 'high'; bgx.drawImage(hintC, 0, 0, cw, ch);
+      const hp = bgx.getImageData(0, 0, cw, ch).data;
+      const o = mk(cw, ch), ox = o.getContext('2d'), id = ox.createImageData(cw, ch), p = id.data;
+      for (let y = 0; y < ch; y++) for (let x = 0; x < cw; x++) {
+        const i = y * cw + x, xl = hgt[y * cw + Math.max(0, x - 1)], xr = hgt[y * cw + Math.min(cw - 1, x + 1)], yu = hgt[Math.max(0, y - 1) * cw + x], yd = hgt[Math.min(ch - 1, y + 1) * cw + x];
+        const nx = (xl - xr) * 9, ny = (yu - yd) * 9, len = Math.hypot(nx, ny, 1), lit = (nx * -.55 + ny * -.62 + .56) / len;   // light from the top left
+        const shade = .66 + .5 * lit, k = i * 4, tint = .16;
+        p[k] = Math.min(255, (236 * (1 - tint) + hp[k] * tint) * shade); p[k + 1] = Math.min(255, (231 * (1 - tint) + hp[k + 1] * tint) * shade);
+        p[k + 2] = Math.min(255, (220 * (1 - tint) + hp[k + 2] * tint) * shade); p[k + 3] = 255;
+      }
+      ox.putImageData(id, 0, 0);
+      ox.lineCap = 'round';
+      for (let n = 0; n < cw * ch / 260; n++) {                            // short plant fibers in the surface
+        const x = Math.random() * cw, y = Math.random() * ch, a = Math.random() * 6.28, L = 3 + Math.random() * 8;
+        ox.strokeStyle = Math.random() < .5 ? 'rgba(120,108,90,.16)' : 'rgba(255,255,250,.35)'; ox.lineWidth = .6;
+        ox.beginPath(); ox.moveTo(x, y); ox.quadraticCurveTo(x + Math.cos(a + 1) * L * .4, y + Math.sin(a + 1) * L * .4, x + Math.cos(a) * L, y + Math.sin(a) * L); ox.stroke();
+      }
+      const out = mk(w, h), x2 = out.getContext('2d'); x2.imageSmoothingQuality = 'high'; x2.drawImage(o, 0, 0, w, h); return out;
     }
     function build() {
       W = cv.offsetWidth; H = cv.offsetHeight; if (!W || !img.naturalWidth) return;
       cv.width = W * DPR; cv.height = H * DPR;
-      const side = Math.min(W, H) * 1.02; box = { x: (W - side) / 2, y: (H - side) / 2, s: side };
-      const small = W < 700;
-      if (!HAIR) { HAIR = [claySprite(), claySprite(), claySprite(), claySprite()]; SOFT = HAIR.map(shadeOf); }
-      // what the finished piece is: the white wave, the painting and the stingrays. Not the curtain, wall or floor behind.
-      const o = mk(M, M), ox = o.getContext('2d'); ox.drawImage(img, 0, 0, M, M);
-      const d = ox.getImageData(0, 0, M, M).data; let m = new Float32Array(M * M);
-      for (let j = 0; j < M; j++) for (let i = 0; i < M; i++) {
-        const k = (j * M + i) * 4, r = d[k], g = d[k + 1], b = d[k + 2], hi = Math.max(r, g, b), lo = Math.min(r, g, b), sat = (hi - lo) / (hi + 1);
-        const rad = Math.hypot(i / M - CX, j / M - CY);
-        const wave = hi > 135 && sat < .22 && rad > .15 && rad < .465, wood = r > g && g > b && hi < 175, colour = sat > .3 && hi > 90 && rad < .47 && !wood, inner = rad < .3, painting = i / M > .045 && i / M < .905 && j / M > .165 && j / M < .75 && rad < .48;
-        m[j * M + i] = wave || colour || inner || painting ? 1 : 0;
-      }
-      const morph = (src, grow) => { const n = new Float32Array(M * M);   // grow then shrink: closes small holes
-        for (let j = 0; j < M; j++) for (let i = 0; i < M; i++) { let v = grow ? 0 : 1; for (let b = -1; b <= 1; b++) for (let a = -1; a <= 1; a++) { const q = src[Math.min(M - 1, Math.max(0, j + b)) * M + Math.min(M - 1, Math.max(0, i + a))]; v = grow ? Math.max(v, q) : Math.min(v, q); } n[j * M + i] = v; }
-        return n; };
-      for (let q = 0; q < 3; q++) m = morph(m, true); for (let q = 0; q < 3; q++) m = morph(m, false);
-      for (let pass = 0; pass < 6; pass++) {
-        const n = new Float32Array(M * M);
-        for (let j = 0; j < M; j++) for (let i = 0; i < M; i++) {
-          let s = 0, c2 = 0; for (let b = -1; b <= 1; b++) for (let a = -1; a <= 1; a++) { const ii = i + a, jj = j + b; if (ii >= 0 && jj >= 0 && ii < M && jj < M) { s += m[jj * M + ii]; c2++; } }
-          n[j * M + i] = s / c2;
-        }
-        m = n;
-      }
-      const at = (u, v) => { const i = Math.min(M - 1, Math.max(0, u * M | 0)), j = Math.min(M - 1, Math.max(0, v * M | 0)); return j * M + i; };
-      const R = Math.min(1100, Math.round(side * DPR));
-      const mAt = (i, j) => { const fu = i / R * M - .5, fv = j / R * M - .5, i0 = Math.max(0, Math.min(M - 2, fu | 0)), j0 = Math.max(0, Math.min(M - 2, fv | 0)), a1 = cl(fu - i0), a2 = cl(fv - j0);
-        return (m[j0 * M + i0] * (1 - a1) + m[j0 * M + i0 + 1] * a1) * (1 - a2) + (m[(j0 + 1) * M + i0] * (1 - a1) + m[(j0 + 1) * M + i0 + 1] * a1) * a2; };
-      // a clean frame with softly rounded corners
-      const fr = (i, j) => { const u = i / R, v = j / R, ins = .02, rad = .045, dx = Math.max(ins + rad - u, 0, u - (1 - ins - rad)), dy = Math.max(ins + rad - v, 0, v - (1 - ins - rad));
-        return 1 - sm(rad - .012, rad, Math.hypot(dx, dy)); };
-      const spot = (i, j) => .3 + .7 * (1 - sm(.34, .66, Math.hypot(i / R - CX, (j / R - CY) * 1.08)));   // a soft gallery light, falling off evenly to the corners
-      // the finished piece: the sculpture and painting stay lit, the curtain, wall and floor sink into shadow
-      sharpL = mk(R, R);
-      { const x = sharpL.getContext('2d'); x.drawImage(img, 0, 0, R, R); const id = x.getImageData(0, 0, R, R), p = id.data;
-        for (let j = 0; j < R; j++) for (let i = 0; i < R; i++) { const k = (j * R + i) * 4, lit = spot(i, j);
-          p[k] *= lit; p[k + 1] *= lit; p[k + 2] *= lit; p[k + 3] = 255 * fr(i, j); }
-        x.putImageData(id, 0, 0); }
-      // the same piece as soft, pale, unsanded pulp: blurred and with its colour still muted
-      blurL = mk(R, R);
-      { const sm1 = mk(Math.max(8, R / 14 | 0), Math.max(8, R / 14 | 0)), s1 = sm1.getContext('2d'); s1.drawImage(img, 0, 0, sm1.width, sm1.height);
-        const x = blurL.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(sm1, 0, 0, R, R);
-        const id = x.getImageData(0, 0, R, R), p = id.data;
-        for (let j = 0; j < R; j++) for (let i = 0; i < R; i++) {
-          const k = (j * R + i) * 4, l = p[k] * .3 + p[k + 1] * .55 + p[k + 2] * .15;
-          const lit = spot(i, j);
-          for (let q = 0; q < 3; q++) p[k + q] = Math.min(255, (l + (p[k + q] - l) * .4) * .72 + 62) * lit;   // pale and muted: raw fiber clay, the picture only hinted at
-          p[k + 3] = 255 * fr(i, j);
-        }
-        x.putImageData(id, 0, 0); }
-      MS = Math.min(.5, 420 / Math.max(W, H));                            // masks are soft, so they can be drawn at low detail
-      mA = mk(Math.ceil(W * DPR * MS), Math.ceil(H * DPR * MS)); ax = mA.getContext('2d');
-      mB = mk(mA.width, mA.height); bx = mB.getContext('2d'); shL = mk(mA.width, mA.height); shx = shL.getContext('2d');
-      cM = mk(mA.width, mA.height); cmx = cM.getContext('2d'); cS = mk(mA.width, mA.height); csx = cS.getContext('2d'); baked = 0;
-      lA = mk(mA.width, mA.height); lax = lA.getContext('2d');
-      lB = mk(lA.width, lA.height); lbx = lB.getContext('2d');
-      // dabs of clay, pressed on all over the piece, each at its own moment
-      D = []; const want = small ? 700 : 1100; let tries = 0;
-      while (D.length < want && tries++ < want * 40) {
-        const u = .03 + Math.random() * .94, v = .03 + Math.random() * .94, mv = m[at(u, v)], bg = mv < .5; if (bg && Math.random() > .35) continue;
-        D.push({ x: box.x + u * side, y: box.y + v * side, a: Math.random() * 6.283, s: side * (.045 + Math.random() * .04) * (bg ? 1.4 : 1),
-          h: (Math.random() * 4) | 0, arr: Math.random() < .08 ? -1 : Math.pow(Math.random(), .8) * .46, sq: .7 + Math.random() * .3 });
-      }
-      D.sort((p, q) => p.arr - q.arr);
-      // palette knife swipes: wide, soft strokes that follow the curl of the wave, laid all over until everything is smooth
-      K = []; const G = 4, cells = [];
-      for (let gj = 0; gj < G; gj++) for (let gi = 0; gi < G; gi++) cells.push([gi, gj]);
-      for (let n = 0; n < 6; n++) cells.push([Math.random() * G | 0, Math.random() * G | 0]);
-      for (const [gi, gj] of cells) {
-        const u = (gi + .2 + Math.random() * .6) / G, v = (gj + .2 + Math.random() * .6) / G, ang = Math.atan2(v - CY, u - CX) + Math.PI / 2 + (Math.random() - .5) * .9;
-        const len = side * (.45 + Math.random() * .25), dir = Math.random() < .5 ? 1 : -1, x = box.x + u * side, y = box.y + v * side;
-        const dx = Math.cos(ang) * len / 2 * dir, dy = Math.sin(ang) * len / 2 * dir, bend = (Math.random() - .5) * len * .25;
-        K.push({ x0: x - dx, y0: y - dy, x1: x + dx, y1: y + dy, bx: -dy / len * 2 * bend, by: dx / len * 2 * bend,
-          w: side * (.22 + Math.random() * .08), ts: .44 + Math.random() * .38, dur: .08 + Math.random() * .03 });
-      }
-      K.sort((p, q) => p.ts - q.ts);
-      draw();
+      const ar = img.naturalWidth / img.naturalHeight; let fh = H * .96, fw = fh * ar; if (fw > W * .96) { fw = W * .96; fh = fw / ar; }
+      fr = { x: (W - fw) / 2, y: (H - fh) / 2, w: fw, h: fh, r: 6 };
+      const kept = maskL ? { m: maskL, r: ridgeL, f: { ...prevFr } } : null;
+      clayL = makeClay(fw * DPR, fh * DPR);
+      ridgeL = mk(fw * DPR, fh * DPR); rx = ridgeL.getContext('2d');
+      maskL = mk(fw * DPR * MS, fh * DPR * MS); mx = maskL.getContext('2d');
+      if (kept) { mx.drawImage(kept.m, 0, 0, maskL.width, maskL.height); rx.drawImage(kept.r, 0, 0, ridgeL.width, ridgeL.height); }   // a resize keeps what you smoothed
+      tmp = mk(fw * DPR, fh * DPR); tx = tmp.getContext('2d');
+      probe = mk(48, Math.round(48 / ar)); px = probe.getContext('2d', { willReadFrequently: true });
+      prevFr = { ...fr }; dirty = true; draw();
     }
-    // draws one image seen only through one mask, onto the page
-    function through(lay, lx, mask, src, shade) {
-      const q = lay.width / (W * DPR) * DPR;
-      lx.setTransform(1, 0, 0, 1, 0, 0); lx.globalCompositeOperation = 'source-over'; lx.clearRect(0, 0, lay.width, lay.height);
-      lx.drawImage(src, box.x * q, box.y * q, box.s * q, box.s * q);
-      lx.globalCompositeOperation = 'destination-in'; lx.drawImage(mask, 0, 0, lay.width, lay.height);
-      if (shade) { lx.globalCompositeOperation = 'source-atop'; lx.drawImage(shade, 0, 0, lay.width, lay.height); }
-      lx.globalCompositeOperation = 'source-over';
-      c.setTransform(1, 0, 0, 1, 0, 0); c.drawImage(lay, 0, 0, cv.width, cv.height); c.setTransform(DPR, 0, 0, DPR, 0, 0);
+    let prevFr = null;
+    const blade = () => Math.max(26, fr.w * .16);
+    // one pass of the palette knife from a to b: clears the clay and pushes a soft ridge up along both edges
+    function stroke(ax, ay, bx, by) {
+      const w = blade(), sx = DPR, s2 = DPR * MS;
+      rx.lineCap = mx.lineCap = 'round';
+      rx.setTransform(sx, 0, 0, sx, -fr.x * sx, -fr.y * sx);
+      rx.strokeStyle = 'rgba(80,68,50,.14)'; rx.lineWidth = w * 1.24; rx.beginPath(); rx.moveTo(ax + 1.5, ay + 2.5); rx.lineTo(bx + 1.5, by + 2.5); rx.stroke();
+      rx.strokeStyle = 'rgba(252,249,242,.6)'; rx.lineWidth = w * 1.13; rx.beginPath(); rx.moveTo(ax, ay); rx.lineTo(bx, by); rx.stroke();
+      mx.setTransform(s2, 0, 0, s2, -fr.x * s2, -fr.y * s2); mx.strokeStyle = '#000';
+      mx.globalAlpha = .45; mx.lineWidth = w * 1.06; mx.beginPath(); mx.moveTo(ax, ay); mx.lineTo(bx, by); mx.stroke();
+      mx.globalAlpha = 1; mx.lineWidth = w * .92; mx.beginPath(); mx.moveTo(ax, ay); mx.lineTo(bx, by); mx.stroke();
+      // where the knife passes, the old ridges flatten out too
+      rx.setTransform(sx, 0, 0, sx, -fr.x * sx, -fr.y * sx); rx.globalCompositeOperation = 'destination-out'; rx.lineWidth = w * .9; rx.beginPath(); rx.moveTo(ax, ay); rx.lineTo(bx, by); rx.stroke(); rx.globalCompositeOperation = 'source-over';
+      dirty = true;
     }
-    const easeK = u => u < .5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+    function measure() {
+      px.clearRect(0, 0, probe.width, probe.height); px.drawImage(maskL, 0, 0, probe.width, probe.height);
+      const d = px.getImageData(0, 0, probe.width, probe.height).data; let s = 0;
+      for (let i = 3; i < d.length; i += 4) s += d[i] > 150 ? 1 : 0;
+      covered = s / (d.length / 4);
+      if (covered > .6 && !done && !finishing) finish();
+    }
     function draw() {
-      if (!box) return;
+      if (!fr) return;
       c.setTransform(DPR, 0, 0, DPR, 0, 0); c.clearRect(0, 0, W, H);
-      const k = MS * DPR, ccx = box.x + CX * box.s, ccy = box.y + CY * box.s;
-      // 1. sticky clay: each dab is pressed on with a little squash, and the pile thickens. Dabs that have landed are kept in a saved layer.
-      const landed = p => ep >= p.arr + .07;
-      if (baked > 0 && !landed(D[baked - 1])) { cmx.setTransform(1, 0, 0, 1, 0, 0); cmx.clearRect(0, 0, cM.width, cM.height); csx.setTransform(1, 0, 0, 1, 0, 0); csx.clearRect(0, 0, cS.width, cS.height); baked = 0; }
-      const dab = (x1, x2, p, e) => { const sz = p.s * (1.25 - .25 * e), sy = p.sq * (1.12 - .12 * e), dy = -10 * (1 - e), cs = Math.cos(p.a) * k, sn = Math.sin(p.a) * k;
-        x1.setTransform(cs, sn, -sn * sy, cs * sy, p.x * k, (p.y + dy) * k); x1.globalAlpha = e; x1.drawImage(HAIR[p.h], -sz, -sz, sz * 2, sz * 2);
-        x2.setTransform(cs, sn, -sn * sy, cs * sy, p.x * k, (p.y + dy) * k); x2.globalAlpha = e * .9; x2.drawImage(SOFT[p.h], -sz, -sz, sz * 2, sz * 2); };
-      while (baked < D.length && landed(D[baked])) dab(cmx, csx, D[baked++], 1);
-      cmx.globalAlpha = csx.globalAlpha = 1; cmx.setTransform(1, 0, 0, 1, 0, 0); csx.setTransform(1, 0, 0, 1, 0, 0);
-      ax.setTransform(1, 0, 0, 1, 0, 0); ax.clearRect(0, 0, mA.width, mA.height); shx.setTransform(1, 0, 0, 1, 0, 0); shx.clearRect(0, 0, shL.width, shL.height);
-      let anyA = baked > 0; if (anyA) { ax.drawImage(cM, 0, 0); shx.drawImage(cS, 0, 0); }
-      for (let i = baked; i < D.length; i++) { const p = D[i], g = cl((ep - p.arr) / .07); if (g <= 0) break; dab(ax, shx, p, 1 - Math.pow(1 - g, 3)); anyA = true; }
-      ax.globalAlpha = 1; shx.globalAlpha = 1; ax.setTransform(1, 0, 0, 1, 0, 0); shx.setTransform(1, 0, 0, 1, 0, 0);
-      // 2. the palette knife: each sweep leaves a smooth band where the real picture shows through
-      bx.setTransform(k, 0, 0, k, 0, 0); bx.clearRect(0, 0, W, H); bx.lineCap = 'round'; bx.strokeStyle = '#fff';
-      const knives = []; let anyB = false;
-      const pt = (s, e) => [s.x0 + (s.x1 - s.x0) * e + s.bx * Math.sin(Math.PI * e), s.y0 + (s.y1 - s.y0) * e + s.by * Math.sin(Math.PI * e)];
-      for (const s of K) {
-        const q = cl((ep - s.ts) / s.dur); if (q <= 0) break;
-        const e = easeK(q), [ex, ey] = pt(s, e), [mx2, my2] = pt(s, e / 2);
-        for (const [wm, al] of [[1.2, .35], [1, .6], [.8, 1]]) {           // feathered edges, like the soft border of a frosting stroke
-          bx.globalAlpha = al; bx.lineWidth = s.w * wm; bx.beginPath(); bx.moveTo(s.x0, s.y0); bx.quadraticCurveTo(2 * mx2 - (s.x0 + ex) / 2, 2 * my2 - (s.y0 + ey) / 2, ex, ey); bx.stroke();
-        }
-        bx.globalAlpha = 1; anyB = true;
-        if (q < 1) { const [px, py] = pt(s, Math.max(0, e - .02)); knives.push([s, ex, ey, Math.atan2(ey - py, ex - px)]); }
-      }
-      const fill = sm(.84, 1, ep); if (fill > 0) { bx.globalAlpha = fill; bx.drawImage(sharpL, box.x, box.y, box.s, box.s); bx.globalAlpha = 1; anyB = true; }
-      bx.setTransform(1, 0, 0, 1, 0, 0);
-      // the clay layer goes wherever the knife has not passed yet
-      if (anyA) { if (anyB) { ax.globalCompositeOperation = 'destination-out'; ax.drawImage(mB, 0, 0); shx.globalCompositeOperation = 'destination-out'; shx.drawImage(mB, 0, 0); ax.globalCompositeOperation = shx.globalCompositeOperation = 'source-over'; }
-        through(lA, lax, mA, blurL, shL); }
-      if (anyB) through(lB, lbx, mB, sharpL);
-      // the blade itself, with a little ridge of clay pushed up in front of it
-      if (knives.length) {
-        c.save(); c.beginPath(); c.rect(box.x + box.s * .02, box.y + box.s * .02, box.s * .96, box.s * .96); c.clip(); c.lineCap = 'round';
-        for (const [s, x, y, a] of knives) {
-          const nx = -Math.sin(a) * s.w * .42, ny = Math.cos(a) * s.w * .42, fx = Math.cos(a), fy = Math.sin(a);
-          c.strokeStyle = 'rgba(238,234,226,.32)'; c.lineWidth = 12; c.beginPath(); c.moveTo(x + fx * 6 - nx, y + fy * 6 - ny); c.lineTo(x + fx * 6 + nx, y + fy * 6 + ny); c.stroke();
-          c.strokeStyle = 'rgba(20,18,14,.12)'; c.lineWidth = 3; c.beginPath(); c.moveTo(x - fx * 2 - nx, y - fy * 2 - ny); c.lineTo(x - fx * 2 + nx, y - fy * 2 + ny); c.stroke();
-          c.strokeStyle = 'rgba(255,255,255,.45)'; c.lineWidth = 1.2; c.beginPath(); c.moveTo(x - nx, y - ny); c.lineTo(x + nx, y + ny); c.stroke();
-        }
+      c.save(); c.beginPath(); c.roundRect(fr.x, fr.y, fr.w, fr.h, fr.r); c.clip();
+      c.drawImage(img, fr.x, fr.y, fr.w, fr.h);
+      // the clay layer, with the smoothed paths cut out of it
+      tx.setTransform(1, 0, 0, 1, 0, 0); tx.globalCompositeOperation = 'source-over'; tx.clearRect(0, 0, tmp.width, tmp.height);
+      tx.drawImage(clayL, 0, 0); tx.drawImage(ridgeL, 0, 0);
+      tx.globalCompositeOperation = 'destination-out'; tx.imageSmoothingQuality = 'high'; tx.drawImage(maskL, 0, 0, tmp.width, tmp.height);
+      c.globalAlpha = 1 - (done ? fade : 0); c.drawImage(tmp, fr.x, fr.y, fr.w, fr.h); c.globalAlpha = 1;
+      // a thin wet sheen where the knife just passed
+      c.restore();
+      c.save(); c.shadowColor = 'rgba(0,0,0,.45)'; c.shadowBlur = 40; c.shadowOffsetY = 18; c.globalCompositeOperation = 'destination-over'; c.fillStyle = '#1a1a19';
+      c.beginPath(); c.roundRect(fr.x, fr.y, fr.w, fr.h, fr.r); c.fill(); c.restore();
+      if (knife) {                                                           // the palette knife itself, angled along the stroke
+        const [kx, ky, ka] = knife, L = blade() * .62;
+        c.save(); c.translate(kx, ky); c.rotate(ka + Math.PI / 2);
+        c.fillStyle = 'rgba(214,218,224,.9)'; c.strokeStyle = 'rgba(40,44,52,.5)'; c.lineWidth = 1;
+        c.beginPath(); c.roundRect(-L, -3, L * 2, 6, 3); c.fill(); c.stroke();
+        c.fillStyle = 'rgba(255,255,255,.8)'; c.fillRect(-L + 3, -2, L * 2 - 6, 1);
         c.restore();
       }
-      const marks = [[0, .25], [.25, .5], [.5, .75], [.75, 1]];
-      marks.forEach(([a, b], i) => { const f = cl((ep - a) / (b - a)); bars[i].style.transform = `scaleX(${f.toFixed(3)})`; steps[i].classList.toggle('on', ep >= a + .001 || (i === 0)); });
-      { const cur = Math.min(3, ep * 4 | 0); steps.forEach((li, i) => li.classList.toggle('cur', i === cur)); }
-      cap.classList.toggle('on', ep > .99);
+      const p = done ? 1 : cl(covered / .6);
+      bars[0].style.transform = 'scaleX(1)';
+      bars[1].style.transform = `scaleX(${cl(p / .95).toFixed(3)})`;
+      bars[2].style.transform = `scaleX(${done ? cl(fade) : 0})`;
+      const cur = done ? 2 : covered > .02 ? 1 : 0;
+      steps.forEach((li, i) => { li.classList.toggle('on', i <= cur); li.classList.toggle('cur', i === cur); });
+      dirty = false;
     }
-    function tick(now) {
-      const dt = Math.min(.05, (now - last) / 1000); last = now; t += dt;
-      ep = Math.max(0, Math.min(1, ep + (hold ? dt * .3 : -dt * .5)));
-      if (vis) draw();
-      requestAnimationFrame(tick);
+    // the last stretch smooths itself, like the final long passes of the knife
+    let fade = 0;
+    function finish() {
+      finishing = true; const rows = 7, pass = [];
+      for (let r = 0; r < rows; r++) { const y = fr.y + fr.h * (r + .5) / rows, l = fr.x - 10, rr = fr.x + fr.w + 10; pass.push(r % 2 ? [rr, y, l, y] : [l, y, rr, y]); }
+      let i = 0, t = 0, last = null;
+      const step = () => {
+        if (i >= pass.length) { done = true; finishing = false; knife = null; const t0 = performance.now();
+          const f = now => { fade = cl((now - t0) / 700); dirty = true; if (fade < 1) requestAnimationFrame(f); else { cap.classList.add('on'); again.hidden = false; btn.hidden = true; } }; requestAnimationFrame(f); return; }
+        const [ax, ay, bx, by] = pass[i]; t = Math.min(1, t + .09);
+        const x = ax + (bx - ax) * t, y = ay + (by - ay) * t;
+        if (last) stroke(last[0], last[1], x, y); knife = [x, y, Math.atan2(by - ay, bx - ax)]; last = [x, y];
+        if (t >= 1) { i++; t = 0; last = null; }
+        requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
     }
-    const on = e => { hold = true; btn.classList.add('on'); if (e && e.cancelable) e.preventDefault(); if (reduce) { ep = 1; draw(); } };
-    const off = () => { hold = false; btn.classList.remove('on'); if (reduce) { ep = 0; draw(); } };
-    btn.addEventListener('pointerdown', on); cv.addEventListener('pointerdown', on);
-    addEventListener('pointerup', off); addEventListener('pointercancel', off); addEventListener('blur', off);
-    btn.addEventListener('contextmenu', e => e.preventDefault()); cv.addEventListener('contextmenu', e => e.preventDefault());
+    function reset() {
+      done = false; finishing = false; fade = 0; covered = 0; cap.classList.remove('on'); again.hidden = true; btn.hidden = false;
+      mx.setTransform(1, 0, 0, 1, 0, 0); mx.clearRect(0, 0, maskL.width, maskL.height); rx.setTransform(1, 0, 0, 1, 0, 0); rx.clearRect(0, 0, ridgeL.width, ridgeL.height);
+      dirty = true; hint.classList.remove('gone');
+    }
+    again.addEventListener('click', reset);
+
+    // dragging: your pointer is the knife
+    let down = false, lastP = null, lastMeasure = 0;
+    const local = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+    cv.addEventListener('pointerdown', e => { if (done || finishing) return; down = true; lastP = local(e); cv.setPointerCapture(e.pointerId); hint.classList.add('gone'); e.preventDefault(); });
+    cv.addEventListener('pointermove', e => {
+      const p = local(e);
+      if (!down) { knife = (done || finishing) ? null : [p[0], p[1], knife ? knife[2] : -.6]; dirty = true; return; }
+      const dx = p[0] - lastP[0], dy = p[1] - lastP[1]; if (dx * dx + dy * dy < 4) return;
+      stroke(lastP[0], lastP[1], p[0], p[1]); knife = [p[0], p[1], Math.atan2(dy, dx)]; lastP = p;
+      const now = performance.now(); if (now - lastMeasure > 140) { lastMeasure = now; measure(); }
+    });
+    const up = () => { if (down) { down = false; measure(); } };
+    cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+    cv.addEventListener('pointerleave', () => { if (!down && !finishing) { knife = null; dirty = true; } });
+
+    // holding the button lets the knife work on its own: long, overlapping passes back and forth
+    let auto = null;
+    function autoPass(now) {
+      if (!holding || done || finishing) { auto = null; if (!finishing) knife = null; dirty = true; return; }
+      if (!auto || auto.t >= 1) {
+        const row = auto ? auto.row + 1 : 0, rows = 9, y = fr.y + fr.h * ((row % rows) + .5) / rows + (Math.random() - .5) * fr.h * .04;
+        const ltr = row % 2 === 0; auto = { row, t: 0, ax: ltr ? fr.x - 12 : fr.x + fr.w + 12, bx: ltr ? fr.x + fr.w + 12 : fr.x - 12, ay: y, by: y + (Math.random() - .5) * fr.h * .08, last: null };
+      }
+      auto.t = Math.min(1, auto.t + .028);
+      const x = auto.ax + (auto.bx - auto.ax) * auto.t, y = auto.ay + (auto.by - auto.ay) * auto.t;
+      if (auto.last) stroke(auto.last[0], auto.last[1], x, y);
+      knife = [x, y, Math.atan2(auto.by - auto.ay, auto.bx - auto.ax)]; auto.last = [x, y];
+      if (now - lastMeasure > 160) { lastMeasure = now; measure(); }
+      requestAnimationFrame(autoPass);
+    }
+    const on = e => { if (done) return; holding = true; btn.classList.add('on'); hint.classList.add('gone'); if (e && e.cancelable) e.preventDefault(); if (!auto) requestAnimationFrame(autoPass); };
+    const off = () => { holding = false; btn.classList.remove('on'); };
+    btn.addEventListener('pointerdown', on); addEventListener('pointerup', off); addEventListener('pointercancel', off); addEventListener('blur', off);
+    btn.addEventListener('contextmenu', e => e.preventDefault());
     btn.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); if (!e.repeat) on(); } });
     btn.addEventListener('keyup', off);
-    new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(cv);
+
+    // the first time you see it, the knife makes one slow pass by itself so you know what to do
+    function demo() {
+      if (demoDone || done || covered > .02) return; demoDone = true;
+      const pts = [], n = 46; for (let i = 0; i <= n; i++) { const u = i / n; pts.push([fr.x + fr.w * (.18 + .64 * u), fr.y + fr.h * (.42 + .12 * Math.sin(u * Math.PI * 1.4))]); }
+      let i = 1; const go = () => { if (down || holding) { knife = null; return; } if (i > n) { knife = null; dirty = true; measure(); return; }
+        stroke(pts[i - 1][0], pts[i - 1][1], pts[i][0], pts[i][1]); knife = [pts[i][0], pts[i][1], Math.atan2(pts[i][1] - pts[i - 1][1], pts[i][0] - pts[i - 1][0])]; i++; requestAnimationFrame(go); };
+      setTimeout(() => requestAnimationFrame(go), 500);
+    }
+    (function loop() { if (vis && dirty) draw(); requestAnimationFrame(loop); })();
+    new IntersectionObserver(([e]) => { vis = e.isIntersecting; if (vis && e.intersectionRatio > .5) demo(); }, { threshold: [0, .5, .8] }).observe(cv);
     if (img.complete && img.naturalWidth) build(); else img.addEventListener('load', build);
-    let rz = 0; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(build, 150); });
-    if (reduce) { ep = 1; img.addEventListener('load', draw); } else requestAnimationFrame(tick);
-    window.__ev = { set: v => { ep = v; draw(); } };
+    let rz = 0; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(build, 200); });
+    if (reduce) { const r = () => { covered = 1; done = true; fade = 1; cap.classList.add('on'); dirty = true; }; img.complete ? r() : img.addEventListener('load', r); }
+    window.__ev = { stroke: (a, b, c2, d) => { stroke(a, b, c2, d); measure(); }, state: () => ({ covered, done, fr }), reset };
   })();
   const navEl = document.querySelector('nav'); let lastY = scrollY;
   addEventListener('scroll', () => { const y = scrollY; if (Math.abs(y - lastY) > 6) { navEl.classList.toggle('away', y > lastY && y > 140); lastY = y; } }, { passive: true });
