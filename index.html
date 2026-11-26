@@ -388,7 +388,7 @@
     </ul>
   </div>
   <div class="ev-stage scene-stage">
-    <img id="evImg" src="art/work/where-i-begin-0.webp" alt="" hidden>
+    <img id="evImg" src="art/work/where-i-begin-0-hd.webp" alt="" hidden>
     <canvas id="evCanvas" data-cursor="Light" aria-label="Where I Begin, 2026, by Jeanette Janvier, shown in a dark room. Move the pointer to move the lamp and see light move across the surface of her fiber clay."></canvas>
     <div class="ev-hint" id="evHint" aria-hidden="true">Move the light</div>
     <div class="ev-cap" id="evCap">Where I Begin, 2026</div>
@@ -915,30 +915,29 @@
     }
     const VS = `attribute vec2 p; varying vec2 uv; void main(){ uv = p * .5 + .5; uv.y = 1. - uv.y; gl_Position = vec4(p, 0., 1.); }`;
     // the photo, a blurred copy used as a height map, and a lamp: soft diffuse light, a glossy highlight on the pale clay, deep falloff into the dark
+    // the photo stays exactly as shot. The lamp only adds a soft pool of light, broad shading on the big forms, and a gentle sheen on the pale clay
     const FS = `precision highp float; varying vec2 uv;
       uniform sampler2D A, B; uniform vec2 px, light; uniform float power, aspect, tm;
-      float h(vec2 q){ vec3 c = texture2D(B, q).rgb; return dot(c, vec3(.3,.55,.15)); }
+      float h(vec2 q){ return dot(texture2D(B, q).rgb, vec3(.3,.55,.15)); }
       void main(){
         vec3 col = texture2D(A, uv).rgb;
-        float e = 3.;
+        float e = 10.;
         float dx = h(uv + vec2(px.x*e,0.)) - h(uv - vec2(px.x*e,0.));
         float dy = h(uv + vec2(0.,px.y*e)) - h(uv - vec2(0.,px.y*e));
-        float fx = (texture2D(A, uv + vec2(px.x,0.)).g - texture2D(A, uv - vec2(px.x,0.)).g);
-        float fy = (texture2D(A, uv + vec2(0.,px.y)).g - texture2D(A, uv - vec2(0.,px.y)).g);
-        vec3 n = normalize(vec3(-(dx*6. + fx*.6), -(dy*6. + fy*.6), 1.));
+        vec3 n = normalize(vec3(-dx*2.2, -dy*2.2, 1.));
         vec2 d2 = (light - uv) * vec2(aspect, 1.);
-        vec3 l = normalize(vec3(d2, .32));
         float dist = length(d2);
-        float att = power / (1. + dist*dist*7.);
-        float diff = max(dot(n, l), 0.);
-        vec3 hv = normalize(l + vec3(0.,0.,1.));
+        vec3 l = normalize(vec3(d2, .55));
+        float pool = power * exp(-dist*dist*2.2);
+        float diff = mix(1., max(dot(n, l), 0.) / max(l.z, .001) * .9, .55);
         float lum = dot(col, vec3(.3,.55,.15)), sat = max(col.r, max(col.g, col.b)) - min(col.r, min(col.g, col.b));
-        float gloss = smoothstep(.55, .9, lum) * (1. - smoothstep(.12, .3, sat));
-        float spec = pow(max(dot(n, hv), 0.), 46.) * gloss;
-        vec3 lamp = vec3(1., .97, .92);
-        vec3 c = col * (.1 + .06*power + att * (.38 + .95*diff)) * lamp + spec * att * .6 * lamp;
-        float edge = smoothstep(0., .006, uv.x) * smoothstep(0., .006, uv.y) * smoothstep(0., .006, 1.-uv.x) * smoothstep(0., .006, 1.-uv.y);
-        gl_FragColor = vec4(c * edge, 1.);
+        float gloss = smoothstep(.6, .92, lum) * (1. - smoothstep(.1, .28, sat));
+        vec3 hv = normalize(l + vec3(0.,0.,1.));
+        float spec = pow(max(dot(n, hv), 0.), 18.) * gloss * pool;
+        float base = .34 + .1 * power;
+        vec3 lamp = vec3(1., .975, .94);
+        vec3 c = col * (base + pool * .95 * diff) * lamp + spec * .22 * lamp;
+        gl_FragColor = vec4(min(c, vec3(1.)), 1.);
       }`;
     function sh(type, src) { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
     function tex(source) { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, source);
@@ -952,10 +951,10 @@
       const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
       ['A', 'B', 'px', 'light', 'power', 'aspect', 'tm'].forEach(k => uni[k] = gl.getUniformLocation(prog, k));
       // the image at a size the GPU likes, plus a soft blurred copy for the broad shapes of the surface
-      const maxS = 1600, s = Math.min(1, maxS / Math.max(img.naturalWidth, img.naturalHeight));
+      const maxS = 2048, s = Math.min(1, maxS / Math.max(img.naturalWidth, img.naturalHeight));
       const a = document.createElement('canvas'); a.width = Math.round(img.naturalWidth * s); a.height = Math.round(img.naturalHeight * s); a.getContext('2d').drawImage(img, 0, 0, a.width, a.height);
-      const sm = document.createElement('canvas'); sm.width = Math.round(a.width / 10); sm.height = Math.round(a.height / 10); sm.getContext('2d').drawImage(a, 0, 0, sm.width, sm.height);
-      const bb = document.createElement('canvas'); bb.width = a.width; bb.height = a.height; const bx = bb.getContext('2d'); bx.imageSmoothingQuality = 'high'; bx.filter = 'blur(2px)'; bx.drawImage(sm, 0, 0, a.width, a.height);
+      const sm = document.createElement('canvas'); sm.width = Math.round(a.width / 24); sm.height = Math.round(a.height / 24); sm.getContext('2d').drawImage(a, 0, 0, sm.width, sm.height);
+      const bb = document.createElement('canvas'); bb.width = a.width; bb.height = a.height; const bx = bb.getContext('2d'); bx.imageSmoothingQuality = 'high'; bx.filter = 'blur(10px)'; bx.drawImage(sm, 0, 0, a.width, a.height);
       gl.activeTexture(gl.TEXTURE0); texA = tex(a); gl.activeTexture(gl.TEXTURE1); texB = tex(bb);
       gl.uniform1i(uni.A, 0); gl.uniform1i(uni.B, 1); gl.uniform2f(uni.px, 1 / a.width, 1 / a.height);
       return true;
@@ -974,7 +973,7 @@
       if (now - lastMove > 2600) { Lt.x = .5 + Math.cos(t * .23) * .34; Lt.y = .5 + Math.sin(t * .31) * .3; }
       const k = now - lastMove < 2600 ? .14 : .03;
       L.x += (Lt.x - L.x) * k; L.y += (Lt.y - L.y) * k;
-      power += (powerT - power) * .035;
+      power += (powerT - power) * .03;
       gl.viewport(0, 0, cv.width, cv.height); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
       gl.viewport(Math.round(fr.x * DPR), Math.round((H - fr.y - fr.h) * DPR), Math.round(fr.w * DPR), Math.round(fr.h * DPR));
       gl.uniform2f(uni.light, L.x, L.y); gl.uniform1f(uni.power, power); gl.uniform1f(uni.tm, t);

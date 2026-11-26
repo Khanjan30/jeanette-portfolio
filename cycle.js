@@ -61,17 +61,24 @@
 
   // scroll position inside the section: 0 at the first work, 9 at the last, then the ending
   const SPAN = .86;
-  function state() {
+  function target() {
     const r = sec.getBoundingClientRect(), P = cl(-r.top / Math.max(1, r.height - H));
-    const raw = Math.min(9, P / SPAN * 9), i = Math.min(8, Math.floor(raw)), fr = raw - i;
-    const f = raw >= 9 ? 9 : i + fr * fr * fr * (fr * (fr * 6 - 15) + 10);   // each work pauses a moment at the front
-    return { P, f, e: sm(SPAN + .01, .985, P) };
+    return { P, f: Math.min(9, P / SPAN * 9), e: sm(SPAN + .01, .985, P) };
+  }
+  // the ring trails the scroll and catches up over about 0.6 seconds, the way the best scroll-driven sites feel
+  let sf = null, se = 0, lastT = 0;
+  function state(now) {
+    const t = target(), dt = lastT ? Math.min(.1, (now - lastT) / 1000) : 1; lastT = now;
+    if (sf === null || Math.abs(t.f - sf) > 4) { sf = t.f; se = t.e; }      // big jumps (links, Index) land straight away
+    const k = 1 - Math.exp(-dt / .22);
+    sf += (t.f - sf) * k; se += (t.e - se) * k;
+    return { P: t.P, f: sf, e: se };
   }
   const posFor = k => { const r = sec.getBoundingClientRect(), top = scrollY + r.top; return top + (k / 9) * SPAN * (r.height - H); };
 
   let shown = -1, t0 = performance.now();
   function draw(now) {
-    const { f, e } = state(), t = (now - t0) / 1000;
+    const { f, e } = state(now), t = (now - t0) / 1000;
     const i0 = Math.min(8, Math.floor(f)), fr = f - i0, rot = theta[i0] + (theta[i0 + 1] - theta[i0]) * fr;
     const front = Math.round(f);
     cards.forEach((c, i) => {
@@ -111,6 +118,14 @@
     lineEl.style.opacity = (1 - sm(0, .25, e)).toFixed(3);
     endEl.style.opacity = sm(.55, .95, e).toFixed(3); endEl.classList.toggle('on', e > .7);
   }
+  let settleT = 0, lastScroll = -1;
+  function settle() {
+    if (!window.lenis || document.documentElement.classList.contains('cy-locked')) return;
+    const { P, f } = target(); if (P <= 0 || P >= SPAN) return;
+    const k = Math.round(f); if (Math.abs(f - k) < .03) return;
+    window.lenis.scrollTo(posFor(k), { duration: .9, easing: u => 1 - Math.pow(1 - u, 3) });
+  }
+  addEventListener('scroll', () => { if (!vis) return; clearTimeout(settleT); settleT = setTimeout(settle, 220); }, { passive: true });
   let vis = false, raf = 0;
   const loop = now => { draw(now); raf = vis ? requestAnimationFrame(loop) : 0; };
   new IntersectionObserver(([en]) => { vis = en.isIntersecting; if (vis && !raf) raf = requestAnimationFrame(loop); }, { rootMargin: '200px 0px' }).observe(sec);
