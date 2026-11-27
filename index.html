@@ -73,7 +73,7 @@
   .hero-kicker{position:relative;align-self:flex-start;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#3d3d39;margin-bottom:22px;display:inline-flex;gap:14px;align-items:center;padding:9px 18px 9px 16px;background:rgba(242,241,236,.86);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 8px 18px -12px rgba(0,0,0,.4);transform:rotate(-1.2deg);clip-path:polygon(0 10%,3% 0,30% 6%,62% 1%,97% 5%,100% 0,99% 34%,100% 62%,98% 100%,64% 95%,33% 100%,2% 96%,0 68%,1% 38%)}
   .hero-kicker::before{content:"";width:28px;height:1px;background:#3d3d39}
   .hero h1{position:relative;font-family:var(--serif);font-weight:300;font-size:clamp(64px,15.5vw,260px);line-height:.84;letter-spacing:-.035em;pointer-events:none}
-  .hero h1 .row{display:block;overflow:hidden;padding-bottom:.06em}
+  .hero h1 .row{display:block;overflow:hidden;padding:0 .1em .34em;margin:0 -.1em -.28em}   /* room for the tail of the italic J so it is never cut off */
   .hero h1 .row:nth-child(2){padding-left:clamp(40px,14vw,260px);font-style:italic;font-weight:200}
   .hero h1 .ch{display:inline-block;transform:translateY(110%) rotate(6deg);animation:rise 1.4s cubic-bezier(.2,.8,.2,1) forwards}
   @keyframes rise{to{transform:none}}
@@ -200,79 +200,56 @@
 
   /* work */
 
-  /* ---------- 05 the work: the cycle ---------- */
-  .cycle{padding:0;height:1150vh;background:#131313;color:#f2f1ec}
-  .cy-stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
-  .cy-top{position:absolute;z-index:420;top:clamp(78px,11vh,104px);left:clamp(20px,4vw,56px);right:clamp(20px,4vw,56px);display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
-  .cy-top .label{margin:0;color:rgba(242,241,236,.6)}
-  .cy-chips{display:flex;gap:6px;flex-wrap:wrap}
-  .cy-chips button{font:500 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:rgba(242,241,236,.55);background:none;border:1px solid rgba(242,241,236,.16);border-radius:40px;padding:9px 14px;cursor:none;transition:color .4s,border-color .4s,background .4s}
-  .cy-chips button:hover,.cy-chips button.on{color:#f2f1ec;border-color:rgba(242,241,236,.6)}
-  .cy-chips .cy-ixbtn{margin-left:10px;background:#f2f1ec;color:#131313;border-color:#f2f1ec}
-  .cy-line{position:absolute;z-index:220;left:clamp(20px,4vw,56px);top:clamp(124px,17vh,160px);max-width:360px;font-family:var(--serif);font-size:clamp(17px,1.6vw,21px);line-height:1.35;color:rgba(242,241,236,.72)}
-  .cy-line b{display:block;font-family:var(--sans);font-weight:500;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#aab4ff;margin-bottom:8px}
-  .cy-word{position:absolute;left:0;right:0;top:48%;text-align:center;font-family:var(--serif);font-weight:200;font-style:italic;font-size:clamp(84px,19vw,330px);letter-spacing:-.045em;line-height:1;color:rgba(242,241,236,.13);white-space:nowrap;pointer-events:none;opacity:0;will-change:transform,opacity}
-  .cy-ring{position:absolute;inset:0;left:50%;top:0;width:0}
-  .cy-card{position:absolute;left:0;top:0;padding:0;border:0;background:#1d1d1c;cursor:none;transform-origin:50% 0%;will-change:transform,opacity;box-shadow:0 30px 60px -28px rgba(0,0,0,.8)}
-  .cy-card img{display:block;width:100%;height:100%;object-fit:cover;filter:brightness(calc(1 - .45 * var(--dim,0)))}
-  .cy-card .cy-str{position:absolute;left:50%;bottom:100%;width:1px;height:120vh;background:linear-gradient(rgba(242,241,236,0),rgba(242,241,236,.28));transform:translateX(-50%);pointer-events:none}
-  .cy-card:focus-visible{outline:2px solid #aab4ff;outline-offset:6px}
-  .cy-cap{position:absolute;z-index:220;left:50%;bottom:clamp(22px,5vh,48px);transform:translateX(-50%);display:flex;align-items:baseline;gap:16px;white-space:nowrap;transition:opacity .2s}
-  .cy-cap .n{font-size:11px;letter-spacing:.22em;color:rgba(242,241,236,.5)}
-  .cy-cap .t{font-family:var(--serif);font-size:clamp(22px,2.4vw,32px);font-weight:300;letter-spacing:-.01em}
-  .cy-cap .m{font-size:12px;color:rgba(242,241,236,.6)}
-  .cy-cap button{font:500 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#f2f1ec;background:none;border:0;border-bottom:1px solid rgba(242,241,236,.4);padding:4px 0;cursor:none}
-  .cy-end{position:absolute;z-index:400;left:0;right:0;bottom:0;padding:0 clamp(20px,4vw,56px) clamp(30px,7vh,70px);background:linear-gradient(rgba(19,19,19,0),rgba(19,19,19,.78) 60%);opacity:0;pointer-events:none;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
-  .cy-end p{font-family:var(--serif);font-weight:300;font-size:clamp(44px,7vw,110px);line-height:.95;letter-spacing:-.035em}
-  .cy-end p i{font-weight:200;color:#c9cfff}
-  .cy-end span{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:rgba(242,241,236,.7)}
-  @media (max-width:760px){
-    .cy-top{top:64px;flex-direction:column;align-items:flex-start;gap:10px}
-    .cy-chips button{padding:7px 10px;letter-spacing:.14em}
-    .cy-chips .cy-ixbtn{margin-left:0}
-    .cy-line{top:178px;max-width:none;right:20px;font-size:15px}
-    .cy-cap{flex-direction:column;align-items:center;gap:4px;text-align:center;white-space:normal;width:86%}
-    .cy-end{flex-direction:column;align-items:flex-start}
-  }
-  html.cy-locked,html.cy-locked body{overflow:hidden}
+  /* ---------- 05 the work: a clean grid ---------- */
+  .works-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:clamp(26px,4vw,48px)}
+  .works-head .label{margin:0}
+  .works-note{font-size:13px;color:var(--ink-soft)}
+  .wk-grid{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,28px)}
+  .wk-tile{position:relative;display:block;width:100%;aspect-ratio:4/5;padding:0;border:0;background:#e3e1da;overflow:hidden;cursor:none;border-radius:3px}
+  .wk-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s ease,transform 1.2s cubic-bezier(.2,.8,.2,1)}
+  .wk-tile img.on{opacity:1}
+  .wk-tile:hover img.on{transform:scale(1.025)}
+  .wk-bars{position:absolute;z-index:2;top:12px;left:12px;right:12px;display:flex;gap:4px;opacity:0;transition:opacity .3s}
+  .wk-bars i{flex:1;height:2px;border-radius:2px;background:rgba(255,255,255,.4)}
+  .wk-bars i.on{background:#fff}
+  .wk-info{position:absolute;z-index:2;left:0;right:0;bottom:0;display:grid;grid-template-columns:1fr auto;align-items:end;gap:4px 12px;padding:60px 18px 16px;background:linear-gradient(rgba(19,19,19,0),rgba(19,19,19,.72));color:#f2f1ec;text-align:left;opacity:0;transform:translateY(8px);transition:opacity .35s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
+  .wk-t{font-family:var(--serif);font-weight:300;font-size:clamp(20px,1.8vw,26px);line-height:1.1;letter-spacing:-.01em}
+  .wk-y{grid-row:2;font-size:11px;letter-spacing:.2em;color:rgba(242,241,236,.75)}
+  .wk-more{grid-row:1 / span 2;grid-column:2;align-self:end;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;border:1px solid rgba(242,241,236,.6);border-radius:999px;padding:9px 14px}
+  .wk-tile:hover .wk-info,.wk-tile:focus-visible .wk-info,.wk-tile:hover .wk-bars{opacity:1;transform:none}
+  .wk-tile:focus-visible{outline:2px solid var(--clay);outline-offset:4px}
+  @media (hover:none){ .wk-info{opacity:1;transform:none;padding-top:44px} .wk-more{display:none} }
+  @media (max-width:960px){.wk-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:560px){.wk-grid{grid-template-columns:1fr}.wk-tile{aspect-ratio:4/4.6}}
 
-  /* a quiet page for each work: one piece, lots of space */
-  .wp,.ix{position:fixed;inset:0;z-index:90;overflow-y:auto;overscroll-behavior:contain;background:#efeee9;color:#131313;opacity:0;transform:translateY(18px);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
-  .wp.open,.ix.open{opacity:1;transform:none}
-  .wp-bar{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(20px,4vw,56px);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#5b5b56;background:linear-gradient(#efeee9 60%,rgba(239,238,233,0))}
-  .wp-bar div{display:flex;gap:10px}
-  .wp-bar button{font:500 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#131313;background:none;border:1px solid rgba(19,19,19,.2);border-radius:40px;padding:10px 16px;cursor:none}
-  .wp-bar button:hover{background:#131313;color:#efeee9}
-  .wp-body{padding:0 clamp(20px,4vw,56px) 60px}
-  .wp-hero{margin:clamp(10px,4vh,40px) auto 0;height:min(76vh,calc(86vw / var(--ar)));aspect-ratio:var(--ar);max-width:100%;box-shadow:0 40px 80px -40px rgba(20,20,30,.5)}
-  .wp-hero img,.wp-fig img{width:100%;height:100%;object-fit:cover;display:block;background:#dedcd5}
-  .wp-cap{max-width:560px;margin:clamp(30px,6vh,56px) auto clamp(60px,12vh,120px);text-align:center}
-  .wp-cap h2{font-family:var(--serif);font-weight:300;font-size:clamp(36px,4.6vw,64px);line-height:1;letter-spacing:-.025em}
-  .wp-meta{margin-top:14px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#5b5b56}
-  .wp-line{margin-top:18px;font-family:var(--serif);font-size:clamp(18px,1.7vw,22px);color:#3d3d39}
-  .wp-more{display:flex;flex-direction:column;align-items:center;gap:clamp(60px,14vh,140px)}
-  .wp-fig{height:min(82vh,calc(86vw / var(--ar)));aspect-ratio:var(--ar);max-width:100%;opacity:0;transform:scale(.93);transition:opacity 1s ease,transform 1.2s cubic-bezier(.2,.8,.2,1)}
-  .wp-fig.in{opacity:1;transform:none}
-  .wp-more.table{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:clamp(20px,4vw,50px);padding:clamp(30px,6vh,60px) 0;background:#e3e1da;border-radius:6px}
-  .wp-more.table .wp-fig{height:min(60vh,calc(70vw / var(--ar)));transform:rotate(var(--r)) scale(.93);box-shadow:0 24px 40px -24px rgba(20,20,30,.55)}
-  .wp-more.table .wp-fig.in{transform:rotate(var(--r))}
-  .wp-nav{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:clamp(80px,16vh,160px) auto 0;border-top:1px solid rgba(19,19,19,.14);padding-top:26px}
-  .wp-nav button{text-align:left;background:none;border:0;cursor:none;color:#131313;display:flex;flex-direction:column;gap:8px}
-  .wp-nav button:last-child{text-align:right;align-items:flex-end}
-  .wp-nav span{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#5b5b56}
-  .wp-nav b{font-family:var(--serif);font-weight:300;font-size:clamp(22px,2.6vw,34px);letter-spacing:-.01em}
-  .wp-nav button:hover b{color:var(--clay)}
-  .ix-list{list-style:none;max-width:980px;margin:0 auto;padding:clamp(10px,4vh,40px) clamp(20px,4vw,56px) 100px}
-  .ix-ch{display:flex;gap:16px;align-items:baseline;margin:clamp(30px,6vh,56px) 0 8px;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:#5b5b56}
-  .ix-ch span{font-family:var(--serif);font-size:15px;letter-spacing:0;color:var(--clay)}
-  .ix-list button{width:100%;display:flex;justify-content:space-between;align-items:baseline;gap:20px;background:none;border:0;border-top:1px solid rgba(19,19,19,.12);padding:16px 0;cursor:none;color:#131313;text-align:left}
-  .ix-t{font-family:var(--serif);font-weight:300;font-size:clamp(26px,4vw,52px);letter-spacing:-.02em;line-height:1.05;transition:transform .4s cubic-bezier(.2,.8,.2,1),color .3s}
-  .ix-list button:hover .ix-t{transform:translateX(14px);color:var(--clay)}
-  .ix-y{font-size:12px;letter-spacing:.18em;color:#5b5b56}
-  .ix-peek{position:fixed;left:0;top:0;width:180px;height:220px;object-fit:cover;pointer-events:none;opacity:0;transition:opacity .25s;box-shadow:0 30px 50px -24px rgba(0,0,0,.5);z-index:3}
-  .ix-peek.on{opacity:1}
-  @media (hover:none){.ix-peek{display:none}}
-  @media (prefers-reduced-motion:reduce){.cycle{height:auto}.wp,.ix,.wp-fig{transition:none}}
+  /* See more: a panel smaller than the window, easy to close */
+  .pn{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:clamp(12px,4vw,48px);background:rgba(19,19,19,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transition:opacity .3s ease}
+  .pn[hidden]{display:none}
+  .pn.open{opacity:1}
+  .pn-card{position:relative;width:min(1120px,100%);max-height:min(88vh,860px);background:#efeee9;color:#131313;border-radius:8px;overflow:auto;overscroll-behavior:contain;box-shadow:0 40px 90px -30px rgba(0,0,0,.6);transform:translateY(14px) scale(.985);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+  .pn.open .pn-card{transform:none}
+  .pn-x{position:sticky;top:0;float:right;z-index:3;margin:14px 14px 0 0;font:500 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#131313;background:#efeee9;border:1px solid rgba(19,19,19,.2);border-radius:999px;padding:10px 16px;cursor:none}
+  .pn-x:hover{background:#131313;color:#efeee9}
+  .pn-body{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(20px,3vw,40px);padding:clamp(18px,3vw,36px);clear:both}
+  .pn-main{background:#e3e1da;border-radius:4px;display:flex;align-items:center;justify-content:center;height:min(70vh,680px)}
+  .pn-main img{max-width:100%;max-height:100%;object-fit:contain;display:block;transition:opacity .16s ease}
+  .pn-main img.swap{opacity:0}
+  .pn-side{display:flex;flex-direction:column;gap:12px;align-self:center}
+  .pn-side h3{font-family:var(--serif);font-weight:300;font-size:clamp(30px,3.4vw,46px);line-height:1;letter-spacing:-.02em}
+  .pn-meta{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#5b5b56}
+  .pn-line{font-family:var(--serif);font-size:clamp(17px,1.5vw,20px);color:#3d3d39}
+  .pn-thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .pn-th{width:64px;height:78px;padding:0;border:1px solid transparent;border-radius:3px;overflow:hidden;background:#dedcd5;cursor:none;opacity:.6;transition:opacity .25s,border-color .25s}
+  .pn-th img{width:100%;height:100%;object-fit:cover;display:block}
+  .pn-th.on,.pn-th:hover{opacity:1;border-color:#131313}
+  .pn-count{margin-top:8px;font-size:11px;letter-spacing:.2em;color:#8b8b85}
+  @media (max-width:760px){ .pn-body{grid-template-columns:1fr} .pn-main{height:52vh} .pn-card{max-height:92vh} }
+  html.pn-locked,html.pn-locked body{overflow:hidden}
+
+  /* resume */
+  .resume .cv{max-width:820px}
+  .resume h2{font-family:var(--serif);font-weight:300;font-size:clamp(36px,5vw,64px);letter-spacing:-.025em;line-height:1}
+  .cv-wait{margin-top:18px;font-size:15px;color:var(--ink-soft)}
   .themes{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
   @media (max-width:860px){.themes{grid-template-columns:1fr 1fr}}
   @media (max-width:520px){.themes{grid-template-columns:1fr}}
@@ -327,6 +304,7 @@
     <li><a href="#work">Work</a></li>
     <li><a href="#difference">Vision</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="#resume">Resume</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
 </nav>
@@ -381,17 +359,18 @@
     <div class="label"><em>03</em> The material</div>
     <h2>Paper had limits.<br><i>So she made her own.</i></h2>
     <p class="meaning">Three years of testing led to her own fiber medium, light enough to hang large forms on invisible strings.</p>
-    <ul class="ev-facts">
-      <li class="ev-fact"><em>i.</em>Mixed by hand from plant fiber.</li>
-      <li class="ev-fact"><em>ii.</em>Spread smooth, then sanded like stone.</li>
-      <li class="ev-fact"><em>iii.</em>Light enough to hang on a thread.</li>
-    </ul>
+    <ol class="sc-steps" style="--n:4">
+      <li class="ev-step on cur"><i><b></b></i><em>Torn paper</em><span>Scraps, torn by hand.</span></li>
+      <li class="ev-step"><i><b></b></i><em>Layered</em><span>Pressed together, piece on piece.</span></li>
+      <li class="ev-step"><i><b></b></i><em>Smoothed</em><span>Every seam worked away.</span></li>
+      <li class="ev-step"><i><b></b></i><em>Finished</em><span>Break the Cycle, 2026.</span></li>
+    </ol>
+    <button class="ev-hold" id="evHold" type="button">Hold to build it</button>
   </div>
   <div class="ev-stage scene-stage">
-    <img id="evImg" src="art/work/where-i-begin-0-hd.webp" alt="" hidden>
-    <canvas id="evCanvas" data-cursor="Light" aria-label="Where I Begin, 2026, by Jeanette Janvier, shown in a dark room. Move the pointer to move the lamp and see light move across the surface of her fiber clay."></canvas>
-    <div class="ev-hint" id="evHint" aria-hidden="true">Move the light</div>
-    <div class="ev-cap" id="evCap">Where I Begin, 2026</div>
+    <img id="evImg" src="art/work/break-the-cycle-0-hd.webp" alt="" hidden>
+    <canvas id="evCanvas" aria-label="Hold the button to watch torn scraps of paper layer together and smooth out into Break the Cycle, 2026, by Jeanette Janvier."></canvas>
+    <div class="ev-cap" id="evCap">Break the Cycle, 2026</div>
   </div>
 </section>
 
@@ -405,21 +384,12 @@
   </div>
 </section>
 
-<section class="cycle" id="work" aria-label="The work: ten pieces in four chapters">
-  <div class="cy-stick">
-    <div class="cy-top">
-      <div class="label"><em>05</em> The work</div>
-      <div class="cy-chips" role="group" aria-label="Chapters">
-        <button type="button" class="cy-chip on">I. Falling</button><button type="button" class="cy-chip">II. Suspended</button><button type="button" class="cy-chip">III. Choosing</button><button type="button" class="cy-chip">IV. Rising</button>
-        <button type="button" class="cy-ixbtn" data-open-index>Index</button>
-      </div>
-    </div>
-    <p class="cy-line" id="cyLine"></p>
-    <div class="cy-word" aria-hidden="true">Falling</div><div class="cy-word" aria-hidden="true">Suspended</div><div class="cy-word" aria-hidden="true">Choosing</div><div class="cy-word" aria-hidden="true">Rising</div>
-    <div class="cy-ring" id="cyRing"></div>
-    <div class="cy-cap" id="cyCap"><span class="n"></span><span class="t"></span><span class="m"></span><button type="button" data-cursor="Open">View work <span>→</span></button></div>
-    <div class="cy-end" id="cyEnd"><p>This is where<br><i>I begin.</i></p><span>Break the Cycle, 2026</span></div>
+<section class="works" id="work" aria-label="The work">
+  <div class="works-head">
+    <div class="label"><em>05</em> The work</div>
+    <p class="works-note">Hover to flip through each piece. Click to see more.</p>
   </div>
+  <ol class="wk-grid" id="workGrid"></ol>
 </section>
 
 <section class="about" id="about">
@@ -435,8 +405,16 @@
   </ul>
 </section>
 
+<section class="resume" id="resume" aria-label="Resume">
+  <div class="label"><em>07</em> Resume</div>
+  <div class="cv">
+    <h2>Resume</h2>
+    <p class="cv-wait">Coming soon. Her full resume, with education, exhibitions and awards, will be here.</p>
+  </div>
+</section>
+
 <section class="contact" id="contact">
-  <div class="label" style="justify-content:center"><em>07</em> Contact</div>
+  <div class="label" style="justify-content:center"><em>08</em> Contact</div>
   <h2 class="reveal">Let's make<br><i>a space.</i></h2>
   <a class="cta" href="contact.html">Get in touch <span>→</span></a>
 </section>
@@ -446,21 +424,18 @@
   <a href="#top" style="text-decoration:none;cursor:none">Back to top ↑</a>
 </footer>
 
-<div class="wp" id="wp" hidden data-lenis-prevent role="dialog" aria-modal="true" aria-label="Artwork">
-  <header class="wp-bar"><span id="wpCh"></span><div><button type="button" data-open-index>Index</button><button type="button" class="wp-x">Close <span aria-hidden="true">×</span></button></div></header>
-  <div class="wp-body" id="wpBody"></div>
-</div>
-<div class="ix" id="ix" hidden data-lenis-prevent role="dialog" aria-modal="true" aria-label="Index of works">
-  <header class="wp-bar"><span>Index</span><button type="button" class="ix-x">Close <span aria-hidden="true">×</span></button></header>
-  <ol class="ix-list" id="ixList"></ol>
-  <img class="ix-peek" id="ixPeek" alt="">
+<div class="pn" id="panel" hidden data-lenis-prevent role="dialog" aria-modal="true" aria-label="Artwork details">
+  <div class="pn-card">
+    <button type="button" class="pn-x" aria-label="Close">Close <span aria-hidden="true">×</span></button>
+    <div class="pn-body" id="panelBody"></div>
+  </div>
 </div>
 
 <script src="lenis.min.js"></script>
 <script src="smooth.js"></script>
 <script src="rays.js"></script>
 <script src="feed.js"></script>
-<script src="cycle.js" defer></script>
+<script src="works.js" defer></script>
 <script>
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -572,27 +547,29 @@
       x: big ? FW * (.52 + .13 * i + .05 * Math.random()) : FW * (.2 + .2 * i), y: big ? FH * (.14 + .17 * i) : Math.max(110, avoid.t * (.3 + .16 * i)), h: Math.random() * 6.28,
       col: PaperRay.COLORS.home[i], v: .3 + Math.random() * .14, sp: 1, ph: Math.random() * 6.28, wob: Math.random() * 100
     }));
+    window.__rays = rays;
   }
   let avoid = null;
+  // turning has momentum: every pull only changes how fast the ray turns, so it swims in smooth arcs instead of twitching
+  const turnTo = (r, want) => { r.w = r.w || 0; r.w += (Math.max(-.045, Math.min(.045, want)) - r.w) * .07; r.h += r.w; };
   function stepRay(r, px, py) {
     const hov = r === hoverRay, m = r.L * 1.3, s = feed && feed.steer(r);
     if (s) {                                             // food in the water: go get it
-      r.h += s.turn; r.sp += (s.sp - r.sp) * .08;
+      turnTo(r, s.turn); r.sp += (s.sp - r.sp) * .05;
       r.x += Math.cos(r.h) * r.v * r.sp; r.y += Math.sin(r.h) * r.v * r.sp; r.ph += .05 * (.6 + r.sp * .4); return;
     }
-    if (avoid && r.x > avoid.l - r.L && r.x < avoid.r + r.L && r.y > avoid.t - r.L * .6 && r.y < avoid.b + r.L) {
-      r.h += Math.max(-.05, Math.min(.05, angDiff(Math.atan2(r.y - (avoid.t + avoid.b) / 2, r.x - (avoid.l + avoid.r) / 2), r.h) * .05));
-    }
     let turn = Math.sin(t * .7 + r.wob) * .012 + Math.sin(t * .23 + r.wob * 2) * .01;   // lazy wandering
+    if (avoid && r.x > avoid.l - r.L && r.x < avoid.r + r.L && r.y > avoid.t - r.L * .6 && r.y < avoid.b + r.L)
+      turn += angDiff(Math.atan2(r.y - (avoid.t + avoid.b) / 2, r.x - (avoid.l + avoid.r) / 2), r.h) * .05;
     for (const o of rays) if (o !== r) {                                              // give each other room
       const ex = r.x - o.x, ey = r.y - o.y, ed = Math.hypot(ex, ey);
       if (ed < (r.L + o.L) * 1.4) turn += angDiff(Math.atan2(ey, ex), r.h) * .035 * (1 - ed / ((r.L + o.L) * 1.4));
     }
     if (r.x < m || r.x > FW - m || r.y < 70 + r.L * .7 || r.y > FH * .8) turn += angDiff(Math.atan2(FH * .42 - r.y, FW / 2 - r.x), r.h) * .04;
     const dx = r.x - px, dy = r.y - py, d = Math.hypot(dx, dy);
-    if (!hov && d < 190 && !(feed && feed.dragging)) { turn += angDiff(Math.atan2(dy, dx), r.h) * .06 * (1 - d / 190); r.sp = Math.min(2.6, r.sp + .06); }
+    if (!hov && d < 190 && !(feed && feed.dragging)) { turn += angDiff(Math.atan2(dy, dx), r.h) * .06 * (1 - d / 190); r.sp += (2.2 - r.sp) * .05; }
     else r.sp += ((hov ? .12 : 1) - r.sp) * .05;
-    r.h += Math.max(-.04, Math.min(.04, turn));
+    turnTo(r, turn);
     r.x += Math.cos(r.h) * r.v * r.sp; r.y += Math.sin(r.h) * r.v * r.sp;
     r.ph += .05 * (.6 + r.sp * .4);
   }
@@ -901,95 +878,122 @@
   }
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  /* ---------- the material: a dark studio and one lamp. Your cursor is the light, raking across the real surface of her fiber clay ---------- */
+  /* ---------- the material: torn scraps of paper layer together and slowly smooth out into Break the Cycle ---------- */
   (function material() {
-    const img = document.getElementById('evImg'), cv = document.getElementById('evCanvas'), cap = document.getElementById('evCap'), hint = document.getElementById('evHint');
-    const facts = [...document.querySelectorAll('#evolve .ev-fact')];
-    const gl = cv.getContext('webgl', { premultipliedAlpha: false, antialias: false });
-    let W = 0, H = 0, fr = null, prog = null, texA = null, texB = null, uni = {}, vis = false, ready = false;
-    let L = { x: .3, y: .25 }, Lt = { x: .3, y: .25 }, power = 0, powerT = 0, lastMove = -1e9, t0 = performance.now(), visitedT = 0;
+    const img = document.getElementById('evImg'), cv = document.getElementById('evCanvas'), btn = document.getElementById('evHold'), cap = document.getElementById('evCap');
+    const steps = [...document.querySelectorAll('#evolve .ev-step')], bars = steps.map(s => s.querySelector('b'));
+    const c = cv.getContext('2d');
+    let W = 0, H = 0, fr = null, P = [], grain = null, ep = 0, hold = false, vis = false, t = 0, last = performance.now();
+    const sm = (a, b, x) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
+    const cl = x => Math.min(1, Math.max(0, x));
+    const mk = (w, h) => { const o = document.createElement('canvas'); o.width = Math.max(1, Math.ceil(w)); o.height = Math.max(1, Math.ceil(h)); return o; };
 
-    if (!gl) {                                                             // no WebGL: show the piece as a still photograph
-      const c2 = cv.getContext('2d'); const still = () => { const r = cv.getBoundingClientRect(); cv.width = r.width * DPR; cv.height = r.height * DPR; const ar = img.naturalWidth / img.naturalHeight; let h = cv.height * .96, w = h * ar; if (w > cv.width * .96) { w = cv.width * .96; h = w / ar; } c2.drawImage(img, (cv.width - w) / 2, (cv.height - h) / 2, w, h); cap.classList.add('on'); facts.forEach(f => f.classList.add('on')); };
-      img.complete ? still() : img.addEventListener('load', still); hint.remove(); return;
+    // a torn outline: a rough rectangle whose edges wander like paper ripped by hand
+    function tornPath(w, h) {
+      const pts = [], j = Math.min(w, h) * .06;
+      const corners = [[0, 0], [w, 0], [w, h], [0, h]].map(([x, y]) => [x + (Math.random() - .5) * j * 2, y + (Math.random() - .5) * j * 2]);
+      for (let e = 0; e < 4; e++) {
+        const [ax, ay] = corners[e], [bx, by] = corners[(e + 1) % 4], n = 16 + (Math.random() * 6 | 0), nx = -(by - ay), ny = bx - ax, nl = Math.hypot(nx, ny) || 1;
+        let drift = 0;
+        for (let i = 0; i < n; i++) {
+          const u = i / n; drift = drift * .7 + (Math.random() - .5) * j * .9;
+          const fine = (Math.random() - .5) * j * .35;
+          pts.push([ax + (bx - ax) * u + nx / nl * (drift + fine), ay + (by - ay) * u + ny / nl * (drift + fine)]);
+        }
+      }
+      return pts;
     }
-    const VS = `attribute vec2 p; varying vec2 uv; void main(){ uv = p * .5 + .5; uv.y = 1. - uv.y; gl_Position = vec4(p, 0., 1.); }`;
-    // the photo, a blurred copy used as a height map, and a lamp: soft diffuse light, a glossy highlight on the pale clay, deep falloff into the dark
-    // the photo stays exactly as shot. The lamp only adds a soft pool of light, broad shading on the big forms, and a gentle sheen on the pale clay
-    const FS = `precision highp float; varying vec2 uv;
-      uniform sampler2D A, B; uniform vec2 px, light; uniform float power, aspect, tm;
-      float h(vec2 q){ return dot(texture2D(B, q).rgb, vec3(.3,.55,.15)); }
-      void main(){
-        vec3 col = texture2D(A, uv).rgb;
-        float e = 10.;
-        float dx = h(uv + vec2(px.x*e,0.)) - h(uv - vec2(px.x*e,0.));
-        float dy = h(uv + vec2(0.,px.y*e)) - h(uv - vec2(0.,px.y*e));
-        vec3 n = normalize(vec3(-dx*2.2, -dy*2.2, 1.));
-        vec2 d2 = (light - uv) * vec2(aspect, 1.);
-        float dist = length(d2);
-        vec3 l = normalize(vec3(d2, .55));
-        float pool = power * exp(-dist*dist*2.2);
-        float diff = mix(1., max(dot(n, l), 0.) / max(l.z, .001) * .9, .55);
-        float lum = dot(col, vec3(.3,.55,.15)), sat = max(col.r, max(col.g, col.b)) - min(col.r, min(col.g, col.b));
-        float gloss = smoothstep(.6, .92, lum) * (1. - smoothstep(.1, .28, sat));
-        vec3 hv = normalize(l + vec3(0.,0.,1.));
-        float spec = pow(max(dot(n, hv), 0.), 18.) * gloss * pool;
-        float base = .34 + .1 * power;
-        vec3 lamp = vec3(1., .975, .94);
-        vec3 c = col * (base + pool * .95 * diff) * lamp + spec * .22 * lamp;
-        gl_FragColor = vec4(min(c, vec3(1.)), 1.);
-      }`;
-    function sh(type, src) { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
-    function tex(source) { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, source);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); return t; }
-    function setup() {
-      prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(prog);
-      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.warn(gl.getProgramInfoLog(prog)); return false; }
-      gl.useProgram(prog);
-      const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
-      const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-      ['A', 'B', 'px', 'light', 'power', 'aspect', 'tm'].forEach(k => uni[k] = gl.getUniformLocation(prog, k));
-      // the image at a size the GPU likes, plus a soft blurred copy for the broad shapes of the surface
-      const maxS = 2048, s = Math.min(1, maxS / Math.max(img.naturalWidth, img.naturalHeight));
-      const a = document.createElement('canvas'); a.width = Math.round(img.naturalWidth * s); a.height = Math.round(img.naturalHeight * s); a.getContext('2d').drawImage(img, 0, 0, a.width, a.height);
-      const sm = document.createElement('canvas'); sm.width = Math.round(a.width / 24); sm.height = Math.round(a.height / 24); sm.getContext('2d').drawImage(a, 0, 0, sm.width, sm.height);
-      const bb = document.createElement('canvas'); bb.width = a.width; bb.height = a.height; const bx = bb.getContext('2d'); bx.imageSmoothingQuality = 'high'; bx.filter = 'blur(10px)'; bx.drawImage(sm, 0, 0, a.width, a.height);
-      gl.activeTexture(gl.TEXTURE0); texA = tex(a); gl.activeTexture(gl.TEXTURE1); texB = tex(bb);
-      gl.uniform1i(uni.A, 0); gl.uniform1i(uni.B, 1); gl.uniform2f(uni.px, 1 / a.width, 1 / a.height);
-      return true;
+    function trace(x, pts, dx = 0, dy = 0) { x.beginPath(); pts.forEach(([a, b], i) => i ? x.lineTo(a + dx, b + dy) : x.moveTo(a + dx, b + dy)); x.closePath(); }
+    // paper grain, shared by every scrap
+    function makeGrain() {
+      const g = mk(256, 256), x = g.getContext('2d'), id = x.createImageData(256, 256);
+      for (let i = 0; i < id.data.length; i += 4) { const v = 222 + Math.random() * 33; id.data[i] = v; id.data[i + 1] = v; id.data[i + 2] = v - 6; id.data[i + 3] = 255; }
+      x.putImageData(id, 0, 0); return g;
     }
-    function layout() {
-      const r = cv.getBoundingClientRect(); W = r.width; H = r.height; if (!W) return;
-      const ar = img.naturalWidth / img.naturalHeight; let fh = H * .96, fw = fh * ar; if (fw > W * .96) { fw = W * .96; fh = fw / ar; }
+    // each scrap carries its own piece of the photograph, printed on paper, with a white torn rim and a soft shadow
+    function makePiece(cx, cy, w, h, layer, S) {
+      const pad = 10, pts = tornPath(w, h), o = mk((w + pad * 2) * S, (h + pad * 2) * S), x = o.getContext('2d');
+      x.scale(S, S); x.translate(pad, pad);
+      x.save(); x.shadowColor = 'rgba(0,0,0,.45)'; x.shadowBlur = 7; x.shadowOffsetY = 2.5;
+      x.fillStyle = '#f4f2ec'; trace(x, pts); x.fill(); x.restore();          // the paper itself, its white torn rim showing past the print
+      const inner = pts.map(([a, b]) => [a + (w / 2 - a) * .035 + (Math.random() - .5) * 1.4, b + (h / 2 - b) * .035 + (Math.random() - .5) * 1.4]);
+      x.save(); trace(x, inner); x.clip();
+      const sx = (cx - w / 2 - fr.x) / fr.w * img.naturalWidth, sy = (cy - h / 2 - fr.y) / fr.h * img.naturalHeight;
+      x.drawImage(img, sx, sy, w / fr.w * img.naturalWidth, h / fr.h * img.naturalHeight, 0, 0, w, h);
+      x.globalCompositeOperation = 'multiply'; x.globalAlpha = .32; x.drawImage(grain, Math.random() * -60, Math.random() * -60, 320, 320);
+      x.globalCompositeOperation = 'source-over'; x.globalAlpha = 1;
+      x.restore();
+      return { spr: o, pad, w, h, cx, cy, layer,
+        sx: fr.x + Math.random() * fr.w, sy: fr.y + Math.random() * fr.h,          // where it lies before it is placed
+        r0: (Math.random() - .5) * 1.4, r1: (Math.random() - .5) * .07, ox: (Math.random() - .5) * 6, oy: (Math.random() - .5) * 6,
+        k: layer * .16 + Math.random() * .2, f: .5 + Math.random() * .28 };
+    }
+    function build() {
+      W = cv.offsetWidth; H = cv.offsetHeight; if (!W || !img.naturalWidth) return;
+      cv.width = W * DPR; cv.height = H * DPR;
+      const ar = img.naturalWidth / img.naturalHeight; let fh = H * .94, fw = fh * ar; if (fw > W * .94) { fw = W * .94; fh = fw / ar; }
       fr = { x: (W - fw) / 2, y: (H - fh) / 2, w: fw, h: fh };
-      cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
-      gl.uniform1f(uni.aspect, fw / fh);
+      if (!grain) grain = makeGrain();
+      const S = Math.min(DPR, 1.6), small = W < 700, G = small ? 6 : 8;
+      P = [];
+      // two layers of scraps: a base layer covering everything, then smaller pieces pressed on top
+      for (let layer = 0; layer < 2; layer++) {
+        const g = layer ? G - 1 : G, cw = fw / g, ch = fh / g;
+        for (let j = 0; j < g; j++) for (let i = 0; i < g; i++) {
+          if (layer && Math.random() < .35) continue;
+          const cx = fr.x + (i + .5 + (Math.random() - .5) * (layer ? .8 : .3)) * cw, cy = fr.y + (j + .5 + (Math.random() - .5) * (layer ? .8 : .3)) * ch;
+          const s = layer ? .9 + Math.random() * .4 : 1.38 + Math.random() * .2;
+          P.push(makePiece(cx, cy, cw * s, ch * s * (.85 + Math.random() * .3), layer, S));
+        }
+      }
+      P.sort((a, b) => a.k - b.k);
+      draw();
     }
-    function frame(now) {
-      if (!ready || !vis) return requestAnimationFrame(frame);
-      const t = (now - t0) / 1000;
-      // when you are not steering it, the lamp drifts slowly around the piece on its own
-      if (now - lastMove > 2600) { Lt.x = .5 + Math.cos(t * .23) * .34; Lt.y = .5 + Math.sin(t * .31) * .3; }
-      const k = now - lastMove < 2600 ? .14 : .03;
-      L.x += (Lt.x - L.x) * k; L.y += (Lt.y - L.y) * k;
-      power += (powerT - power) * .03;
-      gl.viewport(0, 0, cv.width, cv.height); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.viewport(Math.round(fr.x * DPR), Math.round((H - fr.y - fr.h) * DPR), Math.round(fr.w * DPR), Math.round(fr.h * DPR));
-      gl.uniform2f(uni.light, L.x, L.y); gl.uniform1f(uni.power, power); gl.uniform1f(uni.tm, t);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      // the three lines appear one after another while you look
-      if (power > .5) { visitedT += 1 / 60; facts.forEach((f, i) => f.classList.toggle('on', visitedT > .6 + i * 1.6)); if (visitedT > 5.6) cap.classList.add('on'); }
-      requestAnimationFrame(frame);
+    const ease = u => 1 - Math.pow(1 - u, 3);
+    function draw() {
+      if (!fr) return;
+      c.setTransform(DPR, 0, 0, DPR, 0, 0); c.clearRect(0, 0, W, H);
+      // one continuous change: scraps gather and layer (0 to .5), the layers press flat and the seams smooth away (.45 to .95)
+      const flat = sm(.42, .7, ep), photo = sm(.48, .78, ep);
+      // the smooth surface underneath, already the finished piece, shows through as the seams close
+      c.save(); c.beginPath(); c.rect(fr.x, fr.y, fr.w, fr.h); c.clip();      // everything stays inside the frame, like a finished print
+      if (photo > 0) { c.globalAlpha = photo; c.drawImage(img, fr.x, fr.y, fr.w, fr.h); c.globalAlpha = 1; }
+      for (const p of P) {
+        const u = ease(cl((ep - p.k * .7) / .32));                              // its own moment to be picked up and pressed on
+        const gone = sm(p.f, p.f + .16, ep);                                       // and its own moment to be smoothed into the surface
+        if (gone >= 1) continue;
+        const bob = (1 - u) * Math.sin(t * .8 + p.r0 * 9) * 4;
+        const x = p.sx + (p.cx - p.sx) * u + p.ox * (1 - flat) * u, y = p.sy + (p.cy - p.sy) * u + p.oy * (1 - flat) * u + bob;
+        const rot = p.r0 * (1 - u) + p.r1 * u * (1 - flat), s = (.62 + .38 * u) * (1 + .03 * flat);
+        c.save(); c.translate(x, y); c.rotate(rot); c.scale(s, s);
+        c.globalAlpha = (.75 + .25 * u) * (1 - gone);
+        c.drawImage(p.spr, -p.w / 2 - p.pad, -p.h / 2 - p.pad, p.w + p.pad * 2, p.h + p.pad * 2);
+        c.restore();
+      }
+      c.restore(); c.globalAlpha = 1;
+      const marks = [[0, .25], [.25, .5], [.5, .75], [.75, 1]];
+      marks.forEach(([a, b], i) => { const f = cl((ep - a) / (b - a)); bars[i].style.transform = `scaleX(${f.toFixed(3)})`; steps[i].classList.toggle('on', ep >= a + .001 || i === 0); });
+      { const cur = Math.min(3, ep * 4 | 0); steps.forEach((li, i) => li.classList.toggle('cur', i === cur)); }
+      cap.classList.toggle('on', ep > .99);
     }
-    const steer = e => { if (!fr) return; const r = cv.getBoundingClientRect(); Lt.x = (e.clientX - r.left - fr.x) / fr.w; Lt.y = (e.clientY - r.top - fr.y) / fr.h; lastMove = performance.now(); hint.classList.add('gone'); };
-    cv.addEventListener('pointermove', steer); cv.addEventListener('pointerdown', steer);
-    new IntersectionObserver(([e]) => { vis = e.isIntersecting; powerT = e.intersectionRatio > .45 ? 1 : 0; }, { threshold: [0, .45, .8] }).observe(cv);   // the lamp warms up as the section comes into view
-    const start = () => { if (!setup()) return; layout(); ready = true; requestAnimationFrame(frame); };
-    img.complete && img.naturalWidth ? start() : img.addEventListener('load', start);
-    addEventListener('resize', () => { if (ready) layout(); });
-    if (reduce) { powerT = 1; power = 1; Lt = { x: .35, y: .3 }; }
-    window.__ev = { light: (x, y) => { Lt.x = x; Lt.y = y; lastMove = performance.now(); }, power: v => { power = powerT = v; } };
+    function tick(now) {
+      const dt = Math.min(.05, (now - last) / 1000); last = now; t += dt;
+      const before = ep; ep = Math.max(0, Math.min(1, ep + (hold ? dt * .24 : -dt * .4)));
+      if (vis && (ep !== before || ep < .5)) draw();
+      requestAnimationFrame(tick);
+    }
+    const on = e => { hold = true; btn.classList.add('on'); if (e && e.cancelable) e.preventDefault(); if (reduce) { ep = 1; draw(); } };
+    const off = () => { hold = false; btn.classList.remove('on'); if (reduce) { ep = 0; draw(); } };
+    btn.addEventListener('pointerdown', on); cv.addEventListener('pointerdown', on);
+    addEventListener('pointerup', off); addEventListener('pointercancel', off); addEventListener('blur', off);
+    btn.addEventListener('contextmenu', e => e.preventDefault()); cv.addEventListener('contextmenu', e => e.preventDefault());
+    btn.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); if (!e.repeat) on(); } });
+    btn.addEventListener('keyup', off);
+    new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(cv);
+    if (img.complete && img.naturalWidth) build(); else img.addEventListener('load', build);
+    let rz = 0; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(build, 200); });
+    if (reduce) { ep = 1; img.addEventListener('load', draw); } else requestAnimationFrame(tick);
+    window.__ev = { set: v => { ep = v; draw(); } };
   })();
   const navEl = document.querySelector('nav'); let lastY = scrollY;
   addEventListener('scroll', () => { const y = scrollY; if (Math.abs(y - lastY) > 6) { navEl.classList.toggle('away', y > lastY && y > 140); lastY = y; } }, { passive: true });

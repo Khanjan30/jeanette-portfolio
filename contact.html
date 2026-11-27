@@ -147,8 +147,9 @@
     for (const r of rays) {
       const s = feed && feed.steer(r);
       r.sp = r.sp || 1;
-      if (s) { r.h += s.turn; r.sp += (s.sp * 1.5 - r.sp) * .08; }
-      else { r.h += Math.sin(t * .6 + r.ph) * .004; r.sp += (1 - r.sp) * .04; }
+      const want = s ? s.turn : Math.sin(t * .6 + r.ph) * .004;           // turning has momentum, so the rays swim in smooth arcs
+      r.w = r.w || 0; r.w += (Math.max(-.045, Math.min(.045, want)) - r.w) * .07; r.h += r.w;
+      r.sp += ((s ? s.sp * 1.5 : 1) - r.sp) * (s ? .05 : .04);
       r.ph += .048 * (.7 + r.sp * .3);
       r.x += Math.cos(r.h) * r.v * r.sp; r.y += Math.sin(r.h) * r.v * r.sp;
       const m = r.L * 2.5;

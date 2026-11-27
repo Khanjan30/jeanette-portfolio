@@ -188,8 +188,9 @@
     api.steer = function (r) {
       if (r.loop > 0) { r.loop -= 1 / 60; return { turn: .065, sp: 1.5 }; }
       if (!r.food) return null;
-      const d = angDiff(Math.atan2(r.food.y - r.y, r.food.x - r.x), r.h);
-      return { turn: Math.max(-.05, Math.min(.05, d * .1)), sp: 1.7 };
+      const dist = Math.hypot(r.food.y - r.y, r.food.x - r.x), d = angDiff(Math.atan2(r.food.y - r.y, r.food.x - r.x), r.h);
+      const near = Math.min(1, dist / (r.L * .8));                       // close up, steer gently instead of spinning on the spot
+      return { turn: Math.max(-.05, Math.min(.05, d * .1)) * near, sp: 1.2 + .5 * near };
     };
 
     api.draw = function (c) {
