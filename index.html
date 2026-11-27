@@ -247,9 +247,17 @@
   html.pn-locked,html.pn-locked body{overflow:hidden}
 
   /* resume */
-  .resume .cv{max-width:820px}
-  .resume h2{font-family:var(--serif);font-weight:300;font-size:clamp(36px,5vw,64px);letter-spacing:-.025em;line-height:1}
-  .cv-wait{margin-top:18px;font-size:15px;color:var(--ink-soft)}
+  .cv-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;padding-bottom:clamp(22px,3vw,36px);border-bottom:1px solid var(--line)}
+  .cv-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(40px,6vw,84px);letter-spacing:-.03em;line-height:.95}
+  .cv-head p{font-size:14px;color:var(--ink-soft);max-width:340px}
+  .cv-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(34px,5vw,80px) clamp(30px,6vw,100px);margin-top:clamp(30px,4vw,52px)}
+  .cv-block h3{font-size:11px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--clay);margin-bottom:14px}
+  .cv-block ul{list-style:none}
+  .cv-block li{display:grid;grid-template-columns:86px 1fr;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
+  .cv-y{font-size:12px;letter-spacing:.08em;color:var(--ink-soft);padding-top:3px}
+  .cv-t{font-family:var(--serif);font-size:clamp(16px,1.35vw,18px);line-height:1.35}
+  .cv-t small{display:block;margin-top:3px;font-family:var(--sans);font-size:12.5px;color:var(--ink-soft)}
+  @media (max-width:860px){.cv-grid{grid-template-columns:1fr}.cv-block li{grid-template-columns:70px 1fr}}
   .themes{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
   @media (max-width:860px){.themes{grid-template-columns:1fr 1fr}}
   @media (max-width:520px){.themes{grid-template-columns:1fr}}
@@ -408,8 +416,56 @@
 <section class="resume" id="resume" aria-label="Resume">
   <div class="label"><em>07</em> Resume</div>
   <div class="cv">
-    <h2>Resume</h2>
-    <p class="cv-wait">Coming soon. Her full resume, with education, exhibitions and awards, will be here.</p>
+    <div class="cv-head">
+      <h2>Resume</h2>
+      <p>Sculpture and installation artist and high school art teacher, based in Santa Cruz, California.</p>
+    </div>
+    <div class="cv-grid">
+    <div class="cv-block">
+      <h3>Exhibitions</h3>
+      <ul>
+        <li><span class="cv-y">2022</span><span class="cv-t"><i>The Feeling of Falling</i>, Bachelor of Fine Arts Solo Exhibition<small>San Jose State University, San Jose, CA</small></span></li>
+        <li><span class="cv-y">2022</span><span class="cv-t"><i>Gargoyles ‘N Lockers</i>, Group Exhibition<small>San Jose State University, San Jose, CA</small></span></li>
+        <li><span class="cv-y">2022</span><span class="cv-t"><i>Synergy</i>, Group Exhibition<small>San Jose State University, San Jose, CA</small></span></li>
+        <li><span class="cv-y">2022</span><span class="cv-t">Group Student Exhibition<small>San Jose State University, San Jose, CA</small></span></li>
+        <li><span class="cv-y">2017</span><span class="cv-t">Student Exhibition<small>Cabrillo College Gallery, Aptos, CA</small></span></li>
+        <li><span class="cv-y">2016</span><span class="cv-t">Metal Works Exhibition<small>Cabrillo College Gallery, Aptos, CA</small></span></li>
+      </ul>
+    </div>
+    <div class="cv-block">
+      <h3>Honors &amp; Awards</h3>
+      <ul>
+        <li><span class="cv-y">2026</span><span class="cv-t">Third Place, <i>EARTHBOUND: Art Inspired by Nature</i><small>TERAVARNA Foundation</small></span></li>
+        <li><span class="cv-y">2025</span><span class="cv-t">Marion Cilker Scholarship Award for Infusing Art into Teaching Endowment<small>San Jose State University</small></span></li>
+        <li><span class="cv-y">2022</span><span class="cv-t">Summa Cum Laude<small>San Jose State University</small></span></li>
+        <li><span class="cv-y">2022</span><span class="cv-t">President’s Scholar (Top 8%), Spring and Fall 2021<small>San Jose State University</small></span></li>
+        <li><span class="cv-y">2022</span><span class="cv-t">School of Art &amp; Design Scholarship; Fire Arts Scholarship; Urban &amp; Design Scholarship<small>San Jose State University</small></span></li>
+        <li><span class="cv-y">2021</span><span class="cv-t">Carolyn B. Hayes Art Scholarship and Award<small>San Jose State University</small></span></li>
+        <li><span class="cv-y">2020</span><span class="cv-t">Frances Marie Morrow Art Endowed Scholarship and Award<small>Cabrillo College</small></span></li>
+        <li><span class="cv-y">2017</span><span class="cv-t">English Creative Writing Award<small>Cabrillo College</small></span></li>
+      </ul>
+    </div>
+    <div class="cv-block">
+      <h3>Education</h3>
+      <ul>
+        <li><span class="cv-y">2025</span><span class="cv-t">Master of Arts in Education<small>San Jose State University</small></span></li>
+        <li><span class="cv-y">2025</span><span class="cv-t">Single Subject Teaching Credential<small>San Jose State University</small></span></li>
+        <li><span class="cv-y">2022</span><span class="cv-t">Bachelor of Fine Arts in Spatial Arts<small>San Jose State University</small></span></li>
+        <li><span class="cv-y">2021</span><span class="cv-t">Associate of Arts in Studio Art; Associate of Arts in Liberal Arts and Sciences, High Honors<small>Cabrillo College</small></span></li>
+      </ul>
+    </div>
+    <div class="cv-block">
+      <h3>Teaching</h3>
+      <ul>
+        <li><span class="cv-y">2025–2026</span><span class="cv-t">High School Art Teacher<small>Fremont High School, Sunnyvale, CA</small></span></li>
+        <li><span class="cv-y">2024–2025</span><span class="cv-t">High School Art Teacher<small>Soquel High School, Santa Cruz, CA</small></span></li>
+        <li><span class="cv-y">2022</span><span class="cv-t">Guest Lecturer, Art 1<small>San Jose State University</small></span></li>
+        <li><span class="cv-y">2021–2022</span><span class="cv-t">Art Instructor<small>San Lorenzo Valley Charter School</small></span></li>
+        <li><span class="cv-y">2016–2021</span><span class="cv-t">Seahawks Metal Arts Club<small>Cabrillo College</small></span></li>
+        <li><span class="cv-y">2014–2016</span><span class="cv-t">Art Instructor<small>Sunny Slope Farms</small></span></li>
+      </ul>
+    </div>
+    </div>
   </div>
 </section>
 

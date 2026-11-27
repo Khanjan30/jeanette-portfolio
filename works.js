@@ -3,18 +3,18 @@
 (function () {
   // Captions are plain descriptions until Jeanette sends her own lines. Sizes and most materials are still to come.
   const WORKS = [
-    { slug: 'the-feeling-of-falling', title: 'The Feeling of Falling', year: 2022, n: 4, line: 'A figure in free fall, held in mid-air.' },
-    { slug: 'where-i-once-stood', title: 'Where I Once Stood', year: 2026, n: 3, line: 'The pieces of a form, laid out on the studio floor.' },
-    { slug: 'what-remains-of-gravity', title: 'What Remains of Gravity', year: 2026, n: 2, line: 'A body pulled down into a splash.' },
+    { slug: 'the-feeling-of-falling', title: 'The Feeling of Falling', year: 2022, n: 6, line: 'A figure in free fall, held in mid-air.' },
+    { slug: 'where-i-once-stood', title: 'Where I Once Stood', year: 2026, n: 4, line: 'Three white stingrays swim up out of the painting.' },
+    { slug: 'what-remains-of-gravity', title: 'What Remains of Gravity', year: 2026, n: 6, line: 'Feet land in a splash as paper stingrays rise away.' },
     { slug: 'the-space-between', title: 'The Space Between', year: 2026, n: 3, line: 'Fragments hanging, halfway through scattering.' },
     { slug: 'an-instant-without-end', title: 'An Instant Without End', year: 2026, n: 2, line: 'Rings of light and shadow, held in place.' },
     { slug: 'a-moment-held-open', title: 'A Moment Held Open', year: 2026, n: 2, line: 'A splash, frozen the instant it lands.' },
     { slug: 'against-the-current', title: 'Against the Current', year: 2026, n: 3, line: 'A face pushing up through the wave.' },
-    { slug: 'i-decide', title: 'I Decide', year: 2022, n: 1, materials: 'Aluminum', line: 'A figure rising out of the metal.' },
-    { slug: 'where-i-begin', title: 'Where I Begin', year: 2026, n: 3, line: 'A splash that opens into sky.' },
-    { slug: 'break-the-cycle', title: 'Break the Cycle', year: 2026, n: 2, materials: 'Paper, plant fiber, vinyl, cardboard', line: 'A wave closes into a circle. The stingrays break through.', hd: true }
+    { slug: 'i-decide', title: 'I Decide', year: 2022, n: 2, materials: 'Aluminum', line: 'A figure rising out of the metal.' },
+    { slug: 'where-i-begin', title: 'Where I Begin', year: 2026, n: 4, line: 'A splash that opens into sky.' },
+    { slug: 'break-the-cycle', title: 'Break the Cycle', year: 2026, n: 3, materials: 'Paper, plant fiber, vinyl, cardboard', line: 'A wave closes into a circle. The stingrays break through.' }
   ];
-  const src = (w, i, thumb) => `art/work/${w.slug}-${i}${thumb ? '-t' : (w.hd && i === 0 ? '-hd' : '')}.webp`;
+  const src = (w, i, thumb) => `art/work/${w.slug}-${i}${thumb ? '-t' : ''}.webp`;
   const grid = document.getElementById('workGrid'); if (!grid) return;
   const hoverable = matchMedia('(hover:hover)').matches;
 
